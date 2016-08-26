@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+
+<body>
+
+
+
+    <div> 1</div>
+    <div> 2</div>
+    <div> 3</div>
+    <div> 4</div>
+    <input name="" type="button" id="box" />
+    <script type="text/javascript">
+    // var box = document.getElementById("box");
+    // var num = 0;
+    // for(var i=0;i<10;i++){
+    //     box.onclick = function(){
+    //         console.log(i); //总是打印10
+    //     };
+    // }
+
+window.onload = function(){
+    var box = document.getElementById("box");
+    var num = 0;
+    for(var i=0;i<10;i++){
+        box.onclick = a();
+        function a(){
+            console.log(i); //1,2,3,4.....
+        };
+    }
+
+    var div = document.getElementsByTagName("div");
+    var num = 0;
+    for(var i=0;i<div.length;i++){
+        // (function(i){
+        //     div[i].onclick = function(){
+        //         console.log(i); 
+        //     }
+        // })(i)
+
+        function test(i){
+            div[i].onclick = function(){
+                console.log(i); 
+            }
+        }
+        test(i)
+    }
+    
+};
+
+
+
+</script>
+</body>
+
+</html>
