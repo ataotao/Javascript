@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+// 父类构造函数
+function Person (name, age, job) {
+  this.name = name;
+  this.age = age;
+  this.job = job;
+}
+
+// 父类方法
+Person.prototype.sayName = function () {
+  console.log(this.name);
+};
+
+// --------------
+
+// 子类构造函数
+function Student (name, age, job, school) {
+  // 继承父类的所有实例属性（获得父类构造函数中的属性）
+  Person.call(this, name, age, job);
+  this.school = school; // 添加新的子类属性
+}
+
+// 继承父类的原型方法（获得父类原型链上的属性和方法），旧的使用方式
+//Student.prototype = new Person();
+
+// 继承父类的原型方法（获得父类原型链上的属性和方法）
+Student.prototype = Object.create(Person.prototype);
+Student.prototype.constructor = Student; // 设置 constructor 属性指向 Student
+
+// 新增的子类方法
+Student.prototype.saySchool = function () {
+  console.log(this.school);
+};
+
+var person1 = new Person('Weiwei', 27, 'Student');
+var student1 = new Student('Lily', 25, 'Doctor', "Southeast University");
+
+console.log(person1.sayName === student1.sayName); // true
+
+person1.sayName();  // Weiwei
+student1.sayName(); // Lily
+student1.saySchool(); // Southeast University
+
+    </script>
+</body>
+
+</html>
