@@ -113,34 +113,34 @@
     var cat = new Cat('Black Cat');
     cat.showName();
     console.log("------------实例6：实现多重继承------------");
-    var s1 = function(name){
-      this.name = name;
+    var s1 = function(name) {
+        this.name = name;
     };
 
-    var s2 = function(sex){
-      this.sex = sex;
+    var s2 = function(sex) {
+        this.sex = sex;
     };
 
-    var s3 = function(age){
-      this.age = age;
+    var s3 = function(age) {
+        this.age = age;
     };
 
-    var Student = function(name,sex,age,score){
-      s1.call(this,name);
-      s2.call(this,sex);
-      s3.call(this,age);
-      // s1.apply(this,[name]);
-      // s2.apply(this,[sex]);
-      // s3.apply(this,[age]);
-      this.score = score;
+    var Student = function(name, sex, age, score) {
+        s1.call(this, name);
+        s2.call(this, sex);
+        s3.call(this, age);
+        // s1.apply(this,[name]);
+        // s2.apply(this,[sex]);
+        // s3.apply(this,[age]);
+        this.score = score;
     };
 
     Student.prototype.construction = Student;
-    var s = new Student('jack','male','12','100');
+    var s = new Student('jack', 'male', '12', '100');
     console.log(s.name); //输出:jack
-    console.log(s.sex);  //输出:male
-    console.log(s.age);  //输出:12
-    console.log(s.score);//输出:100
+    console.log(s.sex); //输出:male
+    console.log(s.age); //输出:12
+    console.log(s.score); //输出:100
     </script>
     <h2>2、apply方法</h2>
     <p>语法：apply([thisObj[,argArray]]) </p>
@@ -170,6 +170,65 @@
     };
     var moto = new vehicle("Moto", "哈哈");
     moto.showSelf();
+
+
+    console.log('--------------apply方法 1--------------');
+    Function.prototype.construct = function(aArgs) {
+        var oNew = Object.create(this.prototype);
+        this.apply(oNew, aArgs);
+        return oNew;
+    };
+
+    function MyConstructor() {
+        for (var nProp = 0; nProp < arguments.length; nProp++) {
+            this["property" + nProp] = arguments[nProp];
+        }
+    }
+
+    var myArray = [4, "Hello world!", false];
+    var myInstance = MyConstructor.construct(myArray);
+
+    console.log(myInstance.property1); // logs "Hello world!"
+    console.log(myInstance instanceof MyConstructor); // logs "true"
+    console.log(myInstance.constructor); // logs "MyConstructor"
+
+    console.log('--------------使用apply和内置函数--------------');
+    //聪明的apply用法允许你在某些本来需要写成遍历数组变量的任务中使用内建的函数。在接下里的例子中我们会使用Math.max/Math.min来找出一个数组中的最大/最小值。
+    /* min/max number in an array */
+    var numbers = [5, 6, 2, 3, 7];
+
+    /* using Math.min/Math.max apply */
+    var max = Math.max.apply(null, numbers); /* This about equal to Math.max(numbers[0], ...) or Math.max(5, 6, ..) */
+    var min = Math.min.apply(null, numbers);
+
+    /* vs. simple loop based algorithm */
+    max = -Infinity, min = +Infinity;
+
+    for (var i = 0; i < numbers.length; i++) {
+        if (numbers[i] > max)
+            max = numbers[i];
+        if (numbers[i] < min)
+            min = numbers[i];
+    }
+    console.log(min);
+    console.log(max);
+    /*但是当心：如果用上面的方式调用 apply, 你很可能会遇到方法参数个数越界的问题. 当你对一个方法传入非常多的参数 (比如超过1W多个参数) 时, 就非常有可能会导致越界问题, 这个临界值是根据不同的 JavaScript 引擎而定的 (JavaScript 核心中已经做了硬编码  参数个数限制在65536)，因为这个限制(实际上也是任何用到超大栈空间的行为的自然表现)是未指定的. 有些引擎会抛出异常.  更糟糕的是其他引擎会直接限制传入到方法的参数个数，导致参数丢失. (举个例子: 如果某个引擎限制了方法参数最多为4个 [实际真正的参数个数限制当然要高得多了, 这里只是打个比方], 上面的代码中, 真正通过 apply 传到目标方法中的参数为 5, 6, 2, 3, 而不是完整的 numbers 数组.) 如果你的参数数组可能非常大, 那么推荐使用下面这种策略来处理: 将参数数组切块后循环传入目标方法:*/
+    function minOfArray(arr) {
+        var min = Infinity;
+        var QUANTUM = 32768;
+
+        for (var i = 0, len = arr.length; i < len; i += QUANTUM) {
+            var submin = Math.min.apply(null, arr.slice(i, Math.min(i + QUANTUM, len)));
+            min = Math.min(submin, min);
+        }
+
+        return min;
+    }
+
+    var min = minOfArray([5, 6, 2, 3, 7]);
+    console.log(min);
+
+
     </script>
 </body>
 
