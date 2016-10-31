@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript中apply、call、bind</title>
+</head>
+
+<body>
+    <script>
+    /* 最简单的例子 */
+    var info1 = {
+        name: 'wst',
+        say: function(thing) {
+            console.log(this.name + ' says hello ' + thing);
+            console.log(arguments);
+        }
+    };
+    var info2 = {
+        name: 'lcm'
+    };
+    info1.say.call(info2, "gimp");
+    // -> lcm says hello gimp
+    info1.say.apply(info2, ["fedora", "fedora1"]);
+    // -> lcm says hello fedora
+
+    //bind的两种调用方式
+    info1.say.bind(info2, "hexo")();
+    info1.say.bind(info2)("hexo");
+    // -> lcm says hello hexo
+
+    console.log('---------------- apply、call用法的简单示例 -------------------------');
+    /* apply、call用法的简单示例 */
+    function fruits() {}
+
+    fruits.prototype = {
+        color: "red",
+        say: function(cl) {
+            console.log("My color is " + this.color + '，this是' + cl);
+        }
+    };
+
+    var apple = new fruits();
+    apple.say('fruits'); //My color is red
+
+    banana = {
+        color: "yellow"
+    };
+    apple.say.call(banana, 'banana'); //My color is yellow
+    apple.say.apply(banana, ['banana']); //My color is yellow
+    apple.say.bind(banana)('banana'); //My color is yellow
+
+    console.log('---------------- apply 、 call 区别 -------------------------');
+    // apply 、 call 区别
+    var func = function(arg1, arg2) {
+        console.log(arg1 + ',' + arg2);
+    };
+
+    func.call(this, 'arg1', 'arg2');
+    func.apply(this, ['arg1', 'arg2']);
+
+    console.log('---------------- apply 、 call 用法示例 -------------------------');
+    // 数组之间追加
+    var array1 = [12, 'foo', {
+        name: 'Joe'
+    }, -2458];
+    var array2 = ["Doe", 555, 100];
+    Array.prototype.push.apply(array1, array2);
+    /* array1 值为  [12 , "foo" , {name "Joe"} , -2458 , "Doe" , 555 , 100] */
+    console.log(array1);
+
+    // 获取数组中的最大值和最小值
+    var numbers = [5, 458, 120, -215];
+    var maxInNumbersApply = Math.max.apply(Math, numbers); //458
+    var minInNumbersCall = Math.min.call(Math, 5, 458, 120, -215); //458
+    console.log(maxInNumbersApply);
+    console.log(minInNumbersCall);
+
+    // 验证是否是数组（前提是toString()方法没有被重写过）
+    function isArray(obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
+    }
+    console.log(isArray(numbers));
+
+    //类（伪）数组使用数组方法
+    var domNodes = Array.prototype.slice.call(document.getElementsByTagName("*"));
+    console.log(domNodes);
+
+    console.log('---------------- 一道面试题目 -------------------------');
+    //使用 log 代理 console.log
+    function log(msg)　 {
+        console.log(msg);
+    }
+
+    //优雅的方法
+    function log() {
+        console.log.apply(console, arguments);
+    }
+
+    //添加一个 (app) 前缀
+    function log() {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift('(app)');
+
+        console.log.apply(console, args);
+    }
+    log(1);
+    log(1, 2);
+
+    console.log('---------------- bind 用法简单示例 -------------------------');
+    // 正常情况下使用变量保存 this 值
+    var foo = {
+        bar: 1,
+        eventBind: function() {
+            var _this = this;
+            $('.someClass').on('click', function(event) {
+                /* Act on the event */
+                console.log(_this.bar); //1
+            });
+        }
+    };
+
+    // 使用 bind 进行函数绑定
+    var foo = {
+        bar: 1,
+        eventBind: function() {
+            $('.someClass').on('click', function(event) {
+                /* Act on the event */
+                console.log(this.bar); //1
+            }.bind(this));
+        }
+    };
+
+    varfoo = {
+        x: 3
+    };
+
+    var bar = function() {
+        console.log(this.x);
+    };
+
+    bar(); // undefined
+    var func = bar.bind(foo);
+    func(); // 3
+
+    console.log('---------------- apply、call、bind 比较 -------------------------');
+
+    var obj = {
+        x: 81,
+    };
+
+    var foo = {
+        getX: function() {
+            return this.x;
+        }
+    };
+
+    console.log(foo.getX.bind(obj)()); //81
+    console.log(foo.getX.call(obj)); //81
+    console.log(foo.getX.apply(obj)); //81
+    </script>
+</body>
+
+</html>

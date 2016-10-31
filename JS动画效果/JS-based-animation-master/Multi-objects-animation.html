@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        ul, li {
+            list-style: none
+        }
+
+        ul li {
+            width: 200px;
+            height: 100px;
+            background: blue;
+            margin-bottom: 20px;
+            filter: alpha(opacity:30);
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<script type="text/javascript">
+    window.onload = function () {
+        var Lis = document.getElementsByTagName('li');
+        for (var i = 0; i < Lis.length; i++) {
+            Lis[i].timer1 = null;
+            Lis[i].timer2 = null;
+            Lis[i].alpha = 30;
+
+            Lis[i].onmouseover = function () {
+                onMove(this, 400);
+                onAlpha(this, 100);
+            }
+
+            Lis[i].onmouseout = function () {
+                onMove(this, 200);
+                onAlpha(this, 30);
+            }
+
+            function onMove(obj, iTarget) {
+                clearInterval(obj.timer1);
+                obj.timer1 = setInterval(function () {
+                    var speed = (iTarget - obj.offsetWidth) / 8;
+                    speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                    if (obj.offsetWidth == iTarget) {
+                        clearInterval(obj.timer1);
+                    }
+                    else {
+                        obj.style.width = obj.offsetWidth + speed + 'px';
+                    }
+                }, 30);
+            }
+
+            function onAlpha(obj, iTarget) {
+                clearInterval(obj.timer2);
+                obj.timer2 = setInterval(function () {
+                    var speed = 0;
+                    if (obj.alpha < iTarget) {
+                        speed = 10;
+                    }
+                    else {
+                        speed = -10;
+                    }
+                    if (obj.alpha == iTarget) {
+                        clearInterval(obj.timer2);
+                    }
+                    else {
+                        obj.alpha += speed;
+                        obj.style.filter = 'alpha(opacity:' + obj.alpha + ')';
+                        obj.style.opacity = obj.alpha / 100;
+                    }
+                }, 30);
+            }
+        }
+    }
+</script>
+</body>
+</html>

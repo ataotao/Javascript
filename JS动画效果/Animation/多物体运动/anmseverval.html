@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>多物体运动</title>
+	<style type="text/css">
+		body,
+		div,
+		span {
+			margin: 0;
+			padding: 0;
+		}
+		
+		div {
+			width: 100px;
+			height: 100px;
+			top: 0;
+			border: 1px solid #F66C07;
+		}
+	</style>
+	<script type="text/javascript">        //javascript必须放在head或者body里面。
+window.onload=function()
+{
+var Tags=document.getElementsByTagName('div');
+// oDiv.onmouseover=startmove();
+//鼠标移入
+for(var i=0;i<Tags.length;i++){
+Tags[i].timer=null;  
+Tags[i].onmouseover=function(){
+ //为每一个对象设置定时器
+	startmove(this,360);
+//startmove(0,20);
+}
+//鼠标移出
+Tags[i].onmouseout=function(){
+	//startmove(-200,-20); 
+	//为每一个对象设置定时器
+	startmove(this,100);                            //1、单个函数startmove1();
+}
+}
+}
+
+//var timer=null;
+   var speed=0;
+   function startmove(obj,target){    //精简参数
+   window.clearInterval(obj.timer);
+  // var oDiv=document.getElementById('div1');
+   	obj.timer=window.setInterval(function(){
+	//var lastleft=window.getComputedStyle(oDiv,false).left; oDiv.offsetLeft=lastleft
+    var inWidth=parseInt(window.getComputedStyle(obj,false).width);
+    console.log(inWidth);
+	speed=(target-inWidth)/20;   //数值注意取整
+	speed>0 ? speed=Math.ceil(speed) : speed=Math.floor(speed);
+	//console.log(speed);
+	if(inWidth==target){     //oDiv.offsetLeft的目标值是慢慢变大或者变小的，而target值不变。
+       window.clearInterval(obj.timer);
+	}
+	else{obj.style.width=inWidth+speed+'px';}
+    },20);
+}
+</script>
+</head>
+
+<body>
+	<div id="div1">
+		<span>分享</span>
+	</div>
+	<div id="div2">
+		<span>分享</span>
+	</div>
+	<div id="div3">
+		<span>分享</span>
+	</div>
+	<div id="div4">
+		<span>分享</span>
+	</div>
+</body>
+
+</html>

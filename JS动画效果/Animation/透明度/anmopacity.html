@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>透明度运动</title>
+</head>
+<style type="text/css">
+body,div{
+margin: 0;
+padding: 0;
+}
+#div1{
+width: 200px;
+height: 200px;
+background: red;
+filter: alpha(opacity:100);   /*IE浏览器专用*/
+opacity:1;  /*这是数值*/
+}
+</style>
+<script type="text/javascript">
+	window.onload=function(){
+		var myId=document.getElementById('div1');
+		myId.onmouseover=function(){startmove(30);}
+		myId.onmouseout=function(){startmove(100);}
+	}
+	var timer=null;
+	var inopacity=100;   
+	function startmove(itarget){
+		window.clearInterval(timer);
+		timer=window.setInterval(function(){
+		var myId=document.getElementById('div1');
+		
+		//var inopacity=parseInt(window.getComputedStyle(myId,false).filter); //初始值 
+        //getComputedStyle方法返回的是一个字符串，因此需要类型转换	
+        var speed=0;
+        if(inopacity>itarget){     //鼠标移入，透明度变大，opacity值变小
+        	speed=-10;
+        }else if(inopacity<itarget){
+        	speed=10;
+        }
+        if(inopacity==itarget){
+        	clearInterval(timer);
+        }else{
+        	inopacity+=speed;
+        }
+      myId.style.opacity=inopacity/100;
+      // console.log(inopacity);              //oDiv2.style.filter=':alpha(opacity:'+alpha+')';
+      myId.style.filter='alpha(opacity:'+inopacity+')'; /*  myId.style.filter=alpha(opacity:100);*/
+		},30);
+	}
+</script>
+<body>
+<div id="div1">
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- //单个事件代码
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>ctopacity</title>
+
+<style type="text/css">
+
+body,div{
+
+margin: 0;
+
+padding: 0;
+
+
+
+}
+
+#div1{
+
+width: 200px;
+
+height: 200px;
+
+background: red;
+
+filter: alpha(opacity:30);
+
+opacity:0.7;
+
+}
+
+</style>
+
+<script type="text/javascript">
+
+window.onload=function(){
+
+var Idv1=document.getElementById('div1');
+
+Idv1.onmouseover=function(){startmove(0.1);   //移入，opacity值越小，越透明
+
+}
+
+}
+
+var timer=null;
+
+ function startmove(itarget){
+
+  var Idv1=document.getElementById('div1');
+
+   clearInterval(timer);
+
+ timer=setInterval(function(){
+
+  var chopacity= parseFloat(window.getComputedStyle(Idv1,false).opacity);//Idv1.style.opacity;
+//ps这里window.getComputedStyle(Idv1,false).opacity返回值是一个字符串
+
+  //console.log("透明度：" + chopacity);
+
+  var speed=0;
+
+        if(chopacity>itarget){         //移入，opacity值越小，越透明
+
+        speed=-0.1;
+
+        }
+
+       else if(chopacity<itarget){
+
+            speed=0.1;   
+
+         }
+
+           //console.log(1);
+
+      if(Idv1.style.opacity==itarget)
+
+       { 
+
+       clearInterval(timer);
+
+       }
+
+  else{
+
+       Idv1.style.opacity=chopacity+speed;
+
+       console.log("透明:" + Idv1.style.opacity );
+
+        } 
+
+        },30);
+
+ }
+
+</script>
+
+</head>
+
+<body>
+
+<div id="div1">
+
+</div>
+
+</body>
+
+</html>
+
+ -->

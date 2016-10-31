@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>速度+缓冲运动</title>
+	<style type="text/css">
+body,div,span{
+	margin: 0;
+	padding: 0;
+}
+
+#div1{
+	width: 200px;
+	height: 200px;
+	background: red;
+	position: relative;
+	left: -200px;
+	top: 0;
+}
+
+#div1 span {
+	width: 20px;
+	height: 50px;
+	background: blue;
+	position: absolute;
+	left: 200px;
+	top: 75px;
+}
+</style>
+<script type="text/javascript">        //javascript必须放在head或者body里面。
+window.onload=function()
+{
+var oDiv=document.getElementById('div1');
+// oDiv.onmouseover=startmove();
+//鼠标移入
+oDiv.onmouseover=function(){
+	startmove(0);
+//startmove(0,20);
+}
+//鼠标移出
+oDiv.onmouseout=function(){
+	//startmove(-200,-20);   
+	startmove(-200);                            //1、单个函数startmove1();
+}
+}
+var timer=null;
+var speed=0;
+function startmove(target){    //精简参数
+window.clearInterval(timer);
+   var oDiv=document.getElementById('div1');
+	timer=window.setInterval(function(){
+	//var lastleft=window.getComputedStyle(oDiv,false).left; oDiv.offsetLeft=lastleft
+	speed=(target-oDiv.offsetLeft)/20;   //数值注意取整
+    speed>0 ? speed=Math.ceil(speed) : speed=Math.floor(speed);
+/*
+	if(speed>0){
+		speed=Math.ceil(speed);    //移入，速度>0,向上取整ciel()
+	}                           
+	else{speed=Math.floor(speed);}      //移出，速度<0,向下取整floor()     */
+	console.log(speed);
+	if(oDiv.offsetLeft==target){     //oDiv.offsetLeft的目标值是慢慢变大或者变小的，而target值不变。
+       window.clearInterval(timer);
+	}
+    else
+    	{oDiv.style.left=oDiv.offsetLeft+speed+'px';}   //style.left是一个字符串
+	},30);
+}
+</script>
+</head>
+<body>
+<div id="div1">
+	<span>分享</span> <!-- 点分享时div1有效，事件冒泡 -->
+</div>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<style type="text/css">
+   body,div,span{
+	margin: 0;
+	padding: 0;
+}
+#div1{
+	width: 200px;
+	height: 200px;
+	background: red;
+	position: relative;
+	left: -200px;
+	top: 0;
+}
+#div1 span {
+	width: 20px;
+	height: 50px;
+	background: blue;
+	position: absolute;
+	left: 200px;
+	top: 75px;
+}
+</style>
+</head>
+<script type="text/javascript">
+window.onload=function()
+{
+var oDiv=document.getElementById('div1');
+// oDiv.onmouseover=startmove();
+//鼠标移入
+oDiv.onmouseover=function(){
+	startmove(0);
+//startmove(0,20);
+}
+//鼠标移出
+oDiv.onmouseout=function(){
+	//startmove(-200,-20);   
+	startmove(-200);                            //1、单个函数startmove1();
+}
+}
+var timer=null;
+var speed=0;
+function startmove(target){    //精简参数
+window.clearInterval(timer);
+   var oDiv=document.getElementById('div1');
+	timer=window.setInterval(function(){
+	//var lastleft=window.getComputedStyle(oDiv,false).left; oDiv.offsetLeft=lastleft
+	speed=(itarget-offsetLeft)/20;   //数值注意取整
+	if(speed>0){
+		speed=Math.ciel(speed);    //移入，速度>0,向上取整ciel()
+	}                           
+	else{speed=Math.floor(speed);}      //移出，速度<0,向下取整floor()     
+	console.log(speed);
+	if(oDiv.offsetLeft==target){     //oDiv.offsetLeft的目标值是慢慢变大或者变小的，而target值不变。
+       window.clearInterval(timer);
+	}
+    else
+    	{oDiv.style.left=oDiv.offsetLeft+speed+'px';}   //style.left是一个字符串
+	},30);
+}
+</script>
+<body>
+<div id="div1">
+</div>
+</body>
+</html>
+
+
+ -->

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            width: 1280px;
+            height: 720px;
+            filter: alpha(opacity:30);
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+<div id="div"><img src="McLaren-P1.jpg"/></div>
+<script type="text/javascript">
+    window.onload = function () {
+        var img = document.getElementsByTagName('img')[0],
+                timer = null,
+                alpha = 30;
+
+        img.onmouseover = function () {
+            changeOpa(100);
+        }
+
+        img.onmouseout = function () {
+            changeOpa(30);
+        }
+
+        function changeOpa(iOpa) {
+            clearInterval(timer);
+            timer = setInterval(function () {
+                var speed = 0;
+                if (alpha < iOpa) {
+                    speed = 10;
+                }
+                else {
+                    speed = -10;
+                }
+                if (alpha == iOpa) {
+                    clearInterval(timer);
+                }
+                else {
+                    alpha += speed;
+                    img.style.filter = 'alpha(opacity:' + alpha + ')';
+                    img.style.opacity = alpha / 100;
+                }
+            }, 30)
+        }
+    }
+</script>
+</body>
+</html>

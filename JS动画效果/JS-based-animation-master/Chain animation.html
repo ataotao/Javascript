@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="move(foolish).js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul li{
+            list-style: none;
+        }
+        ul li {
+            width: 200px;
+            height: 100px;
+            background: #F92672;
+            border:3px solid #E6DB74;
+            margin-bottom: 20px;
+            filter: alpha(opacity:30);
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li></li>
+</ul>
+<script type="text/javascript">
+    window.onload=function () {
+        var Li = document.getElementsByTagName('li')[0];
+        Li.timer=null;
+        Li.onmouseover=function () {
+            onMove(this,'width',400,function () {
+                onMove(Li,'height',200,function () {
+                    onMove(Li,'opacity',100,null,'timer')
+                },'timer')
+            },'timer')
+        }
+
+        Li.onmouseout=function () {
+            onMove(this,'opacity',30,function () {
+                onMove(Li,'height',100,function () {
+                    onMove(Li,'width',200,null,'timer')
+                },'timer')
+            },'timer')
+        }
+    }
+</script>
+</body>
+</html>

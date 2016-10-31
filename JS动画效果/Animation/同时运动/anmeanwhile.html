@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>同时运动/链式运动</title>
+	<style type="text/css">
+body,div{
+margin: 0;
+padding: 0;
+}
+#div1{
+width: 200px;
+height: 200px;
+border:1px solid yellowgreen;
+filter: alpha(opacity:100);   /*IE浏览器专用*/
+opacity:1;  /*这是数值*/
+}
+#div2{
+width: 200px;
+height: 200px;
+border:1px solid yellowgreen;
+filter: alpha(opacity:100);   /*IE浏览器专用*/
+opacity:1;  /*这是数值*/
+}
+</style>
+<script type="text/javascript">
+    window.onload=function(){
+        var tags=document.getElementsByTagName('div');   //function(){startmove(this,'width',600);}
+        var mId=document.getElementById('div1');
+        for(var i=0;i<tags.length;i++)
+        {tags[i].timer=null;}   
+        tags[1].onmouseover=function(){startmove(this,'opacity',30);}
+        tags[1].onmouseout=function(){startmove(this,'opacity',100);}
+        mId.onmouseover=function(){startmove(this,'height',600,function(){startmove(mId,'width',600);});}
+        mId.onmouseout=function(){startmove(mId,'width',200,function(){startmove(mId,'height',200);});}
+        //tags[1].onmouseover=function(){startmove(this,'width',600);}
+        //,function(){startmove(this,'height',300);});}
+        //tags[1].onmouseout=function(){startmove(this,'width',200);}
+    }
+function getStyle(obj,attr){
+    var mStyle=null;
+    if(obj.currentStyle){
+        mStyle=obj.currentStyle[attr];  
+    }
+    else{
+        mStyle=getComputedStyle(obj,null)[attr];
+    }
+    //console.log(parseFloat(mStyle));
+    attr=='opacity' ? mStyle=parseInt(parseFloat(mStyle)*100):mStyle=parseInt(mStyle);
+    //console.log(mStyle);
+    return mStyle;
+    }
+var speed=0;
+//var timer=null;
+//function startmove(obj,attr,target,fn){    //精简参数
+	function startmove(obj,json,fn){  
+window.clearInterval(obj.timer);
+  // var oDiv=document.getElementById('div1');
+   obj.timer=window.setInterval(function(){
+    var att=getStyle(obj,attr);
+    //console.log(att);
+    speed=(target-att)/20;   //数值注意取整   //多物体运动，东西不能共用
+    speed>0 ? speed=Math.ceil(speed) : speed=Math.floor(speed);
+    //console.log(speed);
+    if(att==target){     //oDiv.offsetLeft的目标值是慢慢变大或者变小的，而target值不变。
+       window.clearInterval(obj.timer);
+       if(fn){fn();}          //判断是否存在回调函数,并调用
+         }
+    else{
+        if(attr=='opacity'){
+        //speed=-speed; 
+        obj.style.opacity=(att+speed)/100;
+        console.log(obj.style.opacity);
+        obj.style.filter='alpha:(opacity:'+att+speed+')';
+        }
+        else{obj.style[attr]=att+speed+'px';} 
+    }
+},20);
+}
+</script>
+</head>
+<body>
+	<div id="div1">
+</div>
+<div id="div2">
+</body>
+</html>
