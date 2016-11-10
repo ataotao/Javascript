@@ -1,0 +1,146 @@
+<style>
+.inlayer {
+width: 120px;
+height: 80px;
+position: relative;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+border-radius: 10px;
+border: 1px #808080 solid;
+background-color: #ff0000;
+}
+
+.inlayer:before {
+content: " ";
+position: absolute;
+top: 100%;
+left: 50px;
+width: 0;
+height: 0;
+border-left: 15px solid transparent;
+border-top: 15px solid #808080;
+border-right: 15px solid transparent;
+}
+
+.inlayer:after {
+content: " ";
+position: absolute;
+top: 100%;
+left: 51px;
+width: 0;
+height: 0;
+border-left: 14px solid transparent;
+border-top: 14px solid #ff0000;
+border-right: 14px solid transparent;
+}
+
+.bg{
+    width:300px;
+    height:50px;
+    background:#caca8c;
+    background-image:-webkit-gradient(
+        linear,40% 0,0 100%,
+        from(transparent),
+        color-stop(.4,transparent),
+        color-stop(.4,#FFF),
+        to(#FFF)
+    ),
+    -webkit-gradient(
+        linear,40% 0,100% 100%,
+        from(transparent),
+        color-stop(.4,transparent),
+        color-stop(.4,#FFF),
+        to(#FFF)
+    );
+    background-size:10px 5px;
+    background-repeat:repeat-x;
+    background-position:0 100%;
+}
+</style>
+<div class="bg">
+
+</div>
+<!-- html -->
+<div id="talkbubble" class="inlayer">
+空心三角形
+</div>
+
+<script>
+//模拟重载
+function P(){
+    var args = arguments;
+    if (typeof args[0] === 'object' && args[0]) {
+        if (args[0].name) {
+            this.name = args[0].name;
+        }
+        if (args[0].age) {
+            this.age = args[0].age;
+        }
+    }else{
+        if (args[0]) {
+            this.name = args[0];
+        }
+        if (args[1]) {
+            this.age = args[1];
+        }
+    }
+}
+
+P.prototype.toString = function(){
+    return 'name=' + this.name + ',age=' + this.age;
+};
+
+var tao = new P('Tao', 34);
+console.log(tao.toString());
+var nunn = new P({name:'chen', age:30});
+console.log(nunn.toString());
+
+
+//调用子类方法
+function Person(name) {
+    this.name = name;
+}
+Person.prototype.init = function(){
+    this.age = 36;
+};
+function Student(name, className){
+    this.className = className;
+    Person.call(this, name);
+}
+
+var bosn = new Student('Bosn', '思优');
+console.log(bosn);
+
+//模拟链式调用
+function ClassManager() {}
+ClassManager.prototype.addClass = function(str){
+ console.log('Class:' + str + 'added');
+ return this;
+};
+
+var manager = new ClassManager();
+manager.addClass('classA').addClass('classB').addClass('classC');
+
+//模块化
+var moduleA;
+moduleA = function(){
+    var prop = 'A';
+    function func(){}
+    return {
+        func: func,
+        prop: prop
+    };
+};
+
+var moduleB;
+moduleB = new function(){
+    var prop = 'B';
+    function func(){}
+    this.func = func;
+    this.prop = prop;
+};
+console.log(new moduleA().prop);
+console.log(moduleB.prop);
+
+
+</script>
