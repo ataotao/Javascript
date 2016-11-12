@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>前瞻</h2>
+    <p><img src="前瞻1.gif" alt=""></p>
+
+    <script>
+    //(?=\d)并不是要替换的部分，只是一个断言，判断是否需要替换，最终替换的只是 'a'
+    //如果要替换a2，那么直接写\w\d就行了
+    var r1 = 'a2*3'.replace(/\w(?=\d)/g, 'X');
+    console.log(r1);
+    var r2 = 'a2*3'.replace(/\w\d/g, 'X');
+    console.log(r2);
+    var r3 = 'a2*34v8'.replace(/\w(?=\d)/g, 'X');
+    console.log(r3);
+
+    </script>
+    
+
+
+    </script>
+</body>
+
+</html>

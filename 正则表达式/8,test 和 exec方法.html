@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>test 和 exec方法</h2>
+
+<p>正则表达式本身的两个方法</p>
+  <p>1.test</p>
+  <p>RegExp.prototype.test(str)</p>
+   <p>用于测试字符串参数中是否存在匹配正则表达式模式的字符串，如果存在则返回true，否则返回false</p>
+  <p> lastIndex 记录当前匹配结果的、最后一个字符的、下一个字符的位置</p>
+ <p> 注意:test()方法在匹配的时候当匹配到一个结果时，会从lastIndex位置开始匹配下一个结果，直到不存在的时候才置为0。因此，当使用全局g属性标识时，当匹配到最后一个结果时，lastIndex值指向不存在的位置，此时再执行test()会返回false。</p>
+  <p>例子：多次执行test（）方法，会在true、false之间循环</p>
+  <p>（/\w/g）.test('a')每次执行都是正确的，但是通过实例化对象，需要很大的开销</p>
+ <p> test()方法：原意就是测试有没有、能不能匹配上，当使用test原意时，没必要加g</p>
+<p>2.exec</p>
+  <p> RegExp.prototype.exec(str)</p>
+   <p>使用正则表达式模式对字符串执行搜索，并将更新全局RegExp对象的属性一反映匹配结果</p>
+   <p>如果没有匹配的文本则返回 null，否则返回一个结果数组：</p>
+   <p>  - index 声明匹配文本的第一个字符位置</p>
+   <p>  - input 存放被检索的字符串 string</p>
+
+<p>非全局调用</p>
+<p>  调用非全局的RegExp对象的 exec()时，返回数组</p>
+<p>   第一个元素是与正则表达式相匹配的文本</p>
+<p>   第二个元素是与RegExpObject的第一个子表达式相匹配的文本（如果有的话）</p>
+<p>   第三个元素是与RegExp对象的第二个子表达式相匹配的文本（如果有的话），以此类推</p>
+
+    <p><img src="test和exec方法1.gif" alt=""></p>
+    <script>
+
+    // var r1 = /\w/;
+    // var r2 = /\w/gim;
+    // console.log(r1.test('a'));
+    // console.log(r1.test('&'));
+
+    // // console.log(r2.test('ab'), '第一次test ab');
+    // // console.log(r2.test('ab'), '第二次test ab ');
+    // // console.log(r2.test('ab'), '第三次test ab ，会变成false，lastindex在作怪');
+    // // console.log(r2.test('&'));
+
+
+    // while (r2.test('abcde')) {
+    //     console.log(r2.lastIndex);
+    //     //lastIndex 当前匹配结果字符的下一个字符
+    // }
+
+    </script>
+    <p><img src="test和exec方法2.gif" alt=""></p>
+
+    <script>
+
+    var reg3 =/\d(\w)\d/;
+    var reg4 =/\d(\w)\d/g;
+    var ts = '$1a2b3c4d5e';
+
+    var ret = reg3.exec(ts);
+
+    console.log(reg3.lastIndex + '\t' + ret.index + '\t' + ret.toString());
+    console.log(reg3.lastIndex + '\t' + ret.index + '\t' + ret.toString());
+
+    while (ret = reg4.exec(ts)) {
+        console.log(reg4.lastIndex + '\t' + ret.index + '\t' + ret.toString());
+    }
+
+    </script>
+</body>
+
+</html>

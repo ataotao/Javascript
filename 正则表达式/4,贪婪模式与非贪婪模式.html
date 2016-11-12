@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>贪婪模式与非贪婪模式</h2>
+    <p>贪婪模式，按最多的匹配。'12345678'.replace(/\d{3,6}/g,'X'))能匹配最多就行。</p>
+    <script>
+        console.log('12345678'.replace(/\d{3,6}/g,'X'));
+        //X78 按最多的匹配
+    </script>
+    <p>非贪婪模式，尽可能少得匹配。'12345678'.replace(/\d{3,6}?/g,'X')一旦匹配成功就不再继续尝试。 厉害了。</p>
+    <script>
+        console.log('12345678'.replace(/\d{3,6}?/g,'X'));
+        //XX78 按最少的匹配
+        console.log('13570336091'.replace(/(\d{3})(\d{4})(\d{4})?/g,"$1-$2-$3")); //电话号码格式化
+    </script>
+    
+
+    <script>
+        //理解贪婪模式
+        var s ="abbbaabbbaaabbb1234";
+        var re1=/.*bbb/g;//*是贪婪量词
+        console.log(s.replace(re1, 'X'));
+        console.log(re1.test(s));
+        // 这个匹配过程将从整个字符串开始：
+
+        // re1.test("abbbaabbbaaabbb1234");//false  ，则去掉最后一个字符4再继续
+
+        // re1.test("abbbaabbbaaabbb123");//false  ，则去掉最后一个字符3再继续
+
+        // re1.test("abbbaabbbaaabbb12");//false  ，则去掉最后一个字符2再继续
+
+        // re1.test("abbbaabbbaaabbb1");//false  ，则去掉最后一个字符1再继续
+
+        // re1.test("abbbaabbbaaabbb");//true ，结束
+
+        // 在贪婪量词的后面加多一个?就变成了惰性量词，它的匹配过程相反，是从前面第一个开始，不匹配则加一个，如此循环直到字符串结束，以上面的为例子。
+
+        // vars ="abbbaabbbaaabbb1234";
+
+        // varre1=/.*?bbb/g;//*?是惰性量词
+
+        // re1.test(s);
+
+        // 它的匹配过程如下：
+
+        // re1.test("a");//false,  再加一个
+
+        // re1.test("ab");//false,  再加一个
+
+        // re1.test("abb");//false,  再加一个
+
+        // re1.test("abbb");//true,  匹配了，保存这个结果，再从下一个开始
+
+        // re1.test("a");//false,  再加一个
+
+        // re1.test("aa");//false,  再加一个
+
+        // re1.test("aab");//false,  再加一个
+
+        // re1.test("aabb");//false,  再加一个
+
+        // re1.test("aabbb");//true,  匹配了，保存这个结果，再从下一个开始
+
+
+    </script>
+
+    </script>
+</body>
+
+</html>

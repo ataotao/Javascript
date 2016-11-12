@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>分组</h2>
+    <p>() 分组</p>
+    <p>| 或</p>
+    <p>$3 $2 $1反向引用</p>
+    <p>?: 忽略分组  注意点：年份忽略分组之后，月份分组为$1,日为$2</p>
+    <script>
+        
+    var r1 = 'a1b2c3d4'.replace(/([a-z]\d){3}/g, 'X');
+    console.log(r1);
+
+    var r2 = 'ByronCasper'.replace(/Byron|Casper/g, 'X');
+    console.log(r2);
+
+    var r3 = 'Byronsper ByrCasper'.replace(/Byr(on|Ca)sper/g, 'X');
+    console.log(r3);
+
+    // 反向引用
+    var r4 = '2012-02-23'.replace(/(\d{4})-(\d{2})-(\d{2})/g,'$2/$3/$1');
+    console.log(r4);
+    //忽略分组之后（针对年份忽略分组）:
+    //注意点：年份忽略分组之后，月份分组为$1,日为$2
+    var r5 = '2012-02-23'.replace(/(?:\d{4})-(\d{2})-(\d{2})/g,'$2/$3/$1');
+    console.log(r5);
+
+    </script>
+    
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+	    var txt = 'ififif if ifif ifif if If if ififif ifi';	
+	    //书写方式一
+		var reg = /\bif\b/gi;
+		//txt.replace(reg,'IF');
+		console.log(txt.replace(reg,'IF'));
+		//书写方式二
+		var reg1 = new RegExp('\\bif\\b', 'gi');
+		//txt.replace(reg1,'IF');
+		console.log(txt.replace(reg1,'IF'));
+
+		//  /g 全文搜索匹配
+		//  /i 忽略大小写
+		//  /m 多行搜索
+	</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>预定义类</h2>
+    <img src="预定义类.gif">
+    <script>
+    //原义文本 就是需要查询的字符 如 abc 123
+    //元字符 就是表达式的特殊含义字符
+    //如 * + ? $ ^ . | \ () {} []
+    // \t:水平制表符；
+    // \v:垂直制表符；
+    // \n:换行符；
+    // \r:回车符；
+    // \0:空字符；
+    // \f:换页符；
+    // \cX:与X对应的控制字符
+
+    /* 字符类 */
+
+    //元字符多字母匹配
+    console.log('a1b2c3d4'.replace(/[abc]/g, '字符'));
+    //字符1字符2字符3d4
+
+    //元字符取反
+    //使用元字符 ^ 创建 反向类/负向类，反向类的意思是：不属于某类的内容
+    //表达式 [^abc] 表示 不是字符a或b或c 的内容
+    console.log('a1b2c3d4'.replace(/[^abc]/g, '字符'));
+    //a字符b字符c字符字符字符
+
+    /* 范围类 */
+    //使用字符类匹配数字 [0123456789] 简写[0-9]
+    //可以使用 [a-z] 来连接两个字符表示 从a到z的任意字符,闭区间，包含a和z本身
+
+    console.log('a1b2c3zx4z9'.replace(/[a-z]/g, 'Q'));
+    //Q1Q2Q3QQ4Q9
+    console.log('a1b2c3zx4z9'.replace(/[a-zA-z0-9]/g, 'Q'));
+    //QQQQQQQQQQQ
+
+    // [0-9]表示0到9的值
+    // [a-z]表示小写字母a到z
+    // [a-zA-Z]表示小写和大写字母a到z
+    // 注意：a-z中间的-并不是代表字符哦 而是范围 
+
+    /* 预定义类 */
+
+    // \. 等价于[^\r\n]   除了回车符和换行符之外的所有字符
+    // \d 等价于 [0-9] 数字字符
+    // \D 等价于 [^0-9] 非数字字符
+    // \s 等价于 [\t\n\x0B\f\r] 空白符 s:space
+    // \S 等价于 [^\t\n\x0B\f\r] 非空白符
+    // \w 等价于 [a-zA-Z_0-9] 单词字符（字母、数字下划线） w:word
+    // \W 等价于 [^a-zA-Z_0-9] 非单词字符
+    // 提示：大写的表示取反
+    // \b 单词边界
+    // \B非单词边界
+    // 例子：
+    // 1. '@123@abc@'.replace(/^@./g,'Q');
+    // "Q23@abc@"
+    // 2.'@123@abc@'.replace(/.@$/g,'Q');
+    // "@123@abQ"
+    // 3.'@123@abc@'.replace(/.@/g,'Q');
+    // "@12QabQ"
+
+    /*边界匹配字符*/
+    // ^ 以XXX开始；^如果在中括号里面就是取反 [^0-9]  非数字字符
+    // $ 以XXX结束；
+    console.log('@123@abc@'.replace(/@./g, 'Q')); //Q23Qbc@
+    console.log('@123@abc@'.replace(/^@./g, 'Q')); //Q23@abc@
+    console.log('@123@abc@'.replace(/.@$/g, 'Q')); //@123@abQ
+    var mulStr = "@123\n@456\n@789";
+    //m是多行匹配
+    console.log(mulStr.replace(/^@\d/gm, 'XXXX'));  //@123XXXX@456XXXX@789
+    // \b 单词边界；
+    // \B非单词边界
+    console.log('This is a boy'.replace(/is/g, 'As'));      //ThAs As a boy
+    console.log('This is a boy'.replace(/\bis\b/g, 'As'));  //This As a boy
+    console.log('This is a boy'.replace(/\Bis\b/g, 'As'));  //前面不是边界后面是边界 //ThAs is a boy
+    </script>
+</body>
+
+</html>
