@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>通过抛出错误递归+延迟获取未知对象的方法</title>
+</head>
+
+<body>
+    <script>
+
+    //模拟数据延迟
+    var a;
+    setTimeout(function() {
+        a = {
+            name: 1,
+            age: 2
+        };
+    }, 5000);
+
+    //递归自执行
+    (function() {
+        try {
+          // a不是对象时会抛出错误
+          a.name;} catch (e) {
+            //延迟再试一次~
+            setTimeout(arguments.callee, 50);
+            return;
+        }
+        // 没有错误就表示数据获取正常
+        console.log(a);
+    })();
+    </script>
+</body>
+
+</html>
