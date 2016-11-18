@@ -18,11 +18,12 @@
         };
     }, 5000);
 
-    //递归自执行
+    //递归自动执行
     (function() {
         try {
           // a不是对象时会抛出错误
-          a.name;} catch (e) {
+          a.name;
+        } catch (e) {
             //延迟再试一次~
             setTimeout(arguments.callee, 50);
             return;
