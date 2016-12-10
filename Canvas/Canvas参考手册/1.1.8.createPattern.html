@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/1.1.8.createPattern.js"></script>
+</head>
+
+<body>
+
+    <h1>颜色、样式和阴影</h1>
+    <h2>属性</h2>
+    <p>定义和用法</p>
+    <p>createPattern() 方法在指定的方向内重复指定的元素。</p>
+    <p>元素可以是图片、视频，或者其他 < canvas > 元素。</p>
+    <p>被重复的元素可用于绘制/填充矩形、圆形或线条等等。</p>
+    <p>JavaScript 语法：</p>
+    <p>context.createPattern(image,"repeat|repeat-x|repeat-y|no-repeat");</p>
+    <p>参数值</p>
+    <p>参数  描述</p>
+    <p>image   规定要使用的图片、画布或视频元素。</p>
+    <p>repeat  默认。该模式在水平和垂直方向重复。</p>
+    <p>repeat-x    该模式只在水平方向重复。</p>
+    <p>repeat-y    该模式只在垂直方向重复。</p>
+    <p>no-repeat   该模式只显示一次（不重复）。</p>
+
+    <img src="img/lamp.gif" id="lamp">
+    <canvas id="canvas" width="200" height="200"></canvas>
+
+    <h3>
+        <button type="button" onclick="history.go(-1)">返回</button>
+    </h3>
+</body>
+
+</html>
