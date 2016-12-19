@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/1.10.addColorStop.js"></script>
+</head>
+
+<body>
+    <h1>颜色、样式和阴影</h1>
+    <h2>属性</h2>
+    <p>定义和用法</p>
+    <p>addColorStop() 方法规定 gradient 对象中的颜色和位置。</p>
+    <p>addColorStop() 方法与 createLinearGradient() 或 createRadialGradient() 一起使用。</p>
+    <p>注释：您可以多次调用 addColorStop() 方法来改变渐变。如果您不对 gradient 对象使用该方法，那么渐变将不可见。为了获得可见的渐变，您需要创建至少一个色标。</p>
+    <p>JavaScript 语法：</p>
+    <p>gradient.addColorStop(stop,color);</p>
+    <p>参数值</p>
+    <p>参数  描述</p>
+    <p>stop    介于 0.0 与 1.0 之间的值，表示渐变中开始与结束之间的位置。</p>
+    <p>color   在结束位置显示的 CSS 颜色值</p>
+    <canvas id="canvas" width="200" height="200"></canvas>
+    <h3>
+        <button type="button" onclick="history.go(-1)">返回</button>
+    </h3>
+</body>
+
+</html>
