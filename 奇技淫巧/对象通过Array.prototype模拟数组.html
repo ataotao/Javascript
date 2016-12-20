@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="first" />
+    <input type="text" id="second" />
+    <script type="text/javascript">
+    var elems = {
+        length: 0,
+        add: function(elem) {
+            Array.prototype.push.call(this, elem);
+        },
+        gather: function(id) {
+            this.add(document.getElementById(id));
+        }
+    };
+
+    elems.gather("first");
+    elems.gather("second");
+    console.log(elems);
+    console.log(elems[0]);
+    console.log(elems[1]);
+    console.log(elems.length);
+    </script>
+</body>
+
+</html>
