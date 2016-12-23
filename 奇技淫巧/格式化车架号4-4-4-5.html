@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="inp" onkeyup="format()" onpaste="format(event)" maxlength="20">
+    <script>
+    function format(e) {
+        var inp = document.getElementById('inp');
+        // var text = inp.value.replace(/-/g, '');
+        var text = e ? e.clipboardData.getData('Text') : inp.value.replace(/-/g, '');
+
+        if (text) {
+            var list = [],
+                i = 0,
+                j = 4;
+            while (i < text.length) {
+                if (i < j * 3) {
+                    list.push(text.substr(i, j));
+                    i += j;
+                } else {
+                    list.push(text.substr(i));
+                    break;
+                }
+            }
+            inp.value = list.join('-');
+        }
+        // return text;
+    }
+
+
+    // function format(text) {
+    //     if (text) {
+    //         var list = [];
+
+    //         for (var i = 0, j = 4; i < text.length; i += j) {
+    //             if (i < j * 3) {
+    //                 list.push(text.substr(i, j));
+    //             } else {
+    //                 list.push(text.substr(i));
+    //                 break;
+    //             }
+    //         }
+    //         text = list.join('-');
+    //     }
+
+    //     inp.value = text;
+
+    //     return text;
+    // }
+    // format('LSGPC64E1EF074616');
+    // LSGPC64E1EF074616
+
+    </script>
+</body>
+
+</html>
