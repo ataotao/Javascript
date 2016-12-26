@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="inp" onkeyup="format()" onpaste="format(event)" maxlength="20">
+    <script>
+    // var age = 18;
+    // var test = {
+    //     get age() {
+    //         return age;
+    //     },
+    //     set age(value) {
+    //         if (value > 100) age = new Date().getFullYear() - value;
+    //         else age = value;
+    //     }
+    // };
+
+    // test.age = 1994;
+    // console.log(test.age);
+
+
+    function Person() {
+        var age = new Date().getFullYear() - 18;
+        Object.defineProperty(this, "age", {
+            get: function() {
+                console.log("内部存储数据为:" + age);
+                return new Date().getFullYear() - age;
+            },
+            set: function(value) {
+                age = value;
+            }
+        });
+    }
+
+    var p = new Person();
+    p.age = 1994;
+    console.log("外部获取到的数据为:" + p.age);
+    </script>
+</body>
+
+</html>
