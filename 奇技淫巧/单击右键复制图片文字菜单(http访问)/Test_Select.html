@@ -1,0 +1,63 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div id="target1">
+&nbsp; &nbsp; &nbsp; &nbsp; 波特兰开拓者队（14胜20负）在主场反弹。虽然考辛斯得到28分、8个篮板和6次助攻，但麦科勒姆得到20分和7次助攻，莱纳德得到16分和5个篮板，他们带领球队6人得分上双，开拓者队在上半场取得领先后牢牢保持优势，他们在主场以102-89复仇击败萨克拉门托国王队（14胜18负）。开拓者队结束6连败，国王队的4连胜被终结。<br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; <img id="aimg_XQS0z" src="http://pic22.8bo.com/files/img.o/2016/1229/hir64iw0g6nn.jpg" /></div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; 考辛斯扣篮</div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; <img id="aimg_DAA90" src="http://pic22.8bo.com/files/img.o/2016/1229/kirg0g6no4l4.jpg" /></div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; 考辛斯强突</div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; <img id="aimg_UJ8Yq" src="http://pic22.8bo.com/files/img.o/2016/1229/or69740gino5.jpg" /></div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; 考辛斯上篮</div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; <img id="aimg_G5gJv" src="http://pic22.8bo.com/files/img.o/2016/1229/kir80g6no5yi.jpg" /></div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; 麦科勒姆突破</div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; <img id="aimg_h5E8y" src="http://pic22.8bo.com/files/img.o/2016/1229/sr6np4f3s0gi.jpg" /></div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; 麦科勒姆投篮</div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; <img id="aimg_yszGt" src="http://pic22.8bo.com/files/img.o/2016/1229/lir6np50sc0g.jpg" /></div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; 劳森救球</div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; <img id="aimg_D5Ktt" src="http://pic22.8bo.com/files/img.o/2016/1229/lir6np5mgw0g.jpg" /></div><br />
+<div align="center">&nbsp; &nbsp; &nbsp; &nbsp; 莱纳德投篮</div><br />
+</div>
+
+
+
+<script>
+function selectById(id) {
+	return selectByElement(document.getElementById(id));
+}
+function selectByElement(element) {
+    if (document.body.createTextRange) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    } else if (window.getSelection) {
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges(); // or selection.empty();
+        selection.addRange(range);
+        /*if(selection.setBaseAndExtent){
+            selection.setBaseAndExtent(text, 0, text, 1);
+        }*/
+    } else {
+        console.log("Not Support");
+    }
+}
+
+// e.g.
+function doSelect() {
+	console.log('doSelect');
+	selectById("target1");
+}
+function doCopy() {
+	console.log('doCopy');
+	document.execCommand("Copy");
+}
+</script>
+<button onclick="doSelect()">选择内容</button>
+<button onclick="doCopy()">复制选区</button>
+</body>
+</html>
