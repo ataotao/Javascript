@@ -8,15 +8,77 @@
 
 <body>
     <script type="text/javascript">
-    function smallest(array) {
-        return Math.min.apply(Math, array);
-    }
-    function largest(array) {
-        return Math.max.apply(Math, array);
-    }
+        // Math.max(0, 1, 2, 3);
+        // Math.min(0, 1, 2, 3);
+        //求数组中的最大和最小值
+        console.log('----------求数组中的最大和最小值----------');
 
-    console.log(smallest([0,1,2,3]));
-    console.log(largest([0,1,2,3]));
+        function smallest(array) {
+            return Math.min.apply(Math, array);
+        }
+
+        function largest(array) {
+            return Math.max.apply(Math, array);
+        }
+
+        console.log(smallest([0, 1, 2, 3]));
+        console.log(largest([0, 1, 2, 3]));
+
+        var arr = [34, 5, 3, 6, 54, 6, -67, 5, 7, 6, -8, 687];
+        console.log(Math.max.apply(Math, arr));
+        console.log(Math.max.call(Math, 34, 5, 3, 6, 54, 6, -67, 5, 7, 6, -8, 687));
+        console.log(Math.min.apply(Math, arr));
+        console.log(Math.min.call(Math, 34, 5, 3, 6, 54, 6, -67, 5, 7, 6, -8, 687));
+
+        //将伪数组转化为数组
+        console.log('----------将伪数组转化为数组----------');
+        // js中的伪数组(例如通过document.getElementsByTagName获取的元素)具有length属性，并且可以通过0、1、2…下标来访问其中的元素，但是没有Array中的push、pop等方法。我们可以利用call、apply来将其转化为真正的数组这样便可以方便地使用数组方法了。
+        var arrayLike = {
+            0: 'qianlong',
+            1: 'ziqi',
+            2: 'qianduan',
+            length: 3
+        };
+        console.log(arrayLike);
+        var arr1 = Array.prototype.slice.call(arrayLike);
+        console.log(arr1);
+
+        // 数组追加
+        console.log('----------数组追加合并----------');
+        // 在js中要往数组中添加元素，可以直接用push方法，
+        var arr2 = [1, 2, 3];
+        var arr3 = [4, 5, 6];
+        [].push.apply(arr2, arr3);
+        console.log(arr2);
+        console.log(arr3);
+
+        //判断变量类型
+        console.log('----------判断变量类型----------');
+        // 对于对象型的数据类型，我们可以借助call来得知他的具体类型，例如数组
+        function isArray(obj) {
+            return Object.prototype.toString.call(obj) == '[object Array]';
+        }
+        console.log(isArray([])); // true
+        console.log(isArray('Atao')); // false
+        console.log([0, 1] instanceof Array); //这也可以
+
+        // 利用call和apply做继承
+        console.log('----------利用call和apply做继承----------');
+        var Person = function (name, age) {
+            this.name = name;
+            this.age = age;
+        };
+        var Girl = function (name) {
+            Person.call(this, name);
+        };
+        var Boy = function (name, age) {
+            Person.apply(this, arguments);
+        }
+        var g1 = new Girl('tao');
+        var b1 = new Boy('Atao', 100);
+
+        console.log(g1);
+        console.log(b1);
     </script>
 </body>
 

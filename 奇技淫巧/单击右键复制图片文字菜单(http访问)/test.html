@@ -93,10 +93,8 @@
                         //清除图片选择
                         window.getSelection().empty();
                     }else{
-                        var copyTxt = '<div id="copyTxt"></div>';
-                        $('body').append(copyTxt);
+                        $('body').append('<div id="copyTxt"></div>');
                         $('#copyTxt').html(epMenu.copyTxt).show();
-                        console.log();
                         // 选中文字
                         doSelect($('#copyTxt'));
                         //复制文字
