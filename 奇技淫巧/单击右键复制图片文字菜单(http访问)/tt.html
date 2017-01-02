@@ -9,49 +9,22 @@
     <meta name="Description" content="">
     <script src="http://seller.sosoqipei.com/common/plugin/jQuery/jquery-1.11.3.min.js"></script>
     <script language="JavaScript">
-        function getImageData(URL) {
-            var img = new Image();
-            // img.setAttribute('crossOrigin', 'anonymous');
-            img.src = URL;
-            img.onload = function () {
-                var canvas = document.createElement("canvas");
-                canvas.width = this.width;
-                canvas.height = this.height;
-
-                var ctx = canvas.getContext("2d");
-                ctx.drawImage(this, 0, 0);
-
-                var dataURL = canvas.toDataURL("image/png");
-                console.log(dataURL);
-                // console.log(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
-            };
-
-        }
-
-        function saveAs(Url, filename) {
-            var blob = new Blob([''], {
-                type: 'application/octet-stream'
-            });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElementNS('xhtml', 'a');
-            a.href = Url;
-            a.download = filename;
-            var e = document.createEvent('MouseEvents');
-            e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-            a.dispatchEvent(e);
-            URL.revokeObjectURL(url);
-        }
-
-        function saveText(t, filename) {
-            var mime = 'text/plain';
-            saveAs(('data:' + mime + ';charset=utf-8;base64,' + Base64.encode(t)), filename)
-        }
+        // function SaveAs5(imgURL)
+        // {
+        // var oPop = window.open(imgURL,"","width=100, height=100, top=0, left=0");
+        // for(; oPop.document.readyState != "complete"; )
+        // { if (oPop.document.readyState == "complete")break; }
+        // oPop.document.execCommand("SaveAs");
+        // //  oPop.close();
+        // }
     </script>
 </head>
 
 <body>
-    <input type="button" value="download image" onclick="getImageData('pic2.jpg');">
-    <input type="button" value="download image1" onclick="saveAs('pic1.jpg', 'tupian');">
+    <a href="http://seller.sosoqipei.com/resource/img/pic_20161026.png" download><img src="pic1.jpg"></a>
+    <!--<img src="pic1.jpg" id="DemoImg" border="0" onclick="SaveAs5(this.src)">
+    <img src="pic1.jpg" id="DemoImg" border="0"> <a href="#" onclick="SaveAs5(document.getElementById('DemoImg').src)"> 点击这里下载图片 </a>-->
+    <a href="http://seller.sosoqipei.com/resource/img/pic_20161026.png" download>file.js</a>
 </body>
 
 </html>
