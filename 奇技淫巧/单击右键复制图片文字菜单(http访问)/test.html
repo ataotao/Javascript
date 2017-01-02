@@ -7,12 +7,6 @@
     <style>
         /*右键菜单*/
         
-        .img_sina_share {
-            display: none;
-            position: absolute;
-            cursor: pointer;
-        }
-        
         .epMenu {
             width: 120px;
             background: #f0f0f0;
@@ -30,7 +24,6 @@
             padding-left: 15px;
             border-top: 1px solid #e0e0e0;
             border-bottom: 1px solid #fff;
-            font-family: 微软雅黑;
             font-size: 14px;
             cursor: default;
         }
@@ -51,8 +44,10 @@
     <script src="http://seller.sosoqipei.com/common/plugin/jQuery/jquery-1.11.3.min.js"></script>
     <script>
         $(function () {
+
             //创建右键菜单
             var epMenu = {
+                //创建
                 create: function (config, option) {
                     var menuNode = document.getElementById('epMenu');
                     if (!menuNode) {
@@ -60,14 +55,27 @@
                         menuNode = document.createElement("div");
                         menuNode.setAttribute('class', 'epMenu');
                         menuNode.setAttribute('id', 'epMenu');
-                    } else $(menuNode).html(''); //清空里面的内容
+                    } else {
+                        //清空里面的内容
+                        $(menuNode).html('')
+                    }; 
 
                     for (var x in option) {
                         var tempNode = document.createElement("a");
                         menuNode.appendChild(tempNode);
-                        $(tempNode).text(option[x]['name']).on('click', option[x].action);
+                        //复制和查看原图绑定不同的事件
+                        if (option[x].href) {
+                            $(tempNode).text(option[x]['name']);
+                            $(tempNode).attr({
+                                'href': option[x].href,
+                                'target': '_blank'
+                            });
+                        } else {
+                            $(tempNode).text(option[x]['name']).on('click', option[x].action);
+                        }
                     }
 
+                    //赋值右键菜单样式
                     $(menuNode).css({
                         left: config.left + 'px',
                         top: config.top + 'px',
@@ -77,33 +85,68 @@
                     $("body").append(menuNode);
 
                     //赋值当前选中对象
-                    this.el = config.el;
+                    epMenu.el = config.el;
 
                 },
+                //销毁
                 destory: function () {
                     $(".epMenu").remove();
                 },
-                copy: function () {
+                //复制菜单
+                menuCopy: function () {
                     if (epMenu.el.target.nodeName === 'IMG') {
-                        //复制图片
+                        //--- 复制图片
                         // 选中图片
-                        doSelect($(epMenu.el.target).parent());
+                        epMenu.doSelect($(epMenu.el.target).parent());
                         //复制图片
-                        doCopy();
+                        epMenu.doCopy();
                         //清除图片选择
                         window.getSelection().empty();
-                    }else{
+                    } else {
+                        //--- 复制文字
                         $('body').append('<div id="copyTxt"></div>');
                         $('#copyTxt').html(epMenu.copyTxt).show();
                         // 选中文字
-                        doSelect($('#copyTxt'));
+                        epMenu.doSelect($('#copyTxt'));
                         //复制文字
-                        doCopy();
+                        epMenu.doCopy();
                         //隐藏文字
                         $('#copyTxt').remove();
                     }
                     //左键销毁菜单
                     epMenu.destory();
+                },
+                //查看原图菜单
+                menuView: function () {
+                    // epMenu.destory();
+                },
+                //选择过程
+                selectById: function (el) {
+                    return epMenu.selectByElement(el[0]);
+                },
+                //复制过程
+                selectByElement: function (element) {
+                    if (document.body.createTextRange) {
+                        var range = document.body.createTextRange();
+                        range.moveToElementText(element);
+                        range.select();
+                    } else if (window.getSelection) {
+                        var selection = window.getSelection();
+                        var range = document.createRange();
+                        range.selectNodeContents(element);
+                        selection.removeAllRanges();
+                        selection.addRange(range);
+                    } else {
+                        console.log("Not Support");
+                    }
+                },
+                // 执行选择
+                doSelect: function (el) {
+                    epMenu.selectById(el);
+                },
+                // 执行复制
+                doCopy: function () {
+                    document.execCommand("Copy");
                 }
             };
 
@@ -116,64 +159,36 @@
             document.onmousedown = function (e) {
                 if (e.button == 2) {
                     e.preventDefault();
-
                     //获取选中文字
                     epMenu.copyTxt = document.getSelection().toString();
-
                     //建立右键菜单
                     var config = {
                             el: e,
                             left: e.clientX,
                             top: e.clientY
                         },
-                        option = [{
+                        option = e.target.nodeName == 'IMG' ? [{
                             name: '复制',
-                            'action': epMenu.copy
+                            'action': epMenu.menuCopy
+                        }, {
+                            name: '查看原图',
+                            'action': epMenu.menuView,
+                            'href': e.target.src
+                        }] : [{
+                            name: '复制',
+                            'action': epMenu.menuCopy
                         }];
                     epMenu.create(config, option);
-
                 } else if (e.button == 0) {
                     //左键销毁菜单
                     var menuNode = document.getElementById('epMenu');
-                    if (menuNode && e.target.innerText != '复制') {
+                    if (menuNode && e.target.innerText != '复制' && e.target.innerText != '查看原图') {
                         epMenu.destory();
                     }
                 }
             }
 
-
         });
-
-        function selectById(el) {
-            return selectByElement(el[0]);
-        }
-
-        function selectByElement(element) {
-            if (document.body.createTextRange) {
-                var range = document.body.createTextRange();
-                range.moveToElementText(element);
-                range.select();
-            } else if (window.getSelection) {
-                var selection = window.getSelection();
-                var range = document.createRange();
-                range.selectNodeContents(element);
-                selection.removeAllRanges();
-                selection.addRange(range);
-            } else {
-                console.log("Not Support");
-            }
-        }
-
-        // e.g.
-        function doSelect(el) {
-            console.log('doSelect');
-            selectById(el);
-        }
-
-        function doCopy() {
-            console.log('doCopy');
-            document.execCommand("Copy");
-        }
     </script>
 </body>
 
