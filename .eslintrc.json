@@ -4,6 +4,7 @@
         "commonjs": true,
         "node": true
     },
+    //启用推荐的默认规则
     "extends": "eslint:recommended",
     "parserOptions": {
         "ecmaVersion": 6,
@@ -11,16 +12,18 @@
             "experimentalObjectRestSpread": true
         }
     },
-    "globals":{
-        "$":true
+    "globals": {
+        "$": true, //jQuery
+        "Page": true //微信小程序
     },
     "rules": {
         //关闭no-console规则
         "no-console": "off",
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
+        //换行方式
+        // "linebreak-style": [
+        //     "error",
+        //     "windows"
+        // ],
         //引号方式
         "quotes": [
             1,
@@ -31,15 +34,11 @@
             1,
             "always"
         ],
-        //缩进风格
-        "indent": [
-            1,
-            4
-        ],
+        //缩进风格 
+        // "indent": ["warn", 4],
         //不能有声明后未被使用的变量或参数
         "no-unused-vars": [
-            "error",
-            {
+            "error", {
                 "vars": "all",
                 "args": "none"
             }
