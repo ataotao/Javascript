@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>Document</title>
+</head>
+
+<body>
+    <table border="1" width="100%">
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        /*
+         * 不分解方式
+         */
+        // var table = document.getElementsByTagName("tbody")[0];
+        // for (var i = 0; i < 200000; i++) {
+        //     var tr = document.createElement("tr");
+        //     for (var t = 0; t < 10; t++) {
+        //         var td = document.createElement("td");
+        //         td.appendChild(
+        //             document.createTextNode(i + "，" + t)
+        //         );
+        //         tr.appendChild(td);
+        //     }
+        //     table.appendChild(tr);
+        // }
+
+        /*
+         * 分解方式
+         */
+
+        console.time('testForEach');
+        var rowCount = 200000;
+        var divideInto = 200000;
+        var chunkSize = rowCount / divideInto;
+        var iteration = 0;
+        var table = document.getElementsByTagName("tbody")[0];
+
+        setTimeout(function generateRows() {
+            var base = chunkSize * iteration;
+            for (var i = 0; i < chunkSize; i++) {
+                var tr = document.createElement("tr");
+                for (var t = 0; t < 10; t++) {
+                    var td = document.createElement("td");
+                    td.appendChild(
+                        document.createTextNode((i + base) + "，" + t + "，" + iteration)
+                    );
+                    tr.appendChild(td);
+                }
+                table.appendChild(tr);
+            }
+            iteration++;
+            if (iteration < divideInto) {
+                setTimeout(generateRows, 10);
+            } else {
+                console.timeEnd('testForEach');
+            }
+        }, 0);
+    </script>
+</body>
+
+</html>

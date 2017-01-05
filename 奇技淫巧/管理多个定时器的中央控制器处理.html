@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--<button type="button" onclick="timers.stop()">停止</button>-->
+    <div id="box" style="background:red; position: absolute; color:#FFF; padding:10px;">
+        hello!
+    </div>
+    <script>
+        //声明一个定时器控制对象
+        var timers = {
+            //记录状态
+            timerID: 0,
+            timers: [],
+
+            //创建添加处理的函数
+            add: function (fn) {
+                this.timers.push(fn);
+            },
+
+            //创建开始定时器的函数
+            start: function () {
+                if (this.timerID) return;
+                (function runNext() {
+                    if (timers.timers.length > 0) {
+                        for (var i = 0; i < timers.timers.length; i++) {
+                            if (timers.timers[i]() === false) {
+                                timers.timers.splice(i, 1);
+                                i--;
+                            }
+                        }
+                        timers.timerID = setTimeout(runNext, 0);
+                    }
+                })();
+            },
+
+            //创建停止定时器的函数
+            // stop: function () {
+            //     clearTimeout(this.timerID);
+            //     this.timerID = 0;
+            //     console.log(this);
+            // }
+
+        };
+
+        window.onload = function () {
+            //执行动画
+
+            var box = document.getElementById("box"),
+                x = 0,
+                y = 20,
+                o = 0,
+                dly = 300;
+
+            //添加了多个定时器
+            timers.add(function () {
+                box.style.left = x + "px";
+                if (++x > dly) {
+                    console.log(timers);
+                    return false;
+                }
+            })
+            timers.add(function () {
+                box.style.top = y + "px";
+                y += 1;
+                if (y > dly) {
+                    console.log(timers);
+                    return false;
+                }
+            });
+
+            timers.add(function () {
+                box.style.opacity = o;
+                o += dly / 100000;
+                if (o >= 1) {
+                    console.log(timers);
+                    return false;
+                }
+            });
+
+            //执行
+            timers.start();
+        }
+    </script>
+</body>
+
+</html>
