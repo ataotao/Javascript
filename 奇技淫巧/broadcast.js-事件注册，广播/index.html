@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="broadcast.js">
+    </script>
+    <script>
+        function test() {
+            //获取事件
+            setTimeout(function () {
+                broadcast.fire("testEvent", [1, 2, 3]);
+            }, 1000);
+        }
+
+        test();
+    </script>
+    <script>
+        var tt = {
+            ff: function () {
+                //注册事件
+                broadcast.on("testEvent", function (data, event) {
+                    console.log(event); // test
+                    console.log(data); // [1,2,3]
+                });
+            }
+        }
+        tt.ff();
+    </script>
+</body>
+
+</html>
