@@ -7,6 +7,24 @@
 </head>
 
 <body>
+    <div id="out">
+        
+    </div>
+    <div id="out1">
+        
+    </div>
+    <div id="out2">
+        
+    </div>
+    <div id="out3">
+        
+    </div>
+    <div id="out4">
+        
+    </div>
+    <div id="out5">
+        
+    </div>
     <script>
         var arr = [{
             "serial": "德系",
@@ -728,18 +746,26 @@
         };
 
         function sortBySerial(a, b) {
-            if (sorter[a.serial] > sorter[b.serial]) {
-                return 1;
-            }
-            if (a.value < b.value) {
-                return -1;
-            }
-            // a 必须等于 b
-            return 0;
+            return sorter[a.serial] - sorter[b.serial]
+            // if (sorter[a.serial] > sorter[b.serial]) {
+            //     return 1;
+            // }
+            // if (a.value < b.value) {
+            //     return -1;
+            // }
+            // // a 必须等于 b
+            // return 0;
         }
 
         console.log(arr.sort(sortBySerial));
+        document.getElementById("out").innerHTML = arr.sort(sortBySerial)[0].serial;
+        document.getElementById("out1").innerHTML = arr.sort(sortBySerial)[1].serial;
+        document.getElementById("out2").innerHTML = arr.sort(sortBySerial)[2].serial;
+        document.getElementById("out3").innerHTML = arr.sort(sortBySerial)[3].serial;
+        document.getElementById("out4").innerHTML = arr.sort(sortBySerial)[4].serial;
+        document.getElementById("out5").innerHTML = arr.sort(sortBySerial)[5].serial;
     </script>
+
 </body>
 
 </html>
