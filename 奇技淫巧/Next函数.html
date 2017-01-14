@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function set(x) {
+            var i = 0;
+            return function () {
+                return x[i++];
+            }
+        }
+
+        var next = set( ['a', 'b', function () { return 1; }, 'd', 'e'] );
+
+        console.log(next());
+        console.log(next());
+        console.log(next());
+        console.log(next());
+        console.log(next());
+        console.log(next());
+
+    </script>
+</body>
+
+</html>

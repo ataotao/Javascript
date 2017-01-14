@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //错误的执行方式
+        function A() {
+            var arr = [],
+                i;
+            for (i = 0; i < 3; i++) {
+                arr[i] = function () {
+                    return i;
+                }
+            }
+            return arr;
+        }
+
+        var AAA = A();
+        console.log(AAA[0]());
+        console.log(AAA[1]());
+        console.log(AAA[2]());
+
+        //正确的执行方式
+        function F() {
+            var arr = [],
+                i;
+            for (i = 0; i < 3; i++) {
+                arr[i] = (function (x) {
+                    return function () {
+                        return x;
+                    }
+                }(i))
+
+            }
+            return arr;
+        }
+
+        var arr = F();
+
+        console.log(arr[0]());
+        console.log(arr[1]());
+        console.log(arr[2]());
+
+        //另一种正确执行方式
+        function F1() {
+            function funcder(x) {
+                return function () {
+                    return x;
+                }
+            }
+            var arr = [],
+                i;
+            for (i = 0; i < 3; i++) {
+                arr[i] = funcder(i)
+            }
+            return arr;
+        }
+
+        var arr1 = F1();
+
+        console.log(arr1[0]());
+        console.log(arr1[1]());
+        console.log(arr1[2]());
+    </script>
+</body>
+
+</html>
