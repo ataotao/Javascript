@@ -1,0 +1,23 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>include-demo</title>
+</head>
+
+<body>
+
+<script>
+	var d = [0,0,0,0,0,0,0];
+	for (var i = 1979; i < 2079; i++) {
+		d[new Date(i, 6, 16).getDay()]++;
+	}
+	console.log(d);
+
+	var dDay = new Date(2017, 6, 16).getDay();
+	console.log('2017生日是星期' + dDay);
+</script>
+
+</body>
+</html>
