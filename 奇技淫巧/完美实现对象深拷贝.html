@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>include-demo</title>
+</head>
+
+<body>
+  <script>
+    var oldObj = {
+      a: 1,
+      b: undefined,
+      bb: null,
+      bbb: false,
+      bbbb: true,
+      c: {
+        cc: 1,
+        dd: 2,
+        ee: {
+          eee: 1,
+          ddd: 2,
+          fff: null,
+          ggg: undefined,
+          hhh: true,
+          iii: false,
+          hh: {
+            eee: 1,
+            ddd: 2,
+            fff: null,
+            ggg: undefined,
+            hhh: true,
+            iii: false,
+            fn: function () {
+              return 1;
+            }
+          }
+        }
+      },
+      d: [1, 2, 3, 4, 5]
+    }
+
+
+    /**
+     * 但是这种方法也有不少坏处，譬如它会抛弃对象的constructor。也就是深拷贝之后，不管这个对象原来的构造函数是什么，在深拷贝之后都会变成Object。
+     * 这种方法能正确处理的对象只有 Number, String, Boolean, Array, 扁平对象，即那些能够被 json 直接表示的数据结构。RegExp对象是无法通过这种方式深拷贝。
+     */
+    // function deepClone(initalObj) {    
+    //   console.log(JSON.stringify(initalObj))
+    //   var obj = {};    
+    //         
+    //     obj = JSON.parse(JSON.stringify(initalObj));    
+    //     
+    //   return obj;
+    // }
+
+    /**
+     * 递归拷贝
+     */
+    /*
+    function deepClone(initalObj, finalObj) {
+      var obj;
+      if (initalObj === null || initalObj === undefined || initalObj === !!initalObj) {
+        obj = initalObj;
+        return obj;
+      } else {
+        obj = finalObj || {};
+      }
+
+      for (var i in initalObj) {
+        var prop = initalObj[i];
+        // 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
+        if (prop === obj) {
+          continue;
+        }
+
+        if (typeof prop === 'object' && prop !== null) {
+          obj[i] = (prop.constructor === Array) ? [] : {};
+          deepClone(prop, obj[i]);
+        } else {
+          obj[i] = prop;
+        }
+      }
+      return obj;
+    }
+    */
+
+
+    /*
+     * 使用Object.create()方法
+     * var newObj = Object.create(oldObj);
+     */
+
+    /*
+     * 浅拷贝
+     * var newObj = Object.assign({},oldObj);
+     */
+
+    // var newObj = deepClone(undefined);
+    // console.log('newObj', newObj);
+    // var newObj = deepClone(false);
+    // console.log('newObj', newObj);
+    // var newObj = deepClone(true);
+    // console.log('newObj', newObj);
+    // var newObj = deepClone(null);
+    // console.log('newObj', newObj);
+    /*
+    var newObj = deepClone(oldObj);
+
+    newObj.c.cc = 3;
+    newObj.c.ee.eee = 'eee';
+    console.log('newObj', newObj);
+    console.log('oldObj', oldObj);
+    newObj.c.cc = 3;
+
+    console.log('newObj.c.cc === oldObj.c.cc', newObj.c.cc === oldObj.c.cc);
+    console.log('newObj.c.ee.eee === oldObj.c.ee.eee', newObj.c.ee.eee === oldObj.c.ee.eee);
+    */
+    /*
+     * 完美解决方案
+     */
+    function deepClone(initialObj, finalObj) {
+      return _deepClone(initialObj, finalObj, {
+        k: [],
+        v: []
+      });
+    }
+
+    function _deepClone(initialObj, finalObj, conflict) {
+      var i;
+      if (initialObj && typeof initialObj === "object" && (i = [Object, Array].indexOf(initialObj.constructor)) != -1) {
+        if (!finalObj) {
+          finalObj = initialObj.constructor === Array ? [] : {};
+        }
+        if (conflict) {
+          i = conflict.k.indexOf(initialObj);
+          if (i != -1) {
+            return conflict.v[i];
+          }
+          conflict.k.push(initialObj);
+          conflict.v.push(finalObj);
+        }
+        for (var key in initialObj) {
+          finalObj[key] = _deepClone(initialObj[key], finalObj[key], conflict);
+        }
+        return finalObj;
+      }
+      return initialObj;
+    }
+
+    // Test
+    // var a = {"n":1};
+    // a.b = {"c":a};
+    var a = {
+      "n": 1
+    };
+    a.x = a;
+    var b = deepClone(a);
+    console.log(b, b.x === b);
+    console.log(deepClone(1));
+    console.log(deepClone(new Date()));
+    console.log(deepClone(/regex/i));
+    console.log(deepClone(false));
+    console.log(deepClone(undefined));
+
+    var newObj = deepClone(oldObj);
+
+    newObj.c.cc = 3;
+    newObj.c.ee.eee = 'eee';
+    console.log('newObj', newObj);
+    console.log('oldObj', oldObj);
+    newObj.c.cc = 3;
+
+    console.log('newObj.c.cc === oldObj.c.cc', newObj.c.cc === oldObj.c.cc);
+    console.log('newObj.c.ee.eee === oldObj.c.ee.eee', newObj.c.ee.eee === oldObj.c.ee.eee);
+  </script>
+</body>
+
+</html>

@@ -4,12 +4,16 @@
         "commonjs": true,
         "node": true
     },
+    "plugins": [
+        "react"
+    ],
     //启用推荐的默认规则
     "extends": "eslint:recommended",
     "parserOptions": {
         "ecmaVersion": 6,
         "ecmaFeatures": {
-            "experimentalObjectRestSpread": true
+            "experimentalObjectRestSpread": true,
+            "jsx": true
         }
     },
     "globals": {
