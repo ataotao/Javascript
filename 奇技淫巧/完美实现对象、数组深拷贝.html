@@ -173,6 +173,20 @@
 
     console.log('newObj.c.cc === oldObj.c.cc', newObj.c.cc === oldObj.c.cc);
     console.log('newObj.c.ee.eee === oldObj.c.ee.eee', newObj.c.ee.eee === oldObj.c.ee.eee);
+
+    var oldArr = [1, 2, 3, {
+      a: 1,
+      b: 2,
+      c:{
+        c: 1,
+        d: 2
+      }
+    }];
+    oldArr[0] = oldArr;
+    var newArr = deepClone(oldArr);
+    newArr[3].c.c = 3;
+    console.log(oldArr);
+    console.log(newArr);
   </script>
 </body>
 
