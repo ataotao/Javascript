@@ -10,40 +10,40 @@
         }
         
         .viewport {
-            width: 900px;
-            height: 300px;
-            overflow: hidden;
-            position: relative
+            width: 900px;/* 可视宽 */
+            height: 300px;/* 图片高 */
+            overflow: hidden; /* 超出隐藏 */
+            position: relative; /* 为下文妈妈的指导位置作准备 */
         }
         
         .father {
-            height: inherit;
-            width: 3000%;
-            transform: translate3d(0, 0, 0);
-            transition: transform 0.5s ease-in-out
+            height: inherit; /* 图片高 继承*/
+            width: 3000%; /* 为了大，子元素 float 无法将其撑开 */
+            transform: translate3d(0, 0, 0);  /* translate3d(x,y,z) */
+            transition: transform 0.5s ease-in-out; /* 丝滑流畅 */
         }
         
         .father.moving {
-            transition: none
+            transition: none;  /* 关闭动画样式 */
         }
         
-        .father>div {
-            width: 550px;
-            height: inherit;
+        .father > div {
+            width: 550px; /*自定义宽度*/
+            height: inherit;  /*高度继承*/
             background: #aaa;
-            float: left
+            float: left; /* 排起来 */
         }
         
         .mother {
-            width: 30px;
-            height: inherit;
+            width: 30px; /* 宽 */
+            height: inherit; /* 高 */
             line-height: 300px;
-            text-align: center;
+            text-align: center; /* 居中 */
             cursor: pointer;
-            user-select: none;
-            background: rgba(0, 0, 0, 0.4);
-            position: absolute;
-            top: 0;
+            user-select: none; /* 可点击，不可选择 */
+            background: rgba(0, 0, 0, 0.4); /* 自定义 */
+            position: absolute; 
+            top: 0; /* 位置 */
         }
         
         .mother[left] {
@@ -76,9 +76,12 @@
         }
         
         .seter>div.on {
+            opacity: 1;
             margin-top: -8px;
-            transition: margin 0.5s ease-in-out;
             background-color: red;
+            transition: all 0.5s ease-in-out;
+            /*transition: margin 1s ease-in-out;*/
+
         }
     </style>
 </head>
@@ -86,6 +89,7 @@
 <body>
     <div class="viewport">
         <div class="father" id="father" style="transform: translate3d(-375px, 0px, 0px);">
+            <!-- -3125: 自己用前面的AskX 函数算 -->
             <div>A</div>
             <!-- 1 -->
             <div>B</div>
@@ -108,9 +112,9 @@
     <script>
         var father = document.getElementById("father"),
             sons = father.children,
-            width = 550,
-            outerWidth = (900 - width) / 2,
-            showingId = parseInt(sons.length / 2) - 1,
+            width = 550, //自己设的CSS, 如果图有margin, 要加上（如 margin: 0 20 则 550+20*2)
+            outerWidth = (900 - width) / 2, // (可视宽-焦点宽)/2，好理解吧，只显示了一部分的图片宽度
+            showingId = parseInt(sons.length / 2) - 1,  //缓存轮播的焦点。从0 开始，和JS 的下标号[] 一样 ---除法求整数部分，并保证对应JS 中代号
             askX = id => -id * width + outerWidth,
             closeLeft = 0,
             closeRight = sons.length - 1,
@@ -122,12 +126,12 @@
         var fatherGo = to => {
 
             if (to == closeLeft - 1 || to == closeRight + 1) return;
-
+            //加载页面时移动
             if (to == closeLeft) {
                 father.style.transform = "translate3d(0, 0, 0)";
                 left.classList.add("close")
             } else if (to == closeRight) {
-                father.style.transform = `translate3d(${-closeRight*width+2*outerWidth}px, 0, 0)`;
+                father.style.transform = `translate3d(${-closeRight * width + 2 * outerWidth}px, 0, 0)`;
                 right.classList.add("close")
             } else {
                 father.style.transform = `translate3d(${askX(to)}px, 0, 0)`;
