@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>轮播图~~ 转呀转</title>
+    <style>
+        html,
+        body {
+            height: 100%
+        }
+        
+        .viewport {
+            width: 900px;
+            height: 300px;
+            overflow: hidden;
+            position: relative
+        }
+        
+        .father {
+            height: inherit;
+            width: 3000%;
+            transform: translate3d(0, 0, 0);
+            transition: transform 0.5s ease-in-out
+        }
+        
+        .father.moving {
+            transition: none
+        }
+        
+        .father>div {
+            width: 550px;
+            height: inherit;
+            background: #aaa;
+            float: left
+        }
+        
+        .mother {
+            width: 30px;
+            height: inherit;
+            line-height: 300px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+            background: rgba(0, 0, 0, 0.4);
+            position: absolute;
+            top: 0;
+        }
+        
+        .mother[left] {
+            left: 0
+        }
+        
+        .mother[right] {
+            right: 0
+        }
+        
+        .mother.close {
+            opacity: 0.3;
+            transition: opacity 0.6s ease
+        }
+        
+        .seter {
+            width: 400px;
+            height: 20px;
+            position: absolute;
+            bottom: 0;
+            left: calc(50% - 200px);
+            cursor: pointer;
+        }
+        
+        .seter>div {
+            width: 80px;
+            height: 28px;
+            background: orange;
+            float: left;
+        }
+        
+        .seter>div.on {
+            margin-top: -8px;
+            transition: margin 0.5s ease-in-out;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="viewport">
+        <div class="father" id="father" style="transform: translate3d(-375px, 0px, 0px);">
+            <div>A</div>
+            <!-- 1 -->
+            <div>B</div>
+            <div>C</div>
+            <!-- 3 -->
+            <div>D</div>
+            <div>E</div>
+            <!-- 5 -->
+        </div>
+        <div class="seter" id="seter">
+            <div id="0"></div>
+            <div class="on" id="1"></div>
+            <div id="2"></div>
+            <div id="3"></div>
+            <div id="4"></div>
+        </div>
+        <div class="mother" id="left" left>^_^</div>
+        <div class="mother" id="right" right>:-)</div>
+    </div>
+    <script>
+        var father = document.getElementById("father"),
+            sons = father.children,
+            width = 550,
+            outerWidth = (900 - width) / 2,
+            showingId = parseInt(sons.length / 2) - 1,
+            askX = id => -id * width + outerWidth,
+            closeLeft = 0,
+            closeRight = sons.length - 1,
+            left = document.getElementById('left'),
+            right = document.getElementById("right"),
+            seter = document.getElementById("seter"),
+            seters = seter.children;
+
+        var fatherGo = to => {
+
+            if (to == closeLeft - 1 || to == closeRight + 1) return;
+
+            if (to == closeLeft) {
+                father.style.transform = "translate3d(0, 0, 0)";
+                left.classList.add("close")
+            } else if (to == closeRight) {
+                father.style.transform = `translate3d(${-closeRight*width+2*outerWidth}px, 0, 0)`;
+                right.classList.add("close")
+            } else {
+                father.style.transform = `translate3d(${askX(to)}px, 0, 0)`;
+                left.classList.remove("close");
+                right.classList.remove("close")
+            }
+
+            seters[showingId].className = ""
+            seters[to].className = "on"
+
+            showingId = to
+        }
+        left.onclick = () => {
+            fatherGo(showingId - 1)
+        }
+        right.onclick = () => {
+            fatherGo(showingId + 1)
+        }
+
+        seter.onclick = e => {
+            fatherGo(Number(e.target.id))
+        }
+    </script>
+</body>
+
+</html>
