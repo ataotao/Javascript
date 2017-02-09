@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test">
+        
+    </div>
+    <script src="./underscore.js"></script>
+    <script>
+    _.defer(function(){ console.log('deferred'); });
+    var obj = {a:1}
+    _.each([1, 2, 3], a, document.getElementById('test'));
+    function a(value, key, list){
+        console.log(this);
+        console.log(value);
+        var textnode = document.createTextNode(key);
+       this.appendChild(textnode);
+    }
+    
+    console.log(_.object(obj));
+
+
+    </script>
+</body>
+</html>
