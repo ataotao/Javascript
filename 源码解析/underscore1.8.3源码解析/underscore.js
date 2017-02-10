@@ -19,7 +19,7 @@
             {};
 
   // Save the previous value of the `_` variable.
-  // 保存"_"(下划线变量)被覆盖之前的值
+  // 保存"_"(下划线变量)被覆盖之前的值 undefined 用于_.noConflict() 放弃Underscore 的控制变量"_"。返回Underscore 对象的引用
   var previousUnderscore = root._;
 
   // Save bytes in the minified (but not gzipped) version:
@@ -49,7 +49,7 @@
   // 创建一个下划线对象
   var _ = function(obj) {
     // 如果在"_"的原型链上(即_的prototype所指向的对象是否跟obj是同一个对象，要满足"==="的关系)
-    console.log(this);
+    console.log(this, 'var _ = function(obj)');
     if (obj instanceof _) return obj;
     // 如果不是，则构造一个
     if (!(this instanceof _)) return new _(obj);
@@ -80,12 +80,25 @@
   // Internal function that returns an efficient (for current engines) version
   // of the passed-in callback, to be repeatedly applied in other Underscore
   // functions.
-  //optimizeCb()，它是underscore内部用来执行函数的很重要的方法，并且改变所执行函数的作用域。
+  // optimizeCb的总体思路就是，传入待优化的回调函数func， 以及迭代回调需要的参数个数argCount，根据参数个数分情况进行优化：
+  /** 优化回调(特指函数中传入的回调)
+   *
+   * @param func 待优化回调函数
+   * @param context 执行上下文
+   * @param argCount 参数个数
+   * @returns {function}
+   */
   var optimizeCb = function(func, context, argCount) {
+    /**
+     * void 运算符通常只用于获取 undefined 的原始值，一般使用 void(0)（等同于 void 0）。
+     * 也可以使用全局变量undefined 来代替（假定其仍是默认值）。 undefined === void 0 // true
+     * 在ES5之前，window下的undefined是可以被重写的，于是导致了某些极端情况下使用undefined会出现一定的差错。
+     * 所以，用void 0是为了防止undefined被重写而出现判断不准确的情况。
+     */
     if (context === void 0) return func;
     //argCount为函数参数的个数，针对不同参数个数进行不同的处理
     switch (argCount) {
-      //为单值的情况，例如times函数
+      //回调函数为单值的情况，例如times函数(times必须传入context才能进入这个步骤)
       case 1: return function(value) {
         return func.call(context, value);
       };
@@ -94,32 +107,68 @@
       //因为2个参数的情况没用被用到，所以在新版中被删除了
       case null:
       //3个参数用于一些迭代器函数，例如map函数
+      //这三个参数通常是：
+      //value：当前迭代元素的值
+      //index：迭代索引
+      //collection：被迭代集合
       case 3: return function(value, index, collection) {
+        console.log('optimizeCb参数为3');
         return func.call(context, value, index, collection);
       };
       // 4个参数用于reduce和reduceRight函数
+      // 这4个参数分别是:
+      // accumulator：累加器
+      // value：迭代元素
+      // index：迭代索引
+      // collection：当前迭代集合 那么这个累加器是什么意思呢？在underscore中的内部函数createReducer中，就涉及到了4个参数的情况。该函数用来生成reduce函数的工厂，underscore中的_.reduce及_.reduceRight都是由它创建的：
       case 4: return function(accumulator, value, index, collection) {
         return func.call(context, accumulator, value, index, collection);
       };
     }
+    //未设定argCount参数个数的情况，默认
     return function() {
       return func.apply(context, arguments);
     };
   };
 
+  // 针对集合迭代的回调处理
   var builtinIteratee;
 
   // An internal function to generate callbacks that can be applied to each
   // element in a collection, returning the desired result — either `identity`,
   // an arbitrary callback, a property matcher, or a property accessor.
+  // 设置变量保存内置迭代 
   var cb = function(value, context, argCount) {
+    // 如果用户修改了迭代器，则使用新的迭代器 
+    //自定义iteratee
+    //在cb函数的代码中，我们也发现了underscore支持通过覆盖其提供的_.iteratee函数来自定义iteratee，更确切的说，来自己决定如何产生一个iteratee：
+    /**
+     * 
+     * _.iteratee = function(value, context) {
+     * // 现在，value为对象时，也是返回自身  
+     * if (value == null || _.isObject(value)) return _.identity;
+     * if (_.isFunction(value)) return optimizeCb(value, context, argCount);
+     * return _.property(value);
+     * }
+     * 
+     */
     if (_.iteratee !== builtinIteratee) return _.iteratee(value, context);
-    //如果为空，则返回value本身（identity函数就是一个返回本身的函数 ）
+    //// 如果不传value，表示返回等价的自身  如果为空，则返回value本身（identity函数就是一个返回本身的函数 ）
+    //如果传入的value为null，亦即没有传入iteratee，则iteratee的行为只是返回当前迭代元素自身，比如
+    //var results = _.map([1,2,3]); // => results：[1,2,3]
     if (value == null) return _.identity;
-    //如果为函数，则改变所执行函数的作用域
+    //如果传入函数，返回该函数的回调 如果为函数，则改变所执行函数的作用域
+    //如果传入value是一个function，那么通过内置函数optimizeCb对其进行优化 绑定上下文
     if (_.isFunction(value)) return optimizeCb(value, context, argCount);
-    //如果是对象，判断是否匹配（matcher是一个用来判断是否匹配的，我们具体后续再聊）
+    //如果传入对象，寻找匹配的属性值  如果是对象，判断是否匹配（matcher是一个用来判断是否匹配的）
+    // 如果value传入的是一个对象，那么返回的iteratee（_.matcher）的目的是想要知道当前被迭代元素是否匹配给定的这个对象：
+    //var results = _.map([{name:'atao'},{name: 'chen',age:33}], {name: 'chen'});
+    // => results: [false,true]
     if (_.isObject(value) && !_.isArray(value)) return _.matcher(value);
+    // 如果都不是，返回相应的属性访问器 
+    // 如果以上情况都不是， 那么传入的value会是一个字面量（直接量），他指示了一个对象的属性key，返回的iteratee（_.property）将用来获得该属性对应的值：
+    //var results = _.map([{name:'atao'},{name:'chen'}],'name');
+    // => results: ['atao', 'chen'];
     return _.property(value);
   };
 
@@ -127,12 +176,14 @@
   // `_.iteratee` if they want additional predicate/iteratee shorthand styles.
   // This abstraction hides the internal-only argCount argument.
   // 通过调用cb函数，生成每个元素的回调
+  // 默认的迭代器，是以无穷argCount为参数调用cb函数。用户可以自行修改。
   _.iteratee = builtinIteratee = function(value, context) {
     return cb(value, context, Infinity);
   };
 
   // Similar to ES6's rest param (http://ariya.ofilabs.com/2013/03/es6-and-rest-parameter.html)
   // This accumulates the arguments passed into an array, after a given index.
+  // 剩余参数（rest parameter）允许长度不确定的实参表示为一个数组
   var restArgs = function(func, startIndex) {
     startIndex = startIndex == null ? func.length - 1 : +startIndex;
     return function() {
@@ -208,17 +259,19 @@
   // sparse array-likes as if they were dense.
   _.each = _.forEach = function(obj, iteratee, context) {
     //optimizeCb( )是underscore内部用来执行函数的很重要的方法
-    iteratee = optimizeCb(iteratee, context);
+    //改变所执行函数的作用域上下文关系。
+    iteratee = optimizeCb(iteratee, context, 3);
     var i, length;
     if (isArrayLike(obj)) {
-      //数组
+      //数组处理
       for (i = 0, length = obj.length; i < length; i++) {
         iteratee(obj[i], i, obj);
       }
     } else {
-      //对象处理，这个_.keys( )我们也后面提到
+      //对象处理，_.keys(obj)检索object拥有的所有可枚举属性的名称为数组。
       var keys = _.keys(obj);
       for (i = 0, length = keys.length; i < length; i++) {
+        //根据keys的索引返回重新组装的数据
         iteratee(obj[keys[i]], keys[i], obj);
       }
     }
@@ -276,9 +329,11 @@
 
   // **Reduce** builds up a single result from a list of values, aka `inject`,
   // or `foldl`.
+  //_.reduce 方法对累加器和数组的每个值应用一个函数 (从左到右)，以将其减少为单个值。
   _.reduce = _.foldl = _.inject = createReduce(1);
 
   // The right-associative version of reduce, also known as `foldr`.
+  // _.reduceRight 方法接受一个函数作为累加器（accumulator），让每个值（从右到左，亦即从尾到头）缩减为一个值。（与 reduce() 的执行方向相反）
   _.reduceRight = _.foldr = createReduce(-1);
 
   // Return the first value which passes a truth test. Aliased as `detect`.
@@ -798,6 +853,7 @@
   };
 
   // Generator function to create the findIndex and findLastIndex functions.
+  //创建findIndex和findLastIndex功能
   var createPredicateIndexFinder = function(dir) {
     return function(array, predicate, context) {
       //迭代函数
@@ -1672,6 +1728,7 @@
 
   // Run Underscore.js in *noConflict* mode, returning the `_` variable to its
   // previous owner. Returns a reference to the Underscore object.
+  //放弃Underscore 的控制变量"_"。返回Underscore 对象的引用 // var underscore = _.noConflict();
   _.noConflict = function() {
     root._ = previousUnderscore;
     return this;
