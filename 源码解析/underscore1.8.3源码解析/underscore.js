@@ -42,7 +42,7 @@
       nativeCreate = Object.create;
 
   // Naked function reference for surrogate-prototype-swapping.
-  //建立一个空函数，用于后面baseCreate内构造函数使用。
+  //建立一个空函数，用于后面baseCreate内构造函数使用
   var Ctor = function(){};
 
   // Create a safe reference to the Underscore object for use below.
@@ -53,7 +53,7 @@
     if (obj instanceof _) return obj;
     // 如果不是，则构造一个
     if (!(this instanceof _)) return new _(obj);
-    // 将underscore对象存放在_.wrapped属性中
+    // 将underscore对象存放在_.wrapped属性中。
     this._wrapped = obj;
   };
 

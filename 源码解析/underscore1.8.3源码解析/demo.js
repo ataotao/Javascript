@@ -110,8 +110,7 @@ function reduceRightFn(memo, value, index, list) {
  * _.find(list, predicate, [context]) 
  * 在list中逐项查找，返回第一个通过predicate迭代函数真值检测的元素值，如果没有值传递给测试迭代器将返回undefined。 如果找到匹配的元素，函数将立即返回，不会遍历整个list。
  */
-var even = _.find('', function(num, key, list){ 
-    return num % 2 == 0; 
-});
-console.log(even);
-
+// var even = _.find([1, 2, 3, 4, 5, 6], function(num, key, list){ 
+//     return num % 2 == 0; 
+// });
+// console.log(even);
