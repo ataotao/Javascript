@@ -42,7 +42,7 @@
       nativeCreate = Object.create;
 
   // Naked function reference for surrogate-prototype-swapping.
-  //建立一个空函数，用于后面baseCreate内构造函数使用
+  //建立一个空函数，用于后面baseCreate内构造函数使用。
   var Ctor = function(){};
 
   // Create a safe reference to the Underscore object for use below.
