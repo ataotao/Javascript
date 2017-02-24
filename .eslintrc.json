@@ -4,9 +4,9 @@
         "commonjs": true,
         "node": true
     },
-    "plugins": [
-        "react"
-    ],
+    // "plugins": [
+    //     "react"
+    // ],
     //启用推荐的默认规则
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -39,7 +39,7 @@
             "always"
         ],
         //缩进风格 
-        // "indent": ["warn", 4],
+        "indent": ["warn", 4],
         //不能有声明后未被使用的变量或参数
         "no-unused-vars": [
             "error", {
