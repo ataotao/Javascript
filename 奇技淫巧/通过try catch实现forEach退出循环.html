@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        var arr = [1, 2, 3];
+        function forEachExit(arg) {
+            try {
+                arg.forEach(function (ele) {
+                    console.log(ele); //只循环了2次
+                    if (ele == 2) {
+                        throw ele;
+                    }
+                });
+            } catch (e) {
+                return e;
+            }
+        }
+        console.log(forEachExit(arr));
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
