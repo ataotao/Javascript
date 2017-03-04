@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lazyload 1</title>
+    <style>
+        img {
+            display: block;
+            margin-bottom: 50px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="images/loading.gif" data-src="images/1.jpg">
+    <img src="images/loading.gif" data-src="images/2.jpg">
+    <img src="images/loading.gif" data-src="images/3.jpg">
+    <img src="images/loading.gif" data-src="images/4.jpg">
+    <img src="images/loading.gif" data-src="images/5.jpg">
+    <img src="images/loading.gif" data-src="images/6.jpg">
+    <img src="images/loading.gif" data-src="images/1.jpg">
+    <img src="images/loading.gif" data-src="images/2.jpg">
+    <img src="images/loading.gif" data-src="images/3.jpg">
+    <img src="images/loading.gif" data-src="images/4.jpg">
+    <img src="images/loading.gif" data-src="images/5.jpg">
+    <img src="images/loading.gif" data-src="images/6.jpg">
+    <script>
+        // 实现方式一
+        // 设置了 500ms 的延迟，和 1000ms 的间隔，当超过 1000ms 未触发该函数，则立即执行该函数，不然则延迟 500ms 执行该函数。
+        function throttle(fn, delay, atleast) {
+            var timeout = null,
+                startTime = new Date();
+            return function () {
+                var curTime = new Date();
+                clearTimeout(timeout);
+                if (curTime - startTime >= atleast) {
+                    fn();
+                    startTime = curTime;
+                } else {
+                    // 如果操作速度快延迟500毫秒执行loadImages
+                    timeout = setTimeout(fn, delay);
+                }
+            }
+        }
+        function lazyload() {
+            var images = document.getElementsByTagName('img');
+            var len = images.length;
+            var n = 0;      //存储图片加载到的位置，避免每次都从第一张图片开始遍历		
+            return function () {
+                var seeHeight = document.documentElement.clientHeight;
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                for (var i = n; i < len; i++) {
+                    if (images[i].offsetTop < seeHeight + scrollTop) {
+                        if (images[i].getAttribute('src') === 'images/loading.gif') {
+                            images[i].src = images[i].getAttribute('data-src');
+                        }
+                        n = n + 1;
+                    }
+                }
+            }
+        }
+        var loadImages = lazyload();
+        loadImages();          //初始化首页的页面图片
+        window.addEventListener('scroll', throttle(loadImages, 500, 1000), false);
+
+
+
+        /**
+        使用 IntersectionObserver API 实现  安卓不兼容
+        https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API
+        IntersectionObserver 传入一个回调函数，当其观察到元素集合出现时候，则会执行该函数。
+        io.observe 即要观察的元素，要一个个添加才可以。
+        io 管理的是一个数组，当元素出现或消失的时候，数组添加或删除该元素，并且执行该回调函数。
+        */
+        // function query(selector) {
+        //     return Array.from(document.querySelectorAll(selector));
+        // }
+        // var io = new IntersectionObserver(function (items) {
+        //     items.forEach(function (item) {
+        //         var target = item.target;
+        //         if (target.getAttribute('src') == 'images/loading.gif') {
+        //             target.src = target.getAttribute('data-src');
+        //         }
+        //     })
+        // });
+        // query('img').forEach(function (item) {
+        //     io.observe(item);
+        // });
+    </script>
+</body>
+
+</html>
