@@ -83,7 +83,7 @@
         }
 
         var success = function(a, args){
-            console.log(arguments)
+            console.log(a, args.url)
         }
 
         doSomething({url:'a'}, success).then(function(){
