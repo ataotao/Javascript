@@ -71,37 +71,28 @@
 */
 // 方法三
 var a = 0;
-        function doSomething() {
+        function doSomething(args) {
             var promise = new Promise((resolve, reject) => {
-                a++;
                 setTimeout(function(){
                     resolve()
-                    // console.log('a');
-                    console.log(a);
+                    console.log(a, args);
+                    a++;
                 }, Math.floor(Math.random()*1000))
-                
             })
-
             return promise;
         }
 
-        function doSomethingElse() {
-            var promise = new Promise((resolve, reject) => {
-                setTimeout(function(){
-                    resolve()
-                    console.log('b');
-                },500)
-            })
-
-            return promise;
-        }
-        function finalHandler() {
-                setTimeout(function(){
-                    console.log('finalHandler');
-                },100)
+        function success(){
+            console.log('success')
         }
 
-        doSomething().then(doSomething).then(doSomething);
+        doSomething({url:'a'}).then(function(){
+            return doSomething({url:'b'});
+        }).then(function(){
+            return doSomething({url:'c'});
+        }).then(function(){
+            success();
+        });
     </script>
 </body>
 
