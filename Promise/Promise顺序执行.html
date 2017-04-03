@@ -70,28 +70,26 @@
         executePromises([1, 2, 3, 4])//1,2,3,4
 */
 // 方法三
-var a = 0;
-        function doSomething(args) {
+        var a = 0;
+        function doSomething(args, success) {
             var promise = new Promise((resolve, reject) => {
                 setTimeout(function(){
                     resolve()
-                    console.log(a, args);
+                    success(a, args)
                     a++;
                 }, Math.floor(Math.random()*1000))
             })
             return promise;
         }
 
-        function success(){
-            console.log('success')
+        var success = function(a, args){
+            console.log(arguments)
         }
 
-        doSomething({url:'a'}).then(function(){
-            return doSomething({url:'b'});
+        doSomething({url:'a'}, success).then(function(){
+            return doSomething({url:'b'}, success);
         }).then(function(){
-            return doSomething({url:'c'});
-        }).then(function(){
-            success();
+            return doSomething({url:'c'}, success);
         });
     </script>
 </body>
