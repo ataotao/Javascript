@@ -11,6 +11,7 @@
 <body>
     <script src="http://seller.sosoqipei.com/common/plugin/jQuery/jquery-1.11.3.min.js"></script>
     <script>
+        /*
         // 方法一
         let promiseIter = function (promises) {
             return new Promise((resolve, reject) => {
@@ -50,7 +51,7 @@
 
         promiseIter([a, b]);// 1 2
 
-// 方法二
+        // 方法二
         function promiseFactory(index) {
             return new Promise((resolve, reject) => {
                 resolve()
@@ -67,6 +68,40 @@
         }
 
         executePromises([1, 2, 3, 4])//1,2,3,4
+*/
+// 方法三
+var a = 0;
+        function doSomething() {
+            var promise = new Promise((resolve, reject) => {
+                a++;
+                setTimeout(function(){
+                    resolve()
+                    // console.log('a');
+                    console.log(a);
+                }, Math.floor(Math.random()*1000))
+                
+            })
+
+            return promise;
+        }
+
+        function doSomethingElse() {
+            var promise = new Promise((resolve, reject) => {
+                setTimeout(function(){
+                    resolve()
+                    console.log('b');
+                },500)
+            })
+
+            return promise;
+        }
+        function finalHandler() {
+                setTimeout(function(){
+                    console.log('finalHandler');
+                },100)
+        }
+
+        doSomething().then(doSomething).then(doSomething);
     </script>
 </body>
 
