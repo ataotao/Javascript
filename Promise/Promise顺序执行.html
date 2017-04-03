@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+    <script src="http://seller.sosoqipei.com/common/plugin/jQuery/jquery-1.11.3.min.js"></script>
+    <script>
+        // 方法一
+        let promiseIter = function (promises) {
+            return new Promise((resolve, reject) => {
+                nextPromise(0, promises);
+                function nextPromise(index, promises) {
+                    let length = promises.length;
+                    if (index >= length) {
+                        resolve();
+                    }
+                    promises[index]()
+                        .then(() => {
+                            nextPromise(index + 1, promises);
+                        })
+                        .catch((err) => {
+                            reject(err);
+                        })
+                }
+            });
+        }
+
+        //使用
+        let a = () => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve()
+                    console.log(1)
+                }, 1000)
+            })
+        }
+
+        let b = () => {
+            return new Promise((resolve, reject) => {
+                resolve()
+                console.log(2)
+            })
+        }
+
+        promiseIter([a, b]);// 1 2
+
+// 方法二
+        function promiseFactory(index) {
+            return new Promise((resolve, reject) => {
+                resolve()
+                console.log(index)
+            })
+        }
+
+        function executePromises(promisesIndex) {
+            var result = Promise.resolve()
+            promisesIndex.forEach(index => {
+                result = result.then(promiseFactory(index))
+            })
+            return result
+        }
+
+        executePromises([1, 2, 3, 4])//1,2,3,4
+    </script>
+</body>
+
+</html>
