@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script>
+        // Promise只能进行异步操作？
+        // 实际上， .then 中指定的方法调用是异步进行的。
+        var promise = new Promise(function (resolve) {
+            console.log('1- inner promise'); // 1
+            resolve(42);
+        });
+        promise.then(function (value) {
+            console.log('3- ' + value); // 3
+        });
+        console.log('2- outer promise'); // 2
+
+        /*
+        为什么要对明明可以以同步方式进行调用的函数，非要使用异步的调用方式呢？
+        同步调用和异步调用同时存在导致的混乱
+        其实在Promise之外也存在这个问题，这里我们以一般的使用情况来考虑此问题。
+        这个问题的本质是接收回调函数的函数，会根据具体的执行情况，可以选择是以同步
+        还是异步的方式对回调函数进行调用。
+        下面我们以 onReady(fn) 为例进行说明，这个函数会接收一个回调函数进行处理。
+        */
+
+        /*
+        function onReady(fn) {
+            var readyState = document.readyState;
+            if (readyState === 'interactive' || readyState === 'complete') {
+                fn();
+            } else {
+                window.addEventListener('DOMContentLoaded', fn);
+            }
+        }
+        onReady(function () {
+            console.log('DOM fully loaded and parsed');
+        });
+        console.log('==Starting==');
+
+        function onReadyAsync(fn) {
+            var readyState = document.readyState;
+            if (readyState === 'interactive' || readyState === 'complete') {
+                setTimeout(fn, 0);
+            } else {
+                window.addEventListener('DOMContentLoaded', fn);
+            }
+        }
+        onReadyAsync(function () {
+            console.log('DOM fully loaded and parsed');
+        });
+        console.log('==Starting==');
+        */
+
+        // 将上面的 onReady 函数用Promise重写的话，代码如下面所示。
+        // 由于Promise保证了每次调用都是以异步方式进行的，所以我们在实际编码中不需要调用 setTimeout 来自己实现异步调用。
+        function onReadyPromise() {
+            return new Promise(function (resolve, reject) {
+                var readyState = document.readyState;
+                if (readyState === 'interactive' || readyState === 'complete') {
+                    resolve();
+                } else {
+                    window.addEventListener('DOMContentLoaded', resolve);
+                }
+            });
+        }
+        onReadyPromise()
+        .then(function () {
+            console.log('DOM fully loaded and parsed');
+        });
+        console.log('==Starting==');
+    </script>
+</body>
+
+</html>

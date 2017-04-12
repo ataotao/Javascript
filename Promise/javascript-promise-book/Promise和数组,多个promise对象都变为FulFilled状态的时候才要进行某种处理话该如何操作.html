@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script>
+        /*
+                            我们以当所有XHR（异步处理）全部结束后要进行某操作为例来进行说明。
+                            各位读者现在也许有点难以在大脑中描绘出这么一种场景，我们可以先看一下下面使
+                            用了普通的回调函数风格的XHR处理代码。
+                        */
+        function getURLCallback(URL, callback) {
+            var req = new XMLHttpRequest();
+            req.open('GET', URL, true);
+            req.onload = function () {
+                if (req.status === 200) {
+                    callback(null, req.responseText);
+                } else {
+                    callback(new Error(req.statusText), req.response);
+                }
+            };
+            req.onerror = function () {
+                callback(new Error(req.statusText));
+            };
+            req.send();
+        }
+        // <1> 对JSON数据进行安全的解析
+        function jsonParse(callback, error, value) {
+            if (error) {
+                callback(error, value);
+            } else {
+                try {
+                    var result = JSON.parse(value);
+                    callback(null, result);
+                } catch (e) {
+                    callback(e, value);
+                }
+            }
+        }
+        // <2> 发送XHR请求
+        var request = {
+            comment: function getComment(callback) {
+                return getURLCallback('http://azu.github.io/promises-book/json/comment.json', jsonParse.bind(
+                    null, callback));
+                /*
+                在使用 jsonParse 函数的时候我们使用了 bind 进行绑定，通过使用这种偏函数
+                （Partial Function）的方式就可以减少匿名函数的使用。（如果在函数回调风格的代码
+                能很好的做到函数分离的话，也能减少匿名函数的数量）
+                jsonParse.bind(null, callback);
+                // 可以认为这种写法能转换为以下的写法
+                function bindJSONParse(error, value){
+                    jsonParse(callback, error, value);
+                }
+                */
+            },
+            people: function getPeople(callback) {
+                return getURLCallback('http://azu.github.io/promises-book/json/people.json', jsonParse.bind(
+                    null, callback));
+            }
+        };
+        // <3> 启动多个XHR请求，当所有请求返回时调用callback
+        function allRequest(requests, callback, results) {
+            if (requests.length === 0) {
+                return callback(null, results);
+            }
+            var req = requests.shift();
+            req(function (error, value) {
+                if (error) {
+                    callback(error, value);
+                } else {
+                    results.push(value);
+                    allRequest(requests, callback, results);
+                }
+            });
+        }
+
+        function main(callback) {
+            allRequest([request.comment, request.people], callback, []);
+        }
+        // 运行的例子
+        main(function (error, results) {
+            if (error) {
+                return console.error(error);
+            }
+            console.log(results, 'callback方式');
+        });
+
+        // 使用Promise#then同时处理多个异步请求
+        // 需要事先说明的是 Promise.all 比较适合这种应用场景的需求，因此我们故意采用了大量 .then 的晦涩的写法。
+
+        function getURLA(URL) {
+            return new Promise(function (resolve, reject) {
+                var req = new XMLHttpRequest();
+                req.open('GET', URL, true);
+                req.onload = function () {
+                    if (req.status === 200) {
+                        // 模拟异步延迟
+                        setTimeout(() => {
+                            resolve(req.responseText);
+                        }, Math.random() * 3000);
+                    } else {
+                        reject(new Error(req.statusText));
+                    }
+                };
+                req.onerror = function () {
+                    reject(new Error(req.statusText));
+                };
+                req.send();
+            });
+        }
+        var requestA = {
+            comment: function getComment() {
+                return getURLA('http://azu.github.io/promises-book/json/comment.json').then(JSON.parse); //等同于下面的代码
+                // return getURLA('http://azu.github.io/promises-book/json/comment.json').then(function(val){
+                //     return JSON.parse(val);
+                // });
+            },
+            people: function getPeople(val) {
+                console.log(val, '取得上个的comment值');
+                // console.log(val.length, '取得上个的comment值');
+                return getURLA('http://azu.github.io/promises-book/json/people.json').then(JSON.parse);
+            },
+            //arr:[] //对应pushValue替代代码(这里要申明到全局或者绑定某个对象)
+        };
+
+
+        function mainA() {
+            function recordValue(results, value) {
+                results.push(value);
+                return results;
+            };
+            // [] 用来保存初始化的值
+            var pushValue = recordValue.bind(null, []);
+
+            //等同于下面代码
+            // function pushValue(val){
+            //     requestA.arr.push(val);
+            //     return requestA.arr;
+            // }
+
+            return requestA.comment()
+                .then(pushValue) //如果中间不处理值，也可以不需要这个部分
+                .then(requestA.people)
+                .then(pushValue); //如果中间不处理值，也可以不需要这个部分
+        }
+        // 运行的例子
+        mainA()
+            .then(function (value) {
+                console.log(value);
+            }).catch(function (error) {
+                console.error(error);
+            });
+
+        /*
+            将上述代码和回调函数风格相比，我们可以得到如下结论。
+            • 可以直接使用 JSON.parse 函数
+            • 函数 main() 返回promise对象
+            • 错误处理的地方直接对返回的promise对象进行处理
+            向前面我们说的那样，main的 then 部分有点晦涩难懂。
+            为了应对这种需要对多个异步调用进行统一处理的场景，Promise准备了 Promise.all 和
+            Promise.race 这两个静态方法。
+            在下面的小节中我们将对这两个函数进行说明。
+        */
+
+
+        // Promise.all用法
+        // 传递给 Promise.all 的promise数组是同时开始执行的。
+
+        // `delay`毫秒后执行resolve
+        function timerPromisefy(delay) {
+            return new Promise(function (resolve) {
+                setTimeout(function () {
+                    resolve(delay);
+                }, delay);
+            });
+        }
+        var startDate = Date.now();
+        // 所有promise变为resolve后程序退出
+        Promise.all([
+            timerPromisefy(1),
+            timerPromisefy(32),
+            timerPromisefy(64),
+            timerPromisefy(128)
+        ]).then(function (values) {
+            console.log(Date.now() - startDate + 'ms');
+            // 約128ms
+            console.log(values); // [1,32,64,128]
+        });
+        /*
+        从上述结果可以看出，传递给 Promise.all 的promise并不是一个个的顺序执行的，而是
+        同时开始、并行执行的。
+        如果这些promise全部串行处理的话，那么需要 等待1ms → 等待32ms
+        → 等待64ms → 等待128ms ，全部执行完毕需要225ms的时间。
+        */
+
+        /*-----------------------------
+        Promise.race
+        接着我们来看看和 Promise.all 类似的对多个promise对象进行处理的 Promise.race 方
+        法。
+        它的使用方法和Promise.all一样，接收一个promise对象数组为参数。
+        Promise.all 在接收到的所有的对象promise都变为 FulFilled 或者 Rejected 状态之后才
+        会继续进行后面的处理， 与之相对的是 Promise.race 只要有一个promise对象进入
+        FulFilled 或者 Rejected 状态的话，就会继续进行后面的处理。
+        */
+
+        // `delay`毫秒后执行resolve
+        function timerPromisefyRace(delay) {
+            return new Promise(function (resolve) {
+                setTimeout(function () {
+                    resolve(delay);
+                }, delay);
+            });
+        }
+        // 任何一个promise变为resolve或reject 的话程序就停止运行
+        Promise.race([
+            timerPromisefyRace(1),
+            timerPromisefyRace(32),
+            timerPromisefyRace(64),
+            timerPromisefyRace(128)
+        ]).then(function (value) {
+            console.log(value); // => 1
+        });
+
+
+        // Promise.all 在接收到的所有的对象promise都变为 FulFilled 或者 Rejected 状态之后才
+        // 会继续进行后面的处理， 与之相对的是 Promise.race 只要有一个promise对象进入
+        // FulFilled 或者 Rejected 状态的话，就会继续进行后面的处理。
+        // 执行下面代码的话，我们会看到 winnter和loser promise对象的 setTimeout 方法都会执行完毕， console.log 也会分别输出它们的信息。
+        // 也就是说， Promise.race 在第一个promise对象变为Fulfilled之后，并不会取消其他promise对象的执行。
+        // 但是结果不会返回到then里面
+
+        var winnerPromise = new Promise(function (resolve) {
+            setTimeout(function () {
+                console.log('this is winner');
+                resolve('this is winner');
+            }, 2000);
+        });
+        var loserPromise = new Promise(function (resolve) {
+            var arg = arguments;
+            setTimeout(function () {
+                console.log('this is loser');
+                resolve('this is loser');
+            }, 4000);
+        });
+        // 第一个promise变为resolve后程序停止
+        Promise.race([winnerPromise, loserPromise])
+        .then(function (value) {
+            console.log(value); // => 'this is winner'
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script>
+        // 基础例子一
+        var promise = new Promise((resolve, reject) => {
+            // 异步处理
+            // 处理结束后、调用resolve 或 reject
+            setTimeout(() => {
+                // resolve('成功');
+                reject(new Error('失败'));
+            }, 1000)
+        });
+
+        var success = res => console.log(res);
+        var error = err => console.log(err);
+        promise
+            .then(success)
+            .catch(error);
+
+        // 基础例子二
+        function asyncFunction() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve('Async Hello world');
+                }, 1000);
+            });
+        }
+        asyncFunction()
+            .then(res => {
+                console.log(res); // => 'Async Hello world'
+            }).catch(err => {
+                console.log(err);
+            });
+        // 如果不使用 `catch` 方法只使用 `then` 方法的话，如下所示的代码也能完成相同的工作。
+        asyncFunction()
+            .then(res => {
+                console.log(res);
+            }, err => {
+                console.log(err);
+            });
+        console.log(asyncFunction());
+
+        // 编写Promise代码
+        function getURL(URL) {
+            return new Promise(function (resolve, reject) {
+                var req = new XMLHttpRequest();
+                req.open('GET', URL, true);
+                req.onload = function () {
+                    if (req.status === 200) {
+                        resolve(req.responseText);
+                    } else {
+                        reject(new Error(req.statusText));
+                    }
+                };
+                req.onerror = function () {
+                    reject(new Error(req.statusText));
+                };
+                req.send();
+            });
+        } 
+        
+        // 运行示例 
+        var URL = "http://httpbin.org/get";
+        getURL(URL).then(function onFulfilled (value) {
+            console.log(value);
+        }).catch(function onRejected (error) {
+            console.error(error);
+        });
+
+        // 编写promise对象处理方法
+        var URL1 = "http://httpbin.org/status/500";
+        getURL(URL1)
+        .then(function onFulfilled(value){
+            console.log(value);
+        }).catch(function onRejected(error){
+            console.error(error);
+        });
+
+        /* 实战Promise */
+        /*
+            静态方法Promise.resolve(value) 可以认为是 new Promise() 方法的快捷方式。
+            比如 Promise.resolve(42); 可以认为是以下代码的语法糖。
+            new Promise(function(resolve){
+                resolve(42);
+            });
+        */
+        var a = Promise.resolve(42).then(function(value){
+            console.log(value);
+        });
+
+        /*
+        Thenable
+        Promise.resolve 方法另一个作用就是将 thenable 对象转换为promise对象。
+        到底什么样的对象能算是thenable的呢，最简单的例子就是 jQuery.ajax()16，它的返回值就是thenable的。
+        因为jQuery.ajax() 的返回值是 jqXHR Object17 对象，这个对象具有 .then 方法。
+        $.ajax('/json/comment.json');// => 拥有 `.then` 方法的对象
+        这个thenable的对象可以使用 Promise.resolve 来转换为一个promise对象。
+        变成了promise对象的话，就能直接使用 then 或者 catch 等这些在 ES6 Promises里定义的方法了。
+        */
+
+        // 将thenable对象转换promise对象
+        var ajax = $.ajax('test.json');
+        /*
+        ajax.then(function(value){
+            console.log('ajax没转换为promise对象也能用', value);
+        });
+        jQuery和thenable
+        jQuery.ajax()18的返回值是一个具有 .then 方法的 jqXHR Object19对象，这个对象继承了来自 Deferred Object20 的方法和属性。
+        但是Deferred Object并没有遵循Promises/A+或ES6 Promises标准，所以即使看上去这个对象转换成了一个promise对象，但是会出现缺失部分信息的问题。
+        这个问题的根源在于jQuery的 Deferred Object21 的 then 方法机制与promise不同。
+        所以我们应该注意，即使一个对象具有 .then 方法，也不一定就能作为ES6 Promises对象使用。
+        */
+        console.log('ajax', ajax)
+        var promise = Promise.resolve(ajax);// => promise对象
+        promise.then(function(value){
+            console.log('ajax返回的thenable对象转换为promise对象带then方法', value);
+        });
+
+    </script>
+</body>
+
+</html>

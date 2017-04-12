@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script>
+        // 使用done的代码示例 
+        if (typeof Promise.prototype.done === 'undefined') {
+            Promise.prototype.done = function (onFulfilled, onRejected) {
+                this
+                    .then(onFulfilled, onRejected)
+                    .catch(function (error) {
+                        setTimeout(function () {
+                            throw error;
+                        }, 0);
+                    });
+            };
+        }
+        var promise = Promise.resolve();
+        promise.done(function () {
+            JSON.parse('this is not json'); // => SyntaxError: JSON.parse
+        });
+
+        // 使用then的场景
+        var promise = Promise.resolve();
+        promise.then(function () {
+            JSON.parse("this is not json");
+        }).catch(function (error) {
+            console.error(error);// => "SyntaxError: JSON.parse"
+        });
+        /*
+        从上面我们可以看出，两者之间有以下不同点。
+        • done 并不返回promise对象
+        ◦ 也就是说，在done之后不能使用 catch 等方法组成方法链
+        • done 中发生的异常会被直接抛给外面
+        ◦ 也就是说，不会进行Promise的错误处理（Error Handling）
+        由于done 不会返回promise对象，所以我们不难理解它只能出现在一个方法链的最后。
+        此外，我们已经介绍过了Promise具有强大的错误处理机制，而done 则会在函数中跳过
+        错误处理，直接抛出异常。
+        为什么很多类库都提供了这个和Promise功能相矛盾的函数呢？看一下下面Promise处理失败的例子，也许我们多少就能理解其中原因了吧。
+        */
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script>
+        // Promise#then
+        function taskA() {
+            console.log('Task A');
+            throw new Error("throw Error @ Task A");
+        }
+
+        function taskB() {
+            console.log('Task B');
+        }
+
+        function onRejected(error) {
+            console.log('Catch Error: A or B', error);
+            // 这里不会处理finalTask抛出的错误 ,只会处理taskA和taskB抛出的错误
+        }
+
+        function finalTask() {
+            console.log('Final Task');
+            // throw new Error("throw Error @ Final Task");
+        }
+        var promise = Promise.resolve();
+        promise
+            .then(taskA)
+            .then(taskB)
+            .catch(onRejected)
+            .then(finalTask);
+
+        // promise chain 中如何传递参数
+        /*
+        每个方法中 return 的值不仅只局限于字符串或者数值类型，也可以是对象或者promise对象等复杂类型。
+        return的值会由 Promise.resolve(return的返回值)进行相应的包装处理，
+        因此不管回调函数中会返回一个什么样的值，最终 then 的结果都是返回一个新创建的promise对象。
+        */
+        function increment(value) {
+            return value + 1;
+        }
+        function doubleUp(value) {
+            return value * 2;
+        }
+        function output(value) {
+            console.log(value);// => (1 + 1) * 2
+        }
+        var promise = Promise.resolve(1);
+        promise
+            .then(increment)
+            .then(doubleUp)
+            .then(output)
+            .catch(function (error) {
+                // promise chain中出现异常的时候会被调用
+                console.error(error);
+            });
+        /*
+        专栏: 每次调用then都会返回一个新创建的promise对象
+        从代码上乍一看， aPromise.then(...).catch(...) 像是针对最初的 aPromise 对象进行了一连串的方法链调用。
+        然而实际上不管是 then 还是 catch 方法调用，都返回了一个新的promise对象。
+        下面我们就来看看如何确认这两个方法返回的到底是不是新的promise对象。
+        === 是严格相等比较运算符，我们可以看出这三个对象都是互不相同的，这也就证明了 then 和 catch 都返回了和调用者不同的promise对象。
+        */
+        var aPromise = new Promise(function (resolve) {
+            resolve(100);
+        });
+        var thenPromise = aPromise.then(function (value) {
+            return 200 + value;
+        }).then(function (value) {
+            console.log(value);
+        });
+        var catchPromise = thenPromise.catch(function (error) {
+            console.error(error);
+        });
+        console.log(aPromise !== thenPromise); // => true
+        console.log(thenPromise !== catchPromise);// => true
+        
+    </script>
+</body>
+
+</html>

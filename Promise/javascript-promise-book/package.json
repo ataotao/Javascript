@@ -1,0 +1,14 @@
+{
+  "name": "javascript-promise-book",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha basic-test/basic-test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "power-assert": "1.4.2"
+  }
+}

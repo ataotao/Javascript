@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script>
+        // 在 .then 里同时指定处理对错误进行处理的函数相比，和使用 catch 又有什么异同。
+
+        // 不能进行错误处理的onRejected
+
+        /*
+        .then 方法中的onRejected参数所指定的回调函数，实际上针对的是其promise对象或者之前的promise对象，而不是针对 .then 方法里面指定的第一个参数，
+        即onFulfilled所指向的对象，这也是 then 和 catch 表现不同的原因。
+        .then 和 .catch 都会创建并返回一个 新的 promise对象。 
+        Promise实际上每次在方法链中增加一次处理的时候所操作的都不是完全相同的promise对象。
+        */
+        function throwError(value) {
+            // 抛出异常
+            throw new Error(value);
+        }
+        // <1> onRejected不会被调用
+        function badMain(onRejected) {
+            return Promise.resolve(42).then(throwError, onRejected);
+        }
+        // <2> 有异常发生时onRejected会被调用
+        function goodMain(onRejected) {
+            return Promise.resolve(42).then(throwError).catch(onRejected);
+        }
+        // 运行示例
+        badMain(function () {
+            console.log("BAD");
+        });
+        goodMain(function () {
+            console.log("GOOD");
+        });
+        
+    </script>
+</body>
+
+</html>

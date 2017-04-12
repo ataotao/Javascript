@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script>
+        // 让Promise等待指定时间
+        // 首先我们来看一下如何在Promise中实现超时。
+        // 所谓超时就是要在经过一定时间后进行某些操作，使用 setTimeout 的话很好理解。
+        // Promise.race中的超时
+        // 让我们回顾一下静态方法 Promise.race ，它的作用是在任何一个promise对象进入到确定（解决）状态后就继续进行后续处理，如下面的例子所示。
+        // 我们可以将刚才的 delayPromise 和其它promise对象一起放到 Promise.race 中来是实现简单的超时机制。
+        /*
+        function delayPromise(ms) {
+            return new Promise(function (resolve) {
+                setTimeout(resolve, ms);
+            });
+        }
+
+        function timeoutPromise(promise, ms) {
+            var timeout = delayPromise(ms).then(function () {
+                throw new Error('Operation timed out after ' + ms + ' ms');
+            });
+            return Promise.race([promise, timeout]);
+        }
+        // 运行示例
+        var taskPromise = new Promise(function (resolve) {
+            // 随便一些什么处理
+            var delay = Math.random() * 2000;
+            setTimeout(function () {
+                resolve(delay + "ms");
+            }, delay);
+        });
+        timeoutPromise(taskPromise, 1000).then(function (value) {
+            console.log("taskPromise在规定时间内结束 : " + value);
+        }).catch(function (error) {
+            console.log("发生超时", error);
+        });
+        */
+
+        // 下面的代码就通过在一定的时间内变为解决状态的promise对象实现了超时处理。
+        function copyOwnFrom(target, source) {
+            Object.getOwnPropertyNames(source).forEach(function (propName) {
+                Object.defineProperty(target, propName, Object.getOwnPropertyDescriptor(source, propName));
+            });
+            return target;
+        }
+
+        function TimeoutError() {
+            var superInstance = Error.apply(null, arguments);
+            copyOwnFrom(this, superInstance);
+        }
+        TimeoutError.prototype = Object.create(Error.prototype);
+        TimeoutError.prototype.constructor = TimeoutError;
+
+        function delayPromise(ms) {
+            return new Promise(function (resolve) {
+
+                setTimeout(resolve, ms);
+            });
+        }
+
+        function timeoutPromise(promise, ms) {
+            var timeout = delayPromise(ms).then(function () {
+                return Promise.reject(new TimeoutError('Operation timed out after ' + ms + ' ms'));
+            });
+            return Promise.race([promise, timeout]);
+        }
+
+        function cancelableXHR(URL) {
+            var req = new XMLHttpRequest();
+            var promise = new Promise(function (resolve, reject) {
+                req.open('GET', URL, true);
+                req.onload = function () {
+                    if (req.status === 200) {
+                        resolve(req.responseText);
+                    } else {
+                        reject(new Error(req.statusText));
+                    }
+                };
+                req.onerror = function () {
+                    reject(new Error(req.statusText));
+                };
+                req.onabort = function () {
+                    reject(new Error('abort this request'));
+                };
+                req.send();
+            });
+            var abort = function () {
+                // 如果request还没有结束的话就执行abort
+                // https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
+                if (req.readyState !== XMLHttpRequest.UNSENT) {
+                    req.abort();
+                }
+            };
+            return {
+                promise: promise,
+                abort: abort
+            };
+        }
+        var object = cancelableXHR('http://httpbin.org/get');
+        // main 随机设定了时间做测试
+        timeoutPromise(object.promise, Math.random() * 1000).then(function (contents) {
+            console.log('Contents', contents);
+        }).catch(function (error) {
+            if (error instanceof TimeoutError) {
+                object.abort();
+                return console.log(error);
+            }
+            console.log('XHR Error :', error);
+        });
+    </script>
+</body>
+
+</html>
