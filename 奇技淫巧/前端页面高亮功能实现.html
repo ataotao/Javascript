@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>前端页面高亮功能实现</title>
+    <style>
+        .keyword-match{color: red;}
+    </style>
+</head>
+
+<body>
+    富文本高亮，关键词：['中华人民共和国', '中华', '我', '中国'];
+    <br />
+
+    <h3>未高亮</h3>
+    <div id="text">
+        <div data-html="<div>hello world!</div>">hello world!</div>
+        <div>
+            <div data-html="<div>hello world!</div>">
+                hello world!
+                <div data-html="<div>hello world!</div>">hello world!</div>
+            </div>
+        </div>
+        <div style="font-style: italic;" data-attr="中华人民共和国">
+            我是
+            <span style="font-size: 20px; font-weight: bold; background-color: cyan;">中国人</span> ，我爱中华人民共和国，中华人民共和国万岁！
+        </div>
+    </div>
+
+    <h3>高亮效果</h3>
+    <div id="content"></div>
+
+    <script>
+        const content = document.getElementById('content');
+        const text = document.getElementById('text').innerHTML; // 富文本串
+        const keyword = ['中华人民共和国', 'hello', '中华', '我', '中国'];
+
+        let hightlightText = hightlightKeyword(text, keyword.join('|'));
+
+        content.innerHTML = hightlightText;
+
+        /**
+         * 借助浏览器完成高亮。
+         * 深度优先遍历所有的节点，对文本节点进行高亮
+         *
+         * @param input - 待高亮的富文本串
+         * @param keyword - 由关键词生成的匹配串，格式 'xxxx|xxx|x'
+         * @returns {string}
+         */
+
+        function hightlightKeyword(html, keyword) {
+            // 复制一个节点去进行遍历操作
+            let wrap = document.createElement('div');
+
+            wrap.innerHTML = html;
+
+            return DFSTraverseAndHightlight(wrap);
+
+            function DFSTraverseAndHightlight(node) {
+                const rootNodes = node.childNodes;
+                const childNodes = Array.from(rootNodes);
+
+                for (let i = 0, len = childNodes.length; i < len; i++) {
+                    const node = childNodes[i];
+
+                    // 文本节点，要进行高亮
+                    if (node.nodeType === 3) {
+                        let span = document.createElement('span');
+                        let a = span.innerHTML = node.nodeValue.replace(new RegExp(`(${keyword})`, 'g'), `<span class="keyword-match">$1</span>`);
+                        console.log(node.nodeValue);
+                        node.parentNode.insertBefore(span, node);
+                        node.parentNode.removeChild(node);
+                    }
+
+                    //文本节点不会有childNodes属性，如果有子节点，继续遍历
+                    if (node.childNodes.length) {
+                        DFSTraverseAndHightlight(node);
+                    }
+                }
+
+                return node.innerHTML;
+            }
+        }
+
+    </script>
+</body>
+
+</html>
