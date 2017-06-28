@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    富文本高亮，关键词：['中华人民共和国', '中华', '我', '中国'];
+    富文本高亮，关键词：['中华人民共和国', '中华', '中国', '我'];
     <br />
 
     <h3>未高亮</h3>
@@ -34,7 +34,8 @@
     <script>
         const content = document.getElementById('content');
         const text = document.getElementById('text').innerHTML; // 富文本串
-        const keyword = ['中华人民共和国', 'hello', '中华', '我', '中国'];
+        const keyword = ['中华人民共和国', 'hello', '中华', '中国', '我'];  
+        //如果一个关键词包含另一个关键词，要优先高亮长度较长的词才对，只需要将字数多的关键词放到关键词数组的最前面即可
 
         let hightlightText = hightlightKeyword(text, keyword.join('|'));
 
