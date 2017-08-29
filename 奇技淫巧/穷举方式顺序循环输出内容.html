@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+
+<body>
+
+</body>
+
+
+<script type="text/javascript" language="javascript">
+
+/**
+ * @param chars 有效的输入的字符串
+ * @param str 默认开始字符串
+ * @param m 最大多少个字符
+ * @param n 最小多少个字符
+ * @param callback 有效输出回调
+ */
+var arr = [];
+
+
+ function test(chars, str, m, n, callback) {
+	if (str.length < m) {
+		for (var i=0; i<chars.length; i++) {
+			var s = str+chars[i];
+			if (s.length >= n) {
+                // callback(s);
+                arr.push(s);
+			}
+			test(chars, s, m, n, callback);
+		}
+    }
+    
+    
+}
+
+// 测试用例
+// test('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/','F',10,4,console.log);
+test('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/','FA-',4,4,console.log);
+test('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/','FC-',4,4,console.log);
+test('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/','Fl-',4,4,console.log);
+test('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/','FH-',4,4,console.log);
+console.log(arr);
+
+/**
+ * @param words 有效的输入的字符串，字符串数组，可以针对第个位置的字符设置有效范围
+ * @param str 默认开始字符串
+ * @param m 最大多少个字符
+ * @param n 最小多少个字符
+ * @param callback 有效输出回调
+ */
+ var arr1 = [];
+ function test2(words, str, m, n, callback) {
+	if (str.length < m) {
+		var chars = words && words[str.length] || "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-";
+		for (var i=0; i<chars.length; i++) {
+			var s = str+chars[i];
+			if (s.length >= n) {    
+                arr1.push(s);
+			}
+			test2(words, s, m, n, callback);
+		}
+	}
+}
+
+
+
+// 测试用例
+// test2([null, "abc","def-"],"F",4,2,console.log);
+test2([null, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ','ABCDEFGHIJKLMNOPQRSTUVWXYZ-', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-'],"F",4,4,console.log);
+console.log(arr1);
+
+</script>
+
+</html>
