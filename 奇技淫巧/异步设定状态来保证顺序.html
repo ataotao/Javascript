@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+ * @param words 自定义有效的字符串数组，可以针对第个位置的字符设置有效范围，如果不设置则默认 A-Z0-9 的范围
+ * @param str 默认开始字符串
+ * @param m 最大多少个字符
+ * @param n 最小多少个字符
+ * @param callback 有效输出回调
+ */
+        function iterate(words, str, m, n, callback, state) {
+            if (str.length < m) {
+                var chars = words && words[str.length] || "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                for (var i = 0; i < chars.length; i++) {
+                    var s = str + chars[i];
+                    if (s.length >= n) {
+                        state = callback(state, s);
+                    }
+                    iterate(words, s, m, n, callback, state);
+                }
+            }
+        }
+
+        // 测试1
+        iterate([null, "abc", "def-"], "F", 4, 2, function (o, s) {
+            o.i++;
+            // 模拟异步操作
+            setTimeout(function () {
+                console.log(s);
+                // 异步执行成功，标记为已解决
+                if (--o.i == 0) {
+                    o.done();
+                }
+            }, 500);
+            return o;
+        }, {
+                i: 0, done: function () {
+                    console.log("执行完成，当前处于空闲状态。");
+                }
+            });
+
+        // 测试2
+        iterate([null, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ABCDEFGHIJKLMNOPQRSTUVWXYZ-"], "F", 3, 2, function (o, s) { console.log(s) });
+    </script>
+</body>
+
+</html>
