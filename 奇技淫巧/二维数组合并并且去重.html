@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    var arr = [
+        ["aa", "bb", "cc"],
+        ["aa", "bb", "cc"],
+        ["b", "b", "v"]
+    ];
+    var hash = {};
+    var result = [];
+    for (var i = 0, len = arr.length; i < len; i++) {
+    	for (var j = 0, l = arr[i].length; j < l; j++) {
+	        if (!hash[arr[i][j]]) {
+	            result.push(arr[i][j]);
+	            hash[arr[i][j]] = true;
+	        }
+        }
+    }
+    console.log(arr);
+    console.log(result);
+    </script>
+</body>
+
+</html>
