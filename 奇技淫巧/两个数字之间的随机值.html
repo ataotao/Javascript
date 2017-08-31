@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    function randomTime(lowValue, highValue) {
+        var choice = highValue - lowValue + 1;
+        return Math.floor(Math.random() * choice + lowValue);
+    }
+
+    console.log(randomTime(500, 1000));
+    </script>
+</body>
+
+</html>
