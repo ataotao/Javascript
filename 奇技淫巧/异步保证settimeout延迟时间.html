@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>滚动图片</title>
+
+</head>
+
+<body>
+
+</body>
+
+<script type="text/javascript" src="jscript.source1.js"></script>
+<script type="text/javascript" language="javascript">
+    let codeArray = ['oc', 'kc', 'ki', 'kl', 'kx', 'la', 'lak', 'lx', 'lxs', 'ox', 'wfc'];
+    let numArray = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+        'l', 'm', 'n', 'o', 'p',
+        'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    ];
+    var sessionObj;
+    var cookieObj;
+    const loginUrl = "https://cn.tecdoc.net/?auth=login";
+    const maleCodeUrl = "https://cn.tecdoc.net/part/287-mahle-original-";
+    const manCodeUrl = "https://cn.tecdoc.net/part/4621-mann-filter-cn-";
+    const trwCodeUrl = "https://cn.tecdoc.net/part/161-trw-";
+    const fldCodeUrl = "https://cn.tecdoc.net/part/62-ferodo-";
+
+    var maleStorePath = "./public/down/cn.tecdoc.net/malecode";
+    var manStorePath = "./public/down/cn.tecdoc.net/mancode";
+    var trwStorePath = "./public/down/cn.tecdoc.net/trwcode";
+    var fldStorePath = "./public/down/cn.tecdoc.net/fldcode";
+
+
+    function AsyncQueue() {
+        function typeOf(obj, type) {
+            return typeof obj === type;
+        }
+
+        function isUndefined(obj) {
+            return obj === void 0;
+        }
+        function isBoolean(obj) {
+            return obj === true
+                || obj === false
+                || typeOf(obj, "boolean")
+                ;
+        }
+        function isNumber(obj) {
+            return typeOf(obj, "number");
+        }
+
+        function isFunction(obj) {
+            return typeOf(obj, "function");
+        }
+
+        function isObject(obj) {
+            return obj === Object(obj);
+        }
+
+
+        var
+            global = this.window || global,
+            self = this,
+            id,					// TimeoutId
+            result,				// 最后一次运行的结果
+            queue = [],			// 队列
+            idle = true,		// 空闲状态
+            ready = true,		// 就绪状态
+            extend = function () {
+                var options, name, src, copy, copyIsArray, clone,
+                    target = arguments[0] || {},
+                    i = 1,
+                    length = arguments.length,
+                    deep = false;
+
+                if (isBoolean(target)) {
+                    deep = target;
+                    target = arguments[1] || {};
+                    i = 2;
+                }
+
+                if (!isObject(target) && !isFunction(target)) {
+                    target = {};
+                }
+
+                if (length === i) {
+                    target = this;
+                    --i;
+                }
+
+                for (; i < length; i++) {
+                    if ((options = arguments[i]) != null) {
+                        for (name in options) {
+                            src = target[name];
+                            copy = options[name];
+
+                            if (target === copy) {
+                                continue;
+                            }
+
+                            if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+                                if (copyIsArray) {
+                                    copyIsArray = false;
+                                    clone = src && isArray(src) ? src : [];
+
+                                } else {
+                                    clone = src && isPlainObject(src) ? src : {};
+                                }
+
+                                target[name] = extend(deep, clone, copy);
+
+                            } else if (!isUndefined(copy)) {
+                                target[name] = copy;
+                            }
+                        }
+                    }
+                }
+
+                return target;
+            },
+            /**
+             * 运行
+             */
+            run = function () {
+                if (id) {
+                    clearTimeout(id);
+                    id = null;
+                }
+                while (queue.length > 0) {
+                    if (!ready) {
+                        break;
+                    }
+
+                    var
+                        obj = queue[0],
+                        delay = obj.delay;
+
+                    if (isFunction(obj.ready)) {
+                        if (!obj.ready(F, global)) {
+                            if (isNumber(obj.count) && obj.count > 0 && --obj.count <= 0) {
+                                if (isFunction(obj.skip) && obj.skip(F, global)) {
+                                    queue.shift();
+                                    continue;
+                                }
+                            } else {
+                                exec(delay);
+                                return;
+                            }
+                        }
+                    } else if (delay > 0) {
+                        obj.delay = 0;
+                        exec(delay);
+                        return;
+                    }
+
+                    if (queue.shift()) {
+                        var callback = obj.callback;
+                        if (isFunction(callback)) {
+                            result = callback.call(global, result, isNumber(obj.count) ? obj.count : 0);
+                        }
+                    }
+                }
+                idle = true;
+            },
+            /**
+             * 执行当前队列
+             */
+            exec = function (delay) {
+                if (idle || delay) {
+                    idle = false;
+                    if (delay && delay > 0) {
+                        id = setTimeout(run, delay);
+                    } else if (delay < 0 && process) {
+                        process.nextTick(run);
+                    } else {
+                        run();
+                    }
+                }
+            },
+            /**
+             * 自动执行
+             */
+            autoexec = function () {
+                if (idle && ready && queue.length > 0) {
+                    exec(queue[0].delay);
+                }
+                return self;
+            };
+        extend(self, {
+            /**
+             * 是否在忙？
+             */
+            busy: function () {
+                return !idle;
+            },
+            /**
+             * 队列数量
+             */
+            count: function () {
+                return queue.length;
+            },
+            /**
+             * 清除队列
+             */
+            clear: function () {
+                if (id) {
+                    clearTimeout(id);
+                    idle = true;
+                    id = null;
+                }
+                queue.length = 0;
+                return self;
+            },
+            /**
+             * 中断
+             */
+            abort: function () {
+                self.clear();
+                result = undefined;
+                return self;
+            },
+            /**
+             * 暂停
+             */
+            pause: function () {
+                ready = false;
+                return self;
+            },
+            /**
+             * 继续
+             */
+            resume: function () {
+                ready = true;
+                return autoexec();
+            },
+            /**
+             * 锁定执行
+             * @param {void function(unlock)} func 要执行的函数
+             * @param {function} callback 回调函数，在 unlock 函数后调用；
+             * @param {boolean} reusable 可重复使用的？
+             */
+            lock: function (func, callback, reusable) {
+                if (isFunction(func)) {
+                    if (isFunction(callback)) {
+                        self.next(function () {
+                            self.pause();
+                            var i = 0;
+                            func(function () {
+                                if (0 == i++ || reusable) {
+                                    callback.apply(this, _slice.call(arguments));
+                                    self.resume();
+                                }
+                            });
+                        });
+                    } else {
+                        self.next(func);
+                    }
+                }
+                return self;
+            },
+            /**
+             * 间隔 delay 毫秒执行一次，直到 func 返回 false 才能转到下一步。
+             * @param {bool function(result, counter)} func 调用函数；
+             * @param {integer} delay 延迟时间（毫秒）；
+             * @param {boolean} immediately 是否立即执行；
+             */
+            interval: function (func, delay, immediately) {
+                if (isFunction(func)) {
+                    var
+                        counter = 0,
+                        fn = function (r) {
+                            r = func(r, ++counter);
+                            if (r !== false) {
+                                self.next(fn, delay);
+                            }
+                            return r;
+                        };
+                    self.next(fn, immediately ? 0 : delay);
+                }
+                return autoexec();
+            },
+            /**
+             * 直到 ready 函数返回 true 才执行 callback 函数，否则执行 loop 函数后再次检查。
+             * @param {function(ready.result, counter)} callback 回调函数；
+             * @param {function(next, counter)} loop 循环函数，需要手动调用 next 才会再次去检查；
+             * @param {function<next.sender>(...)} ready 就绪检测函数；
+             * @param {integer} delay 延迟时间（毫秒）；
+             * @param {boolean} immediately 是否立即执行，默认为false；
+             * @param {boolean} loopPriority 是否循环优先，默认为false；
+             */
+            until: function (callback, loop, ready, delay, immediately, loopPriority) {
+                if (isFunction(loop) && isFunction(ready)) {
+                    var r,
+                        counter = 0,
+                        next = function () {
+                            if (!(r = ready.apply(this, arguments))) {
+                                self.next(fn, delay);
+                            } else if (isFunction(callback)) {
+                                callback(r, counter);
+                            }
+                        },
+                        fn = function () {
+                            loop(next, ++counter);
+                        };
+                    self.next(loopPriority ? fn : next, immediately ? 0 : delay);
+                }
+                return self;
+            },
+            /**
+             * 检查 check 函数执行结果为 true 时再调用 callback 函数。
+             * @param {function} check 检测函数；
+             * @param {function} callback 回调函数，当 skip 函数返回 true 时不执行该函数；
+             * @param {integer} delay 延迟时间（毫秒）；
+             * @param {integer} count 限制次数，当 count 大于 0 时，并且检查失败超过 count 次时则继续回调函数 callback 的执行；
+             * @param {function} skip 检测失败并且超过指定次数后，由该函数决定是否跳过 callback 的执行，默认不跳过 callback 的执行；
+             */
+            ready: function (check, callback, delay, count, skip) {
+                if (isFunction(check)) {
+                    queue.push({
+                        ready: check,
+                        callback: callback,
+                        delay: (isNaN(delay) ? 0 : delay),
+                        count: count,
+                        skip: skip
+                    });
+                }
+                return autoexec();
+            },
+            /**
+             * 隔 delay 毫秒后执行 callback 函数。
+             * @param {function} callback 回调函数；
+             * @param {integer} delay 延迟时间（毫秒）；
+             */
+            next: function (callback, delay) {
+                if (isFunction(callback)) {
+                    queue.push({
+                        callback: callback,
+                        delay: delay || 0
+                    });
+                }
+                return autoexec();
+            }
+        });
+    }
+
+
+    let run = new AsyncQueue();
+
+    let delay = 100;
+
+
+    // 数据采集
+    for (let i = 1; i < codeArray.length; i++) {
+
+        let code = codeArray[i];
+        // 遍历车型对应关系
+        for (let j = 1; j < 2; j++) {
+            run.next(async () => {
+                // console.log(2);
+                let htmlbody = await getHtml(`${maleCodeUrl}${code}-${j}`, cookieObj);
+                let htmlStr = await analysisHtml("male", htmlbody.toString(), code, j);
+                console.log(htmlStr);
+            }, delay);
+            for (let k = 0; k < numArray.length; k++) {
+                run.next(async () => {
+                    // console.log(1);
+                    let numItem = numArray[k];
+                    let htmlbody2 = await getHtml(`${maleCodeUrl}${code}-${j}-${numItem}`, cookieObj);
+                    let htmlStr2 = await analysisHtml("male", htmlbody2.toString(), code, `${j}-${numItem}`);
+                    console.log(htmlStr2);
+                }, delay);
+            }
+        }
+
+    }
+
+    function getHtml(str, cookieObj) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(str);
+            }, randomTime(1000, 2000));
+        });
+        // return str;
+    }
+
+    function analysisHtml(str, code, i) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(str + code + i);
+            }, randomTime(1000, 2000));
+        });
+        // return str + code + i;
+    }
+
+    function randomTime(lowValue, highValue) {
+        var choice = highValue - lowValue + 1;
+        return Math.floor(Math.random() * choice + lowValue);
+    }
+
+</script>
+
+</html>
