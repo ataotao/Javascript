@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // 模拟遍历产品编号
+        function fn(x, y){
+            console.log(`i= ${x}, j= ${y}`);
+        }
+        var itemIds = [];
+        for (let i = 0; i <= 88; i++) {
+            itemIds.push(fn);
+        }
+        console.log(itemIds);
+
+        // 构造分组
+       
+        /*
+        * items  原始数组
+        * num    分组数量
+        */
+        
+        function arrayGroup(items, num) {
+            // 分组数量
+            num = !num ? 20 : num;  
+            // 分组索引
+            let n = 1;   
+            // 构造数组   
+            let arrs = [];  
+
+            for (let i = 0; i < items.length; i++) {
+                let part = items[i];
+                let idx = n - 1;
+                let mul = num * n;
+                if (i <= mul) {
+                    if (!arrs[idx]) {
+                        arrs[idx] = [];
+                    }
+                    if (i == mul) {
+                        n++;
+                    }
+                    arrs[idx].push(part);
+                }
+            }
+            return arrs;
+        }
+
+        let fnGroup = arrayGroup(itemIds, 20);
+        for (let i = 0; i < fnGroup.length; i++) {
+            let f = fnGroup[i];
+            for (let j = 0; j < f.length; j++) {
+                let e = f[j];
+                e(i,j);                
+            }
+        }
+        
+    // let j = 1;
+    // let pIds = [];
+    // for (let i = 50061324; i < 50062982; i++,j++) {
+    // for (let i = 0; i < 20; i++) {
+    //     pIds[i] = [];
+    //     for (; j <= 50 * (i + 1); j++) {
+    //         pIds[i].push(j);
+    //     }
+
+    // }
+    // console.log(partIds);
+    </script>
+</body>
+
+</html>
