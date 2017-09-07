@@ -16,7 +16,7 @@
             console.log(`i= ${x}, j= ${y}`);
         }
         var itemIds = [];
-        for (let i = 0; i <= 88; i++) {
+        for (let i = 0; i <= 99; i++) {
             itemIds.push(fn);
         }
         console.log(itemIds);
@@ -30,7 +30,7 @@
         
         function arrayGroup(items, num) {
             // 分组数量
-            num = !num ? 20 : num;  
+            let number = num || 20;  
             // 分组索引
             let n = 1;   
             // 构造数组   
@@ -39,7 +39,7 @@
             for (let i = 0; i < items.length; i++) {
                 let part = items[i];
                 let idx = n - 1;
-                let mul = num * n;
+                let mul = number * n;
                 if (i <= mul) {
                     if (!arrs[idx]) {
                         arrs[idx] = [];
