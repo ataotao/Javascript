@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * 用于从一个字符串中提取两个字符串之间的部分
+         * @author Atao 2017-10-20
+         * @param  {[type]} string [字符串]
+         * @param  {[type]} start  [开始字符]
+         * @param  {[type]} end    [结束字符]
+         * @return {[type]}        [两个字符串之间的部分]
+         */
+        function between(string, start, end) {
+            var startIndex = string.indexOf(start);
+            var endIndex = string.indexOf(end);
+            if (startIndex == -1 || endIndex == -1) return string;
+            var startAt = string.indexOf(start) + start.length;
+            var endAt = string.indexOf(end, startAt);
+            return string.slice(startAt, endAt);
+        }
+        console.log(between('测试一下中间的数据', '一下', '数据'));
+        console.log(between('测试一下中间的数据', 'a', 'b'));
+        console.log(between('测试一下中间的数据', '一下', 'b'));
+    </script>
+</body>
+
+</html>
