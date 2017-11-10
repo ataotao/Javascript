@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <title></title>
+
+    <style>
+        div {
+            margin: 5px 0;
+            text-align: center;
+        }
+
+        button {
+            width: 500px;
+            height: 100px;
+            margin-top: 20px;
+            font-size: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <script>
+        var date1 = new Date('2017-11-09T09:42:52.116Z'); //开始时间  
+        var date2 = new Date(); //结束时间  
+        var date3 = date2.getTime() - date1.getTime(); //时间差的毫秒数  
+        //计算出相差天数  
+        var days = Math.floor(date3 / (24 * 3600 * 1000));
+        //计算出小时数  
+        var leave1 = date3 % (24 * 3600 * 1000); //计算天数后剩余的毫秒数  
+        var hours = Math.floor(leave1 / (3600 * 1000));
+        //计算相差分钟数  
+        var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数  
+        var minutes = Math.floor(leave2 / (60 * 1000));
+        //计算相差秒数  
+        var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数  
+        var seconds = Math.round(leave3 / 1000);
+        console.log(" 相差 " + days + "天 " + hours + "小时 " + minutes + " 分钟" + seconds + " 秒");
+
+
+        function GetDateStr(AddDayCount) {
+            var dd = new Date();
+            dd.setDate(dd.getDate() + AddDayCount); //获取AddDayCount天后的日期 
+            var y = dd.getFullYear();
+            var m = dd.getMonth() + 1; //获取当前月份的日期 
+            var d = dd.getDate();
+            return y + "-" + m + "-" + d;
+        }
+
+        console.log("前天：" + GetDateStr(-2));
+        console.log("<br />昨天：" + GetDateStr(-1));
+        console.log("<br />今天：" + GetDateStr(0));
+        console.log("<br />明天：" + GetDateStr(1));
+        console.log("<br />后天：" + GetDateStr(2));
+        console.log("<br />大后天：" + GetDateStr(3));
+
+
+        // 对比时间
+        /**
+         * @interval 对比时间的类型
+         * @begintime 开始时间
+         * @begintime 结束时间
+         */
+        function datediff(interval, begintime, enddate) {
+            var bT = begintime.getTime(),
+                eT = enddate.getTime(),
+                //科学计数法，表示 
+                // 864 * 10的5次方
+                // 864 * 10 * 10 *10 * 10 * 10
+                // 864 * 100000
+                rate = interval == 'DATE' ? 864e5 : interval == 'HOUR' ? 36e5 : interval == 'MINUTE' ? 6e4 : interval ==
+                'SECOND' ? 1e3 : 1;
+            return Math.floor(eT / rate) - Math.floor(bT / rate);
+        }
+
+        console.log(datediff("DATE", new Date('2017-11-09T09:42:52.116Z'), new Date('2017-11-10T00:00:00.000Z')));
+    </script>
+</body>
+
+</html>
