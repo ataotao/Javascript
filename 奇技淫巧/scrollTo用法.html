@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <script type="text/javascript">
+       
+        function scrollWindow(hei) {
+            let box = document.getElementById('box');
+            let scrollHeight = box.scrollHeight;
+            box.scrollTo(0, hei || scrollHeight)
+        }
+    </script>
+    <style>
+        #box {
+            height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <input type="button" onclick="scrollWindow()" value="滚动到底部" />
+    <input type="button" onclick="scrollWindow(50)" value="滚动到50的位置" />
+    <div id="box">
+        <p>SCROLL SCROLL SCROLL SCROLL SCROLL SCROLL SCROLL SCROLL</p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <p>SCROLL SCROLL SCROLL SCROLL SCROLL SCROLL SCROLL SCROLL</p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <p>SCROLL SCROLL SCROLL SCROLL SCROLL SCROLL SCROLL SCROLL</p>
+    </div>
+
+
+</body>
