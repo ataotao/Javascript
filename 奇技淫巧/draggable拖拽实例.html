@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #div1,
+        #div2 {
+            width: 100px;
+            height: 50px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="width:600px;border:1px solid black">
+        <h2>拖动收藏</h2>
+        <div draggable="true" ondragstart="dsHandler(event)">中国</div>
+        <div draggable="true" ondragstart="dsHandler(event)">美国</div>
+        <div draggable="true" ondragstart="dsHandler(event)">小日本</div>
+        <div draggable="true" ondragstart="dsHandler(event)">印度</div>
+        <div draggable="true" ondragstart="dsHandler(event)">垃圾越南</div>
+        <div draggable="true" ondragstart="dsHandler(event)">垃圾泰国</div>
+    </div>
+    <div id="dest" style="width:400px;height:400px;border:1px solid black;float:left">
+        <h2 ondragleave="return false">收藏夹</h2>
+    </div>
+    <img src="us.png" alt="垃圾桶" draggable="false" id="gb" style="float:left" />
+
+    <script type="text/javascript">
+        var dest = document.getElementById("dest");
+        var dsHandler = function (e) {
+            e.dataTransfer.setData("text/plain", "<item>" + e.target.innerHTML);
+        };
+        dest.ondrop = function (e) {
+            var text = e.dataTransfer.getData("text/plain");
+            if (text.indexOf("<item>") == 0) {
+                var newEle = document.createElement("div");
+                newEle.id = new Date().getUTCMilliseconds();
+                newEle.innerHTML = text.substring(6);
+                newEle.draggable = "true";
+                newEle.ondragstart = function (e) {
+                    e.dataTransfer.setData("text/plain", "<remove>" + newEle.id);
+                };
+                dest.appendChild(newEle);
+            }
+        };
+        document.getElementById("gb").ondrop = function (e) {
+            var id = e.dataTransfer.getData("text/plain");
+            if (id.indexOf("<remove>") == 0) {
+                var target = document.getElementById(id.substring(8));
+                dest.removeChild(target);
+            }
+        };
+        document.ondragover = function (e) {
+            return false;
+        };
+        document.ondrop = function (e) {
+            return false;
+        }
+    </script>
+
+
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <span id="drag" draggable="true" ondragstart="drag(event)">drag me to the other box</span>
+    </div>
+    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <script type="text/javascript">
+        function allowDrop(allowdropevent) {
+            allowdropevent.target.style.color = 'blue';
+            allowdropevent.preventDefault();
+            console.log('allowDrop');
+        }
+
+        function drag(dragevent) {
+            dragevent.dataTransfer.setData("text", dragevent.target.id);
+            dragevent.target.style.color = 'green';
+            console.log('drag');
+        }
+
+        function drop(dropevent) {
+            dropevent.preventDefault();
+            var data = dropevent.dataTransfer.getData("text");
+            dropevent.target.appendChild(document.getElementById(data));
+            document.getElementById("drag").style.color = 'black';
+            console.log('drop');
+        }
+    </script>
+
+
+
+</body>
+
+</html>
