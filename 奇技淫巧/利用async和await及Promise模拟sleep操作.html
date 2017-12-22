@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // 模拟其他语言中的sleep，实际上可以是任何异步操作。
+        const sleep = (timeountMS) => new Promise((resolve) => {
+            setTimeout(resolve, timeountMS);
+        });
+
+        (async () => {  //声明即执行的async函数表达式
+            for (var i = 0; i < 5; i++) {
+                await sleep(1000);
+                console.log(new Date, i);
+            }
+
+            await sleep(1000);
+            console.log(new Date, i);
+        })();
+
+    </script>
+</body>
+
+</html>
