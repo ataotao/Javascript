@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="button" value="show" onclick="showDescription()">
+
+    <canvas id="example"> 
+    <h2>Shapes</h2> 
+    <p>A rectangle with a black border. 
+        In the background is a pink circle. 
+        Partially overlaying the <a href="http://en.wikipedia.org/wiki/Circle" onfocus="drawCircle();" onblur="drawPicture();">circle</a>. 
+        Partially overlaying the circle is a green 
+        <a href="http://en.wikipedia.org/wiki/Square" onfocus="drawSquare();" onblur="drawPicture();">square</a> 
+        and a purple <a href="http://en.wikipedia.org/wiki/Triangle" onfocus="drawTriangle();" onblur="drawPicture();">triangle</a>,
+        both of which are semi-opaque, so the full circle can be seen underneath.</p> 
+    </canvas>
+
+    <!-- <canvas id="canvas" tabindex="0" role="button" aria-pressed="false" aria-label="Start game"></canvas> -->
+
+    <script src="index.js"></script>
+</body>
+
+</html>

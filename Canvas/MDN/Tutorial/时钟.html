@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="textml; charset=utf-8">
+    <title>clock by html5</title>
+    <style>
+        body {
+            background: #333;
+        }
+
+        #canvas1 {
+            display: block;
+            width: 400px;
+            margin: 100px auto;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+
+            var oC = document.getElementById('canvas1');
+
+            var oCtx = oC.getContext('2d');
+            var x = 0;    //圆心x
+            var y = 0;    //圆心y
+            var r = 0;    //圆心r
+            initialize();
+            setInterval(DrawUpdate, 1000);
+
+            function initialize() {
+
+                x = 200;    //圆心x
+                y = 200;    //圆心y
+                r = 150;    //圆心r
+                oCtx.strokeStyle = '#1ec1e4';
+                oCtx.fillStyle = '#333';
+
+                //画秒刻度
+                for (var i = 0; i < 60; i++) {
+                    oCtx.beginPath();
+                    oCtx.moveTo(x, y);
+                    oCtx.arc(x, y, r, i * 6 * Math.PI / 180, (i + 1) * 6 * Math.PI / 180);
+                    oCtx.stroke();
+                }
+                oCtx.closePath();
+
+                oCtx.beginPath();
+                oCtx.arc(x, y, r - 8, 0, 2 * Math.PI);
+                oCtx.closePath();
+                oCtx.fill();
+
+                //画分钟刻度
+                oCtx.lineWidth = 2;
+                oCtx.beginPath();
+                for (var i = 0; i < 12; i++) {
+                    oCtx.moveTo(x, y);
+                    oCtx.arc(x, y, r, i * 30 * Math.PI / 180, i * 30 * Math.PI / 180);
+                    oCtx.stroke();
+                }
+                oCtx.closePath();
+
+                /*
+                在DrawUpdate中可以实现，就没必要了
+                oCtx.beginPath();
+                oCtx.arc(x, y, r-12, 0, 2*Math.PI);
+                oCtx.closePath();
+                oCtx.fill();    
+                oCtx.closePath();*/
+
+                DrawUpdate();
+            }
+
+            //负责更新时间
+            function DrawUpdate() {
+
+                var iSecValue = 0;    //秒针对应的刻度
+                var iMinValue = 0;    //分针对应的刻度
+                var iHourValue = 0;    //时针对应的刻度
+
+                var oDate = new Date();
+                var iSec = oDate.getSeconds();
+                var iMin = oDate.getMinutes();
+                var iHour = oDate.getHours();
+                iSecValue = (- 90 + iSec * 6) * Math.PI / 180;
+                iMinValue = (- 90 + iMin * 6 + iSec / 10) * Math.PI / 180;
+                iHourValue = (- 90 + iHour * 30 + iMin / 2) * Math.PI / 180;
+
+                //遮罩,覆盖原来的时间
+                oCtx.beginPath();
+                oCtx.arc(x, y, r - 12, 0, 2 * Math.PI);
+                oCtx.closePath();
+                oCtx.fill();
+
+                //画时针
+                oCtx.lineWidth = 3;
+                oCtx.beginPath();
+                oCtx.moveTo(x, y);
+                oCtx.arc(x, y, r * 0.5, iHourValue, iHourValue);
+                oCtx.stroke();
+
+                //画分针
+                oCtx.lineWidth = 2;
+                oCtx.beginPath();
+                oCtx.moveTo(x, y);
+                oCtx.arc(x, y, r * 0.8, iMinValue, iMinValue);
+                oCtx.stroke();
+
+                //画秒针
+                oCtx.lineWidth = 1;
+                oCtx.beginPath();
+                oCtx.moveTo(x, y);
+                oCtx.arc(x, y, r * 0.9, iSecValue, iSecValue);
+                oCtx.stroke();
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <canvas id="canvas1" width="400" height="400">Hey,guys!您的浏览器版本也太低了吧，赶紧升级下吧，推荐Google Chrome哦！</canvas>
+</body>
+<html>

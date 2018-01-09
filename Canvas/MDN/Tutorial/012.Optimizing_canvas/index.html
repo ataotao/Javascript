@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        canvas {
+            border: 1px solid black;
+        }
+
+        #stage {
+            width: 480px;
+            height: 320px;
+            position: relative;
+            border: 2px solid black
+        }
+
+        #stage canvas {
+            position: absolute;
+        }
+
+        #ui-layer {
+            z-index: 3
+        }
+
+        #game-layer {
+            z-index: 2
+        }
+
+        #background-layer {
+            z-index: 1
+        }
+    </style>
+</head>
+
+<body>
+    <input type="range" id="scale-range" min="0.5" max="3.0" step="0.01" value="1.0" style="display:block;margin:20px auto;width:300px"
+    />
+    <canvas id="canvas" style="display:block;margin:0 auto;border:1px solid #aaa;">
+        您的浏览器尚不支持canvas
+    </canvas>
+
+    <p>使用多层画布去画一个复杂的场景</p>
+    <div id="stage">
+            <canvas id="ui-layer" width="480" height="320"></canvas>
+            <canvas id="game-layer" width="480" height="320"></canvas>
+            <canvas id="background-layer" width="480" height="320"></canvas>
+          </div>
+    <script src="index.js"></script>
+</body>
+
+</html>
