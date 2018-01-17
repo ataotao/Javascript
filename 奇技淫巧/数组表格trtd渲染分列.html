@@ -1,0 +1,2191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+
+  </style>
+</head>
+
+<body>
+
+
+  <script>
+    let data = [{
+      "key": "vcBase",
+      "name": "基本参数",
+      "nameMenu": "基本参数",
+      "list": [{
+        "key": "commonName",
+        "name": "车型俗称",
+        "value": "2007款 东风标致 东风标致307 三厢 2.0L 手自一体 舒适型 (DC7204C 307)"
+      }, {
+        "key": "brandName",
+        "name": "品牌名称",
+        "value": "东风标致"
+      }, {
+        "key": "vehicleSize",
+        "name": "外形尺寸",
+        "value": "4469*1746*1536"
+      }, {
+        "key": "standardName",
+        "name": "标准名称",
+        "value": "东风标致DC7204C 307轿车"
+      }, {
+        "key": "vehicleAlias",
+        "name": "别名",
+        "value": "标致307 2.0L AT舒适版三厢"
+      }, {
+        "key": "vehicleClass",
+        "name": "车型分类名称",
+        "value": "轿车类"
+      }, {
+        "key": "groupName",
+        "name": "车组名称",
+        "value": "东风标致307三厢(04/06-07/09)"
+      }, {
+        "key": "companyName",
+        "name": "厂家名称",
+        "value": "神龙汽车有限公司"
+      }, {
+        "key": "familyName",
+        "name": "车系名称",
+        "value": "东风标致307"
+      }, {
+        "key": "marketDate",
+        "name": "上市年份",
+        "value": "200701"
+      }, {
+        "key": "yearPattern",
+        "name": "年款",
+        "value": "2007"
+      }, {
+        "key": "cfgLevel",
+        "name": "配置等级",
+        "value": "舒适型"
+      }, {
+        "key": "bodyType",
+        "name": "车身结构",
+        "value": "三厢轿车"
+      }, {
+        "key": "engineDesc",
+        "name": "发动机描述",
+        "value": "2.0L"
+      }, {
+        "key": "listPrice",
+        "name": "厂商指导价(元)",
+        "value": "160800"
+      }, {
+        "key": "engineModel",
+        "name": "发动机型号",
+        "value": "标致雪铁龙PSA RFN 10LH3X"
+      }, {
+        "key": "purchasePrice",
+        "name": "新车购置价(元)",
+        "value": "146800"
+      }, {
+        "key": "displacement",
+        "name": "排量",
+        "value": "1.997"
+      }, {
+        "key": "purchasePriceTax",
+        "name": "购置价含税(元)",
+        "value": "159347"
+      }, {
+        "key": "powerType",
+        "name": "动力类型",
+        "value": "汽油"
+      }, {
+        "key": "stopFlag",
+        "name": "停产标识",
+        "value": "停产"
+      }, {
+        "key": "bsx",
+        "name": "变速箱",
+        "value": "4档手自一体变速箱"
+      }, {
+        "key": "zczb",
+        "name": "整车质保",
+        "value": "两年或4万公里"
+      }, {
+        "key": "drivenType",
+        "name": "驱动形式",
+        "value": "前置前驱"
+      }, {
+        "key": "effluentStandard",
+        "name": "排放标准",
+        "value": "国三"
+      }, {
+        "key": "importFlag",
+        "name": "国产/进口",
+        "value": "合资"
+      }, {
+        "key": "remark",
+        "name": "备注",
+        "value": "手自一体 舒适版"
+      }, {
+        "key": "riskFlag",
+        "name": "风险标识",
+        "value": "正常车型"
+      }, {
+        "key": "airbagNum",
+        "name": "安全气囊数"
+      }, {
+        "key": "absFlag",
+        "name": "ABS标示",
+        "value": "否"
+      }, {
+        "key": "letStand",
+        "name": "排放依据标准",
+        "value": "GB18352.3-2005国Ⅲ"
+      }, {
+        "key": "antiTheft",
+        "name": "防盗标识",
+        "value": "否"
+      }, {
+        "key": "vehicleWeight",
+        "name": "总质量"
+      }, {
+        "key": "seatMin",
+        "name": "最小座位数"
+      }, {
+        "key": "trackFront",
+        "name": "前轮距",
+        "value": "1505"
+      }, {
+        "key": "seatMax",
+        "name": "最大座位数"
+      }, {
+        "key": "trackRear",
+        "name": "后轮距",
+        "value": "1489"
+      }, {
+        "key": "seat",
+        "name": "座位数",
+        "value": "5"
+      }, {
+        "key": "underpan",
+        "name": "底盘"
+      }, {
+        "key": "fullWeight",
+        "name": "整备质量（千克）",
+        "value": "1341"
+      }, {
+        "key": "wheelbase",
+        "name": "轴距",
+        "value": "2612"
+      }, {
+        "key": "fullWeightMinKg",
+        "name": "最小整备质量",
+        "value": "1341"
+      }, {
+        "key": "fdj",
+        "name": "发动机"
+      }, {
+        "key": "fullWeightMaxKg",
+        "name": "最大整备质量",
+        "value": "1341"
+      }, {
+        "key": "valveNum",
+        "name": "发动机气门数(单缸气门数)",
+        "value": "4"
+      }, {
+        "key": "tonnage",
+        "name": "吨位"
+      }, {
+        "key": "arrayType",
+        "name": "气缸排列形式",
+        "value": "L4"
+      }, {
+        "key": "gfjs",
+        "name": "官方0-100km/h加速(s)"
+      }, {
+        "key": "fuelJetType",
+        "name": "燃油喷射形式",
+        "value": "多点电喷"
+      }, {
+        "key": "scjs",
+        "name": "实测0-100km/h加速(s)",
+        "value": "10.7"
+      }, {
+        "key": "gearNum",
+        "name": "变速器档数",
+        "value": "4"
+      }, {
+        "key": "sczd",
+        "name": "实测100-0km/h制动(m)"
+      }, {
+        "key": "gearboxType",
+        "name": "变速箱（器）类型",
+        "value": "手自一体"
+      }, {
+        "key": "scyh",
+        "name": "实测油耗(L)"
+      }, {
+        "key": "power",
+        "name": "功率",
+        "value": "108"
+      }, {
+        "key": "gxbzhyh",
+        "name": "工信部综合油耗(L)"
+      }],
+      "renderData": [
+        [{
+          "key": "commonName",
+          "name": "车型俗称",
+          "value": "2007款 东风标致 东风标致307 三厢 2.0L 手自一体 舒适型 (DC7204C 307)"
+        }, {
+          "key": "brandName",
+          "name": "品牌名称",
+          "value": "东风标致"
+        }],
+        [{
+          "key": "vehicleSize",
+          "name": "外形尺寸",
+          "value": "4469*1746*1536"
+        }, {
+          "key": "standardName",
+          "name": "标准名称",
+          "value": "东风标致DC7204C 307轿车"
+        }],
+        [{
+          "key": "vehicleAlias",
+          "name": "别名",
+          "value": "标致307 2.0L AT舒适版三厢"
+        }, {
+          "key": "vehicleClass",
+          "name": "车型分类名称",
+          "value": "轿车类"
+        }],
+        [{
+          "key": "groupName",
+          "name": "车组名称",
+          "value": "东风标致307三厢(04/06-07/09)"
+        }, {
+          "key": "companyName",
+          "name": "厂家名称",
+          "value": "神龙汽车有限公司"
+        }],
+        [{
+          "key": "familyName",
+          "name": "车系名称",
+          "value": "东风标致307"
+        }, {
+          "key": "marketDate",
+          "name": "上市年份",
+          "value": "200701"
+        }],
+        [{
+          "key": "yearPattern",
+          "name": "年款",
+          "value": "2007"
+        }, {
+          "key": "cfgLevel",
+          "name": "配置等级",
+          "value": "舒适型"
+        }],
+        [{
+          "key": "bodyType",
+          "name": "车身结构",
+          "value": "三厢轿车"
+        }, {
+          "key": "engineDesc",
+          "name": "发动机描述",
+          "value": "2.0L"
+        }],
+        [{
+          "key": "listPrice",
+          "name": "厂商指导价(元)",
+          "value": "160800"
+        }, {
+          "key": "engineModel",
+          "name": "发动机型号",
+          "value": "标致雪铁龙PSA RFN 10LH3X"
+        }],
+        [{
+          "key": "purchasePrice",
+          "name": "新车购置价(元)",
+          "value": "146800"
+        }, {
+          "key": "displacement",
+          "name": "排量",
+          "value": "1.997"
+        }],
+        [{
+          "key": "purchasePriceTax",
+          "name": "购置价含税(元)",
+          "value": "159347"
+        }, {
+          "key": "powerType",
+          "name": "动力类型",
+          "value": "汽油"
+        }],
+        [{
+          "key": "stopFlag",
+          "name": "停产标识",
+          "value": "停产"
+        }, {
+          "key": "bsx",
+          "name": "变速箱",
+          "value": "4档手自一体变速箱"
+        }],
+        [{
+          "key": "zczb",
+          "name": "整车质保",
+          "value": "两年或4万公里"
+        }, {
+          "key": "drivenType",
+          "name": "驱动形式",
+          "value": "前置前驱"
+        }],
+        [{
+          "key": "effluentStandard",
+          "name": "排放标准",
+          "value": "国三"
+        }, {
+          "key": "importFlag",
+          "name": "国产/进口",
+          "value": "合资"
+        }],
+        [{
+          "key": "remark",
+          "name": "备注",
+          "value": "手自一体 舒适版"
+        }, {
+          "key": "riskFlag",
+          "name": "风险标识",
+          "value": "正常车型"
+        }],
+        [{
+          "key": "airbagNum",
+          "name": "安全气囊数"
+        }, {
+          "key": "absFlag",
+          "name": "ABS标示",
+          "value": "否"
+        }],
+        [{
+          "key": "letStand",
+          "name": "排放依据标准",
+          "value": "GB18352.3-2005国Ⅲ"
+        }, {
+          "key": "antiTheft",
+          "name": "防盗标识",
+          "value": "否"
+        }],
+        [{
+          "key": "vehicleWeight",
+          "name": "总质量"
+        }, {
+          "key": "seatMin",
+          "name": "最小座位数"
+        }],
+        [{
+          "key": "trackFront",
+          "name": "前轮距",
+          "value": "1505"
+        }, {
+          "key": "seatMax",
+          "name": "最大座位数"
+        }],
+        [{
+          "key": "trackRear",
+          "name": "后轮距",
+          "value": "1489"
+        }, {
+          "key": "seat",
+          "name": "座位数",
+          "value": "5"
+        }],
+        [{
+          "key": "underpan",
+          "name": "底盘"
+        }, {
+          "key": "fullWeight",
+          "name": "整备质量（千克）",
+          "value": "1341"
+        }],
+        [{
+          "key": "wheelbase",
+          "name": "轴距",
+          "value": "2612"
+        }, {
+          "key": "fullWeightMinKg",
+          "name": "最小整备质量",
+          "value": "1341"
+        }],
+        [{
+          "key": "fdj",
+          "name": "发动机"
+        }, {
+          "key": "fullWeightMaxKg",
+          "name": "最大整备质量",
+          "value": "1341"
+        }],
+        [{
+          "key": "valveNum",
+          "name": "发动机气门数(单缸气门数)",
+          "value": "4"
+        }, {
+          "key": "tonnage",
+          "name": "吨位"
+        }],
+        [{
+          "key": "arrayType",
+          "name": "气缸排列形式",
+          "value": "L4"
+        }, {
+          "key": "gfjs",
+          "name": "官方0-100km/h加速(s)"
+        }],
+        [{
+          "key": "fuelJetType",
+          "name": "燃油喷射形式",
+          "value": "多点电喷"
+        }, {
+          "key": "scjs",
+          "name": "实测0-100km/h加速(s)",
+          "value": "10.7"
+        }],
+        [{
+          "key": "gearNum",
+          "name": "变速器档数",
+          "value": "4"
+        }, {
+          "key": "sczd",
+          "name": "实测100-0km/h制动(m)"
+        }],
+        [{
+          "key": "gearboxType",
+          "name": "变速箱（器）类型",
+          "value": "手自一体"
+        }, {
+          "key": "scyh",
+          "name": "实测油耗(L)"
+        }],
+        [{
+          "key": "power",
+          "name": "功率",
+          "value": "108"
+        }, {
+          "key": "gxbzhyh",
+          "name": "工信部综合油耗(L)"
+        }]
+      ]
+    }, {
+      "key": "vcBody",
+      "name": "车身参数",
+      "nameMenu": "车身",
+      "list": [{
+        "key": "cscsjg",
+        "name": "车身结构",
+        "value": "三厢轿车"
+      }, {
+        "key": "yjtz",
+        "name": "硬件特征",
+        "value": "169.35897"
+      }, {
+        "key": "dpmj",
+        "name": "底盘面积",
+        "value": "7.8"
+      }, {
+        "key": "xlxrj",
+        "name": "行李厢容积(L)",
+        "value": "620"
+      }, {
+        "key": "yxrj",
+        "name": "油箱容积(L)",
+        "value": "60"
+      }, {
+        "key": "zws",
+        "name": "座位数(个)",
+        "value": "5"
+      }, {
+        "key": "cms",
+        "name": "车门数(个)",
+        "value": "四门"
+      }, {
+        "key": "zbzl",
+        "name": "整备质量(Kg)",
+        "value": "1321;1341"
+      }, {
+        "key": "zxldjx",
+        "name": "最小离地间隙(mm)"
+      }, {
+        "key": "zj",
+        "name": "轴距(mm)",
+        "value": "2612 "
+      }, {
+        "key": "hlj",
+        "name": "后轮距(mm)",
+        "value": "1489 "
+      }, {
+        "key": "qlj",
+        "name": "前轮距(mm)",
+        "value": "1505 "
+      }, {
+        "key": "gd",
+        "name": "高度(mm)",
+        "value": "1536"
+      }, {
+        "key": "kd",
+        "name": "宽度(mm)",
+        "value": "1746"
+      }, {
+        "key": "cd",
+        "name": "长度(mm)",
+        "value": "4469"
+      }],
+      "renderData": [
+        [{
+          "key": "cscsjg",
+          "name": "车身结构",
+          "value": "三厢轿车"
+        }, {
+          "key": "yjtz",
+          "name": "硬件特征",
+          "value": "169.35897"
+        }],
+        [{
+          "key": "dpmj",
+          "name": "底盘面积",
+          "value": "7.8"
+        }, {
+          "key": "xlxrj",
+          "name": "行李厢容积(L)",
+          "value": "620"
+        }],
+        [{
+          "key": "yxrj",
+          "name": "油箱容积(L)",
+          "value": "60"
+        }, {
+          "key": "zws",
+          "name": "座位数(个)",
+          "value": "5"
+        }],
+        [{
+          "key": "cms",
+          "name": "车门数(个)",
+          "value": "四门"
+        }, {
+          "key": "zbzl",
+          "name": "整备质量(Kg)",
+          "value": "1321;1341"
+        }],
+        [{
+          "key": "zxldjx",
+          "name": "最小离地间隙(mm)"
+        }, {
+          "key": "zj",
+          "name": "轴距(mm)",
+          "value": "2612 "
+        }],
+        [{
+          "key": "hlj",
+          "name": "后轮距(mm)",
+          "value": "1489 "
+        }, {
+          "key": "qlj",
+          "name": "前轮距(mm)",
+          "value": "1505 "
+        }],
+        [{
+          "key": "gd",
+          "name": "高度(mm)",
+          "value": "1536"
+        }, {
+          "key": "kd",
+          "name": "宽度(mm)",
+          "value": "1746"
+        }],
+        [{
+          "key": "cd",
+          "name": "长度(mm)",
+          "value": "4469"
+        }]
+      ]
+    }, {
+      "key": "vcControl",
+      "name": "操控配置",
+      "nameMenu": "操控配置",
+      "list": [{
+        "key": "hqxhcsq",
+        "name": "后桥限滑差速器/差速锁",
+        "value": "无"
+      }, {
+        "key": "qqxhcsq",
+        "name": "前桥限滑差速器/差速锁",
+        "value": "无"
+      }, {
+        "key": "zycsqszgn",
+        "name": "中央差速器锁止功能",
+        "value": "无"
+      }, {
+        "key": "kbzxb",
+        "name": "可变转向比"
+      }, {
+        "key": "kqxj",
+        "name": "空气悬架",
+        "value": "无"
+      }, {
+        "key": "kbxj",
+        "name": "可变悬架",
+        "value": "无"
+      }, {
+        "key": "dphj",
+        "name": "陡坡缓降",
+        "value": "无"
+      }, {
+        "key": "zdzc",
+        "name": "自动驻车/上坡辅助",
+        "value": "无"
+      }, {
+        "key": "cswdkz",
+        "name": "车身稳定控制(ESC/ESP/DSC等)",
+        "value": "无"
+      }, {
+        "key": "qylkz",
+        "name": "牵引力控制(ASR/TCS/TRC等)",
+        "value": "无"
+      }, {
+        "key": "scfz",
+        "name": "刹车辅助(EBA/BAS/BA等)",
+        "value": "无"
+      }, {
+        "key": "zdlfp",
+        "name": "制动力分配(EBD/CBC等)",
+        "value": "无"
+      }, {
+        "key": "abs",
+        "name": "ABS防抱死",
+        "value": "无"
+      }],
+      "renderData": [
+        [{
+          "key": "hqxhcsq",
+          "name": "后桥限滑差速器/差速锁",
+          "value": "无"
+        }, {
+          "key": "qqxhcsq",
+          "name": "前桥限滑差速器/差速锁",
+          "value": "无"
+        }],
+        [{
+          "key": "zycsqszgn",
+          "name": "中央差速器锁止功能",
+          "value": "无"
+        }, {
+          "key": "kbzxb",
+          "name": "可变转向比"
+        }],
+        [{
+          "key": "kqxj",
+          "name": "空气悬架",
+          "value": "无"
+        }, {
+          "key": "kbxj",
+          "name": "可变悬架",
+          "value": "无"
+        }],
+        [{
+          "key": "dphj",
+          "name": "陡坡缓降",
+          "value": "无"
+        }, {
+          "key": "zdzc",
+          "name": "自动驻车/上坡辅助",
+          "value": "无"
+        }],
+        [{
+          "key": "cswdkz",
+          "name": "车身稳定控制(ESC/ESP/DSC等)",
+          "value": "无"
+        }, {
+          "key": "qylkz",
+          "name": "牵引力控制(ASR/TCS/TRC等)",
+          "value": "无"
+        }],
+        [{
+          "key": "scfz",
+          "name": "刹车辅助(EBA/BAS/BA等)",
+          "value": "无"
+        }, {
+          "key": "zdlfp",
+          "name": "制动力分配(EBD/CBC等)",
+          "value": "无"
+        }],
+        [{
+          "key": "abs",
+          "name": "ABS防抱死",
+          "value": "无"
+        }]
+      ]
+    }, {
+      "key": "vcEngine",
+      "name": "发动机参数",
+      "nameMenu": "发动机",
+      "list": [{
+        "key": "fdjms",
+        "name": "发动机描述",
+        "value": "2.0L"
+      }, {
+        "key": "bgl",
+        "name": "比功率(最大功率(kw)/整备质量(kg))",
+        "value": "0.08"
+      }, {
+        "key": "sglb",
+        "name": "升功率比(最大功率(kw)/排量(L))",
+        "value": "54.08"
+      }, {
+        "key": "hbbz",
+        "name": "环保标准",
+        "value": "国三"
+      }, {
+        "key": "ggcl",
+        "name": "缸盖材料",
+        "value": "铝"
+      }, {
+        "key": "gtcl",
+        "name": "缸体材料",
+        "value": "铝"
+      }, {
+        "key": "gyfs",
+        "name": "供油方式",
+        "value": "电喷"
+      }, {
+        "key": "rybh",
+        "name": "燃油标号",
+        "value": "93号(京92号)"
+      }, {
+        "key": "rlxs",
+        "name": "燃料形式",
+        "value": "汽油"
+      }, {
+        "key": "fdjtyjs",
+        "name": "发动机特有技术",
+        "value": "CVVT连续可变气门正时"
+      }, {
+        "key": "zdnjzs",
+        "name": "最大扭矩转速(rpm)",
+        "value": "4000"
+      }, {
+        "key": "zdnj",
+        "name": "最大扭矩(N·m)",
+        "value": "200"
+      }, {
+        "key": "zdglzs",
+        "name": "最大功率转速(rpm)",
+        "value": "6000"
+      }, {
+        "key": "zdgl",
+        "name": "最大功率(kW)",
+        "value": "108"
+      }, {
+        "key": "zdml",
+        "name": "最大马力(Ps)",
+        "value": "147"
+      }, {
+        "key": "xc",
+        "name": "行程"
+      }, {
+        "key": "gj",
+        "name": "缸径"
+      }, {
+        "key": "pqjg",
+        "name": "配气机构",
+        "value": "DOHC双顶置凸轮轴"
+      }, {
+        "key": "ysb",
+        "name": "压缩比",
+        "value": "11"
+      }, {
+        "key": "mgqms",
+        "name": "每缸气门数(个) ",
+        "value": "4气门"
+      }, {
+        "key": "qgs",
+        "name": "气缸数(个)",
+        "value": "4缸"
+      }, {
+        "key": "qgplxs",
+        "name": "气缸排列形式"
+      }, {
+        "key": "jqxs",
+        "name": "进气形式",
+        "value": "自然吸气"
+      }, {
+        "key": "pl",
+        "name": "排量(mL)",
+        "value": "1997"
+      }, {
+        "key": "fdjxh",
+        "name": "发动机型号",
+        "value": "标致雪铁龙PSA RFN 10LH3X"
+      }],
+      "renderData": [
+        [{
+          "key": "fdjms",
+          "name": "发动机描述",
+          "value": "2.0L"
+        }, {
+          "key": "bgl",
+          "name": "比功率(最大功率(kw)/整备质量(kg))",
+          "value": "0.08"
+        }],
+        [{
+          "key": "sglb",
+          "name": "升功率比(最大功率(kw)/排量(L))",
+          "value": "54.08"
+        }, {
+          "key": "hbbz",
+          "name": "环保标准",
+          "value": "国三"
+        }],
+        [{
+          "key": "ggcl",
+          "name": "缸盖材料",
+          "value": "铝"
+        }, {
+          "key": "gtcl",
+          "name": "缸体材料",
+          "value": "铝"
+        }],
+        [{
+          "key": "gyfs",
+          "name": "供油方式",
+          "value": "电喷"
+        }, {
+          "key": "rybh",
+          "name": "燃油标号",
+          "value": "93号(京92号)"
+        }],
+        [{
+          "key": "rlxs",
+          "name": "燃料形式",
+          "value": "汽油"
+        }, {
+          "key": "fdjtyjs",
+          "name": "发动机特有技术",
+          "value": "CVVT连续可变气门正时"
+        }],
+        [{
+          "key": "zdnjzs",
+          "name": "最大扭矩转速(rpm)",
+          "value": "4000"
+        }, {
+          "key": "zdnj",
+          "name": "最大扭矩(N·m)",
+          "value": "200"
+        }],
+        [{
+          "key": "zdglzs",
+          "name": "最大功率转速(rpm)",
+          "value": "6000"
+        }, {
+          "key": "zdgl",
+          "name": "最大功率(kW)",
+          "value": "108"
+        }],
+        [{
+          "key": "zdml",
+          "name": "最大马力(Ps)",
+          "value": "147"
+        }, {
+          "key": "xc",
+          "name": "行程"
+        }],
+        [{
+          "key": "gj",
+          "name": "缸径"
+        }, {
+          "key": "pqjg",
+          "name": "配气机构",
+          "value": "DOHC双顶置凸轮轴"
+        }],
+        [{
+          "key": "ysb",
+          "name": "压缩比",
+          "value": "11"
+        }, {
+          "key": "mgqms",
+          "name": "每缸气门数(个) ",
+          "value": "4气门"
+        }],
+        [{
+          "key": "qgs",
+          "name": "气缸数(个)",
+          "value": "4缸"
+        }, {
+          "key": "qgplxs",
+          "name": "气缸排列形式"
+        }],
+        [{
+          "key": "jqxs",
+          "name": "进气形式",
+          "value": "自然吸气"
+        }, {
+          "key": "pl",
+          "name": "排量(mL)",
+          "value": "1997"
+        }],
+        [{
+          "key": "fdjxh",
+          "name": "发动机型号",
+          "value": "标致雪铁龙PSA RFN 10LH3X"
+        }]
+      ]
+    }, {
+      "key": "vcExternal",
+      "name": "外部配置",
+      "nameMenu": "外部配置",
+      "list": [{
+        "key": "bcfz",
+        "name": "泊车辅助"
+      }, {
+        "key": "qzzyfs",
+        "name": "前座中央扶手",
+        "value": "无"
+      }, {
+        "key": "czbx",
+        "name": "车载冰箱",
+        "value": "无"
+      }, {
+        "key": "cnkqtj",
+        "name": "车内空气调节/花粉过滤",
+        "value": "无"
+      }, {
+        "key": "wdfqkz",
+        "name": "温度分区控制"
+      }, {
+        "key": "hzcfk",
+        "name": "后座出风口",
+        "value": "无"
+      }, {
+        "key": "hpdlkt",
+        "name": "后排独立空调",
+        "value": "无"
+      }, {
+        "key": "zdkt",
+        "name": "自动空调",
+        "value": "有"
+      }, {
+        "key": "sdkt",
+        "name": "手动空调",
+        "value": "无"
+      }, {
+        "key": "ddhbx",
+        "name": "电动后备厢",
+        "value": "无"
+      }, {
+        "key": "hpbj",
+        "name": "后排杯架",
+        "value": "无"
+      }, {
+        "key": "hzzyfs",
+        "name": "后座中央扶手",
+        "value": "无"
+      }, {
+        "key": "dspzy",
+        "name": "第三排座椅",
+        "value": "无"
+      }, {
+        "key": "hpzyblfd",
+        "name": "后排座椅比例放倒",
+        "value": "无"
+      }, {
+        "key": "hpzyztfd",
+        "name": "后排座椅整体放倒",
+        "value": "无"
+      }, {
+        "key": "hpzyam",
+        "name": "后排座椅按摩",
+        "value": "无"
+      }, {
+        "key": "qpzyam",
+        "name": "前排座椅按摩",
+        "value": "无"
+      }, {
+        "key": "hpzytf",
+        "name": "后排座椅通风",
+        "value": "无"
+      }, {
+        "key": "qpzytf",
+        "name": "前排座椅通风",
+        "value": "无"
+      }, {
+        "key": "hpzyjr",
+        "name": "后排座椅加热",
+        "value": "无"
+      }, {
+        "key": "qpzyjr",
+        "name": "前排座椅加热",
+        "value": "无"
+      }, {
+        "key": "ddzyjy",
+        "name": "电动座椅记忆",
+        "value": "无"
+      }, {
+        "key": "hpzyddtj",
+        "name": "后排座椅电动调节",
+        "value": "无"
+      }, {
+        "key": "depzyyd",
+        "name": "第二排座椅移动",
+        "value": "无"
+      }, {
+        "key": "depkbjdtj",
+        "name": "第二排靠背角度调节",
+        "value": "无"
+      }, {
+        "key": "fjswddtj",
+        "name": "副驾驶位电动调节",
+        "value": "无"
+      }, {
+        "key": "jswddtj",
+        "name": "驾驶位电动调节",
+        "value": "无"
+      }, {
+        "key": "jbzctj",
+        "name": "肩部支撑调节",
+        "value": "无"
+      }, {
+        "key": "ybzctj",
+        "name": "腰部支撑调节",
+        "value": "无"
+      }, {
+        "key": "zygdtj",
+        "name": "座椅高低调节",
+        "value": "无"
+      }, {
+        "key": "ydfgzy",
+        "name": "运动风格座椅",
+        "value": "无"
+      }, {
+        "key": "zpzy",
+        "name": "真皮/仿皮座椅",
+        "value": "无"
+      }, {
+        "key": "ttszxs",
+        "name": "HUD抬头数字显示",
+        "value": "无"
+      }, {
+        "key": "xcdnxsp",
+        "name": "行车电脑显示屏",
+        "value": "无"
+      }, {
+        "key": "dcspyx",
+        "name": "倒车视频影像",
+        "value": "无"
+      }, {
+        "key": "hdcld",
+        "name": "后倒车雷达",
+        "value": "有"
+      }, {
+        "key": "qld",
+        "name": "前雷达",
+        "value": "无"
+      }, {
+        "key": "dsxh",
+        "name": "定速巡航",
+        "value": "无"
+      }, {
+        "key": "fxpjr",
+        "name": "方向盘加热",
+        "value": "无"
+      }, {
+        "key": "fxphd",
+        "name": "方向盘换挡",
+        "value": "无"
+      }, {
+        "key": "dgnfxp",
+        "name": "多功能方向盘",
+        "value": "有"
+      }, {
+        "key": "fxpddtj",
+        "name": "方向盘电动调节",
+        "value": "无"
+      }, {
+        "key": "fxpqhtj",
+        "name": "方向盘前后调节",
+        "value": "无"
+      }, {
+        "key": "fxpsxtj",
+        "name": "方向盘上下调节",
+        "value": "无"
+      }, {
+        "key": "zpfxp",
+        "name": "真皮方向盘",
+        "value": "有"
+      }, {
+        "key": "ddxhm",
+        "name": "电动吸合门",
+        "value": "无"
+      }, {
+        "key": "lhjly",
+        "name": "铝合金轮毂",
+        "value": "无"
+      }, {
+        "key": "ydwgtj",
+        "name": "运动外观套件",
+        "value": "无"
+      }, {
+        "key": "tyntc",
+        "name": "太阳能天窗"
+      }, {
+        "key": "qjtc",
+        "name": "全景天窗",
+        "value": "无"
+      }, {
+        "key": "ddtc",
+        "name": "电动天窗",
+        "value": "有"
+      }],
+      "renderData": [
+        [{
+          "key": "bcfz",
+          "name": "泊车辅助"
+        }, {
+          "key": "qzzyfs",
+          "name": "前座中央扶手",
+          "value": "无"
+        }],
+        [{
+          "key": "czbx",
+          "name": "车载冰箱",
+          "value": "无"
+        }, {
+          "key": "cnkqtj",
+          "name": "车内空气调节/花粉过滤",
+          "value": "无"
+        }],
+        [{
+          "key": "wdfqkz",
+          "name": "温度分区控制"
+        }, {
+          "key": "hzcfk",
+          "name": "后座出风口",
+          "value": "无"
+        }],
+        [{
+          "key": "hpdlkt",
+          "name": "后排独立空调",
+          "value": "无"
+        }, {
+          "key": "zdkt",
+          "name": "自动空调",
+          "value": "有"
+        }],
+        [{
+          "key": "sdkt",
+          "name": "手动空调",
+          "value": "无"
+        }, {
+          "key": "ddhbx",
+          "name": "电动后备厢",
+          "value": "无"
+        }],
+        [{
+          "key": "hpbj",
+          "name": "后排杯架",
+          "value": "无"
+        }, {
+          "key": "hzzyfs",
+          "name": "后座中央扶手",
+          "value": "无"
+        }],
+        [{
+          "key": "dspzy",
+          "name": "第三排座椅",
+          "value": "无"
+        }, {
+          "key": "hpzyblfd",
+          "name": "后排座椅比例放倒",
+          "value": "无"
+        }],
+        [{
+          "key": "hpzyztfd",
+          "name": "后排座椅整体放倒",
+          "value": "无"
+        }, {
+          "key": "hpzyam",
+          "name": "后排座椅按摩",
+          "value": "无"
+        }],
+        [{
+          "key": "qpzyam",
+          "name": "前排座椅按摩",
+          "value": "无"
+        }, {
+          "key": "hpzytf",
+          "name": "后排座椅通风",
+          "value": "无"
+        }],
+        [{
+          "key": "qpzytf",
+          "name": "前排座椅通风",
+          "value": "无"
+        }, {
+          "key": "hpzyjr",
+          "name": "后排座椅加热",
+          "value": "无"
+        }],
+        [{
+          "key": "qpzyjr",
+          "name": "前排座椅加热",
+          "value": "无"
+        }, {
+          "key": "ddzyjy",
+          "name": "电动座椅记忆",
+          "value": "无"
+        }],
+        [{
+          "key": "hpzyddtj",
+          "name": "后排座椅电动调节",
+          "value": "无"
+        }, {
+          "key": "depzyyd",
+          "name": "第二排座椅移动",
+          "value": "无"
+        }],
+        [{
+          "key": "depkbjdtj",
+          "name": "第二排靠背角度调节",
+          "value": "无"
+        }, {
+          "key": "fjswddtj",
+          "name": "副驾驶位电动调节",
+          "value": "无"
+        }],
+        [{
+          "key": "jswddtj",
+          "name": "驾驶位电动调节",
+          "value": "无"
+        }, {
+          "key": "jbzctj",
+          "name": "肩部支撑调节",
+          "value": "无"
+        }],
+        [{
+          "key": "ybzctj",
+          "name": "腰部支撑调节",
+          "value": "无"
+        }, {
+          "key": "zygdtj",
+          "name": "座椅高低调节",
+          "value": "无"
+        }],
+        [{
+          "key": "ydfgzy",
+          "name": "运动风格座椅",
+          "value": "无"
+        }, {
+          "key": "zpzy",
+          "name": "真皮/仿皮座椅",
+          "value": "无"
+        }],
+        [{
+          "key": "ttszxs",
+          "name": "HUD抬头数字显示",
+          "value": "无"
+        }, {
+          "key": "xcdnxsp",
+          "name": "行车电脑显示屏",
+          "value": "无"
+        }],
+        [{
+          "key": "dcspyx",
+          "name": "倒车视频影像",
+          "value": "无"
+        }, {
+          "key": "hdcld",
+          "name": "后倒车雷达",
+          "value": "有"
+        }],
+        [{
+          "key": "qld",
+          "name": "前雷达",
+          "value": "无"
+        }, {
+          "key": "dsxh",
+          "name": "定速巡航",
+          "value": "无"
+        }],
+        [{
+          "key": "fxpjr",
+          "name": "方向盘加热",
+          "value": "无"
+        }, {
+          "key": "fxphd",
+          "name": "方向盘换挡",
+          "value": "无"
+        }],
+        [{
+          "key": "dgnfxp",
+          "name": "多功能方向盘",
+          "value": "有"
+        }, {
+          "key": "fxpddtj",
+          "name": "方向盘电动调节",
+          "value": "无"
+        }],
+        [{
+          "key": "fxpqhtj",
+          "name": "方向盘前后调节",
+          "value": "无"
+        }, {
+          "key": "fxpsxtj",
+          "name": "方向盘上下调节",
+          "value": "无"
+        }],
+        [{
+          "key": "zpfxp",
+          "name": "真皮方向盘",
+          "value": "有"
+        }, {
+          "key": "ddxhm",
+          "name": "电动吸合门",
+          "value": "无"
+        }],
+        [{
+          "key": "lhjly",
+          "name": "铝合金轮毂",
+          "value": "无"
+        }, {
+          "key": "ydwgtj",
+          "name": "运动外观套件",
+          "value": "无"
+        }],
+        [{
+          "key": "tyntc",
+          "name": "太阳能天窗"
+        }, {
+          "key": "qjtc",
+          "name": "全景天窗",
+          "value": "无"
+        }],
+        [{
+          "key": "ddtc",
+          "name": "电动天窗",
+          "value": "有"
+        }]
+      ]
+    }, {
+      "key": "vcHighTech",
+      "name": "高科技配置",
+      "nameMenu": "高科技配置",
+      "list": [{
+        "key": "qjsxt",
+        "name": "全景摄像头",
+        "value": "无"
+      }, {
+        "key": "zsyxh",
+        "name": "自适应巡航",
+        "value": "无"
+      }, {
+        "key": "zkyjpfpxs",
+        "name": "中控液晶屏分屏显示",
+        "value": "无"
+      }, {
+        "key": "ysxt",
+        "name": "夜视系统",
+        "value": "无"
+      }, {
+        "key": "ztzdzxxt",
+        "name": "整体主动转向系统",
+        "value": "无"
+      }, {
+        "key": "zdscxt",
+        "name": "主动刹车/主动安全系统",
+        "value": "无"
+      }, {
+        "key": "cdplyjxt",
+        "name": "车道偏离预警系统",
+        "value": "无"
+      }, {
+        "key": "bxfz",
+        "name": "并线辅助",
+        "value": "无"
+      }, {
+        "key": "fdjqtjs",
+        "name": "发动机启停技术",
+        "value": "无"
+      }, {
+        "key": "zdbcrw",
+        "name": "自动泊车入位",
+        "value": "无"
+      }],
+      "renderData": [
+        [{
+          "key": "qjsxt",
+          "name": "全景摄像头",
+          "value": "无"
+        }, {
+          "key": "zsyxh",
+          "name": "自适应巡航",
+          "value": "无"
+        }],
+        [{
+          "key": "zkyjpfpxs",
+          "name": "中控液晶屏分屏显示",
+          "value": "无"
+        }, {
+          "key": "ysxt",
+          "name": "夜视系统",
+          "value": "无"
+        }],
+        [{
+          "key": "ztzdzxxt",
+          "name": "整体主动转向系统",
+          "value": "无"
+        }, {
+          "key": "zdscxt",
+          "name": "主动刹车/主动安全系统",
+          "value": "无"
+        }],
+        [{
+          "key": "cdplyjxt",
+          "name": "车道偏离预警系统",
+          "value": "无"
+        }, {
+          "key": "bxfz",
+          "name": "并线辅助",
+          "value": "无"
+        }],
+        [{
+          "key": "fdjqtjs",
+          "name": "发动机启停技术",
+          "value": "无"
+        }, {
+          "key": "zdbcrw",
+          "name": "自动泊车入位",
+          "value": "无"
+        }]
+      ]
+    }, {
+      "key": "vcSafety",
+      "name": "安全装备",
+      "nameMenu": "安全装备",
+      "list": [{
+        "key": "wysjrxt",
+        "name": "无钥匙进入系统",
+        "value": "无"
+      }, {
+        "key": "ykys",
+        "name": "遥控钥匙",
+        "value": "无"
+      }, {
+        "key": "wysqdxt",
+        "name": "无钥匙启动系统",
+        "value": "无"
+      }, {
+        "key": "cnzks",
+        "name": "车内中控锁",
+        "value": "无"
+      }, {
+        "key": "fdjdzfd",
+        "name": "发动机电子防盗",
+        "value": "无"
+      }, {
+        "key": "zyjk",
+        "name": "LATCH座椅接口(兼容ISOFIX)",
+        "value": "无"
+      }, {
+        "key": "etzyjk",
+        "name": "ISOFIX儿童座椅接口",
+        "value": "无"
+      }, {
+        "key": "aqdwjts",
+        "name": "安全带未系提示",
+        "value": "无"
+      }, {
+        "key": "ltyjxxs",
+        "name": "零胎压继续行驶",
+        "value": "无"
+      }, {
+        "key": "tyjczz",
+        "name": "胎压监测装置",
+        "value": "无"
+      }, {
+        "key": "xbqn",
+        "name": "膝部气囊",
+        "value": "无"
+      }, {
+        "key": "hptbqnql",
+        "name": "后排头部气囊(气帘)",
+        "value": "无"
+      }, {
+        "key": "qptbqnql",
+        "name": "前排头部气囊(气帘)",
+        "value": "无"
+      }, {
+        "key": "hpcqn",
+        "name": "后排侧气囊",
+        "value": "无"
+      }, {
+        "key": "qpcqn",
+        "name": "前排侧气囊",
+        "value": "无"
+      }, {
+        "key": "fjsaqqn",
+        "name": "副驾驶安全气囊",
+        "value": "无"
+      }, {
+        "key": "jszaqqn",
+        "name": "驾驶座安全气囊",
+        "value": "无"
+      }],
+      "renderData": [
+        [{
+          "key": "wysjrxt",
+          "name": "无钥匙进入系统",
+          "value": "无"
+        }, {
+          "key": "ykys",
+          "name": "遥控钥匙",
+          "value": "无"
+        }],
+        [{
+          "key": "wysqdxt",
+          "name": "无钥匙启动系统",
+          "value": "无"
+        }, {
+          "key": "cnzks",
+          "name": "车内中控锁",
+          "value": "无"
+        }],
+        [{
+          "key": "fdjdzfd",
+          "name": "发动机电子防盗",
+          "value": "无"
+        }, {
+          "key": "zyjk",
+          "name": "LATCH座椅接口(兼容ISOFIX)",
+          "value": "无"
+        }],
+        [{
+          "key": "etzyjk",
+          "name": "ISOFIX儿童座椅接口",
+          "value": "无"
+        }, {
+          "key": "aqdwjts",
+          "name": "安全带未系提示",
+          "value": "无"
+        }],
+        [{
+          "key": "ltyjxxs",
+          "name": "零胎压继续行驶",
+          "value": "无"
+        }, {
+          "key": "tyjczz",
+          "name": "胎压监测装置",
+          "value": "无"
+        }],
+        [{
+          "key": "xbqn",
+          "name": "膝部气囊",
+          "value": "无"
+        }, {
+          "key": "hptbqnql",
+          "name": "后排头部气囊(气帘)",
+          "value": "无"
+        }],
+        [{
+          "key": "qptbqnql",
+          "name": "前排头部气囊(气帘)",
+          "value": "无"
+        }, {
+          "key": "hpcqn",
+          "name": "后排侧气囊",
+          "value": "无"
+        }],
+        [{
+          "key": "qpcqn",
+          "name": "前排侧气囊",
+          "value": "无"
+        }, {
+          "key": "fjsaqqn",
+          "name": "副驾驶安全气囊",
+          "value": "无"
+        }],
+        [{
+          "key": "jszaqqn",
+          "name": "驾驶座安全气囊",
+          "value": "无"
+        }]
+      ]
+    }, {
+      "key": "vcMedia",
+      "name": "多媒体配置",
+      "nameMenu": "多媒体配置",
+      "list": [{
+        "key": "duodcd",
+        "name": "多碟CD",
+        "value": "0"
+      }, {
+        "key": "lbysqxt8",
+        "name": "≥8喇叭扬声器系统",
+        "value": "有"
+      }, {
+        "key": "lbysqxt6",
+        "name": "6-7喇叭扬声器系统",
+        "value": "无"
+      }, {
+        "key": "lbysqxt4",
+        "name": "4-5喇叭扬声器系统",
+        "value": "无"
+      }, {
+        "key": "lbysqxt2",
+        "name": "2-3喇叭扬声器系统",
+        "value": "无"
+      }, {
+        "key": "dddvdxt",
+        "name": "多碟DVD系统",
+        "value": "无"
+      }, {
+        "key": "dddvd",
+        "name": "单碟DVD",
+        "value": "无"
+      }, {
+        "key": "xnddcd",
+        "name": "虚拟多碟CD",
+        "value": "无"
+      }, {
+        "key": "ddcd",
+        "name": "单碟CD",
+        "value": "无"
+      }, {
+        "key": "rjjhxt",
+        "name": "人机交互系统",
+        "value": "无"
+      }, {
+        "key": "cdzc",
+        "name": "CD支持MP3/WMA",
+        "value": "有"
+      }, {
+        "key": "wjyyjk",
+        "name": "外接音源接口(AUX/USB/iPod等",
+        "value": "无"
+      }, {
+        "key": "hpyjp",
+        "name": "后排液晶屏",
+        "value": "无"
+      }, {
+        "key": "czds",
+        "name": "车载电视",
+        "value": "无"
+      }, {
+        "key": "lyczdh",
+        "name": "蓝牙/车载电话",
+        "value": "无"
+      }, {
+        "key": "nzyp",
+        "name": "内置硬盘",
+        "value": "无"
+      }, {
+        "key": "gps",
+        "name": "GPS导航系统",
+        "value": "无"
+      }, {
+        "key": "dwhdfw",
+        "name": "定位互动服务",
+        "value": "无"
+      }],
+      "renderData": [
+        [{
+          "key": "duodcd",
+          "name": "多碟CD",
+          "value": "0"
+        }, {
+          "key": "lbysqxt8",
+          "name": "≥8喇叭扬声器系统",
+          "value": "有"
+        }],
+        [{
+          "key": "lbysqxt6",
+          "name": "6-7喇叭扬声器系统",
+          "value": "无"
+        }, {
+          "key": "lbysqxt4",
+          "name": "4-5喇叭扬声器系统",
+          "value": "无"
+        }],
+        [{
+          "key": "lbysqxt2",
+          "name": "2-3喇叭扬声器系统",
+          "value": "无"
+        }, {
+          "key": "dddvdxt",
+          "name": "多碟DVD系统",
+          "value": "无"
+        }],
+        [{
+          "key": "dddvd",
+          "name": "单碟DVD",
+          "value": "无"
+        }, {
+          "key": "xnddcd",
+          "name": "虚拟多碟CD",
+          "value": "无"
+        }],
+        [{
+          "key": "ddcd",
+          "name": "单碟CD",
+          "value": "无"
+        }, {
+          "key": "rjjhxt",
+          "name": "人机交互系统",
+          "value": "无"
+        }],
+        [{
+          "key": "cdzc",
+          "name": "CD支持MP3/WMA",
+          "value": "有"
+        }, {
+          "key": "wjyyjk",
+          "name": "外接音源接口(AUX/USB/iPod等",
+          "value": "无"
+        }],
+        [{
+          "key": "hpyjp",
+          "name": "后排液晶屏",
+          "value": "无"
+        }, {
+          "key": "czds",
+          "name": "车载电视",
+          "value": "无"
+        }],
+        [{
+          "key": "lyczdh",
+          "name": "蓝牙/车载电话",
+          "value": "无"
+        }, {
+          "key": "nzyp",
+          "name": "内置硬盘",
+          "value": "无"
+        }],
+        [{
+          "key": "gps",
+          "name": "GPS导航系统",
+          "value": "无"
+        }, {
+          "key": "dwhdfw",
+          "name": "定位互动服务",
+          "value": "无"
+        }]
+      ]
+    }, {
+      "key": "vcLight",
+      "name": "灯光/玻璃/后视镜配置",
+      "nameMenu": "灯光配置",
+      "list": [{
+        "key": "ddsdtj",
+        "name": "大灯随动调节"
+      }, {
+        "key": "gyys",
+        "name": "感应雨刷",
+        "value": "无"
+      }, {
+        "key": "hys",
+        "name": "后雨刷",
+        "value": "无"
+      }, {
+        "key": "zybhzj",
+        "name": "遮阳板化妆镜",
+        "value": "无"
+      }, {
+        "key": "hpcysbl",
+        "name": "后排侧隐私玻璃",
+        "value": "无"
+      }, {
+        "key": "hpczyl",
+        "name": "后排侧遮阳帘",
+        "value": "无"
+      }, {
+        "key": "hfdzyl",
+        "name": "后风挡遮阳帘",
+        "value": "无"
+      }, {
+        "key": "hsjjy",
+        "name": "后视镜记忆",
+        "value": "无"
+      }, {
+        "key": "hsjddzd",
+        "name": "后视镜电动折叠",
+        "value": "无"
+      }, {
+        "key": "whsjzdfxm",
+        "name": "外后视镜自动防眩目",
+        "value": "无"
+      }, {
+        "key": "nhsjzdfxm",
+        "name": "内后视镜自动防眩目",
+        "value": "无"
+      }, {
+        "key": "hsjjr",
+        "name": "后视镜加热",
+        "value": "无"
+      }, {
+        "key": "hsjddtj",
+        "name": "后视镜电动调节",
+        "value": "无"
+      }, {
+        "key": "fzwxbl",
+        "name": "防紫外线/隔热玻璃",
+        "value": "无"
+      }, {
+        "key": "ccfjsgn",
+        "name": "车窗防夹手功能",
+        "value": "无"
+      }, {
+        "key": "hddcc",
+        "name": "后电动车窗",
+        "value": "无"
+      }, {
+        "key": "qddcc",
+        "name": "前电动车窗",
+        "value": "无"
+      }, {
+        "key": "cnfwd",
+        "name": "车内氛围灯",
+        "value": "无"
+      }, {
+        "key": "ddqxzz",
+        "name": "大灯清洗装置",
+        "value": "无"
+      }, {
+        "key": "ddgdkt",
+        "name": "大灯高度可调",
+        "value": "无"
+      }, {
+        "key": "qwd",
+        "name": "前雾灯",
+        "value": "无"
+      }, {
+        "key": "zxtd",
+        "name": "转向头灯(辅助灯)",
+        "value": "无"
+      }, {
+        "key": "zdtd",
+        "name": "自动头灯",
+        "value": "无"
+      }, {
+        "key": "rjxcd",
+        "name": "日间行车灯",
+        "value": "无"
+      }, {
+        "key": "leddd",
+        "name": "LED大灯",
+        "value": "无"
+      }, {
+        "key": "xqdd",
+        "name": "氙气大灯",
+        "value": "无"
+      }],
+      "renderData": [
+        [{
+          "key": "ddsdtj",
+          "name": "大灯随动调节"
+        }, {
+          "key": "gyys",
+          "name": "感应雨刷",
+          "value": "无"
+        }],
+        [{
+          "key": "hys",
+          "name": "后雨刷",
+          "value": "无"
+        }, {
+          "key": "zybhzj",
+          "name": "遮阳板化妆镜",
+          "value": "无"
+        }],
+        [{
+          "key": "hpcysbl",
+          "name": "后排侧隐私玻璃",
+          "value": "无"
+        }, {
+          "key": "hpczyl",
+          "name": "后排侧遮阳帘",
+          "value": "无"
+        }],
+        [{
+          "key": "hfdzyl",
+          "name": "后风挡遮阳帘",
+          "value": "无"
+        }, {
+          "key": "hsjjy",
+          "name": "后视镜记忆",
+          "value": "无"
+        }],
+        [{
+          "key": "hsjddzd",
+          "name": "后视镜电动折叠",
+          "value": "无"
+        }, {
+          "key": "whsjzdfxm",
+          "name": "外后视镜自动防眩目",
+          "value": "无"
+        }],
+        [{
+          "key": "nhsjzdfxm",
+          "name": "内后视镜自动防眩目",
+          "value": "无"
+        }, {
+          "key": "hsjjr",
+          "name": "后视镜加热",
+          "value": "无"
+        }],
+        [{
+          "key": "hsjddtj",
+          "name": "后视镜电动调节",
+          "value": "无"
+        }, {
+          "key": "fzwxbl",
+          "name": "防紫外线/隔热玻璃",
+          "value": "无"
+        }],
+        [{
+          "key": "ccfjsgn",
+          "name": "车窗防夹手功能",
+          "value": "无"
+        }, {
+          "key": "hddcc",
+          "name": "后电动车窗",
+          "value": "无"
+        }],
+        [{
+          "key": "qddcc",
+          "name": "前电动车窗",
+          "value": "无"
+        }, {
+          "key": "cnfwd",
+          "name": "车内氛围灯",
+          "value": "无"
+        }],
+        [{
+          "key": "ddqxzz",
+          "name": "大灯清洗装置",
+          "value": "无"
+        }, {
+          "key": "ddgdkt",
+          "name": "大灯高度可调",
+          "value": "无"
+        }],
+        [{
+          "key": "qwd",
+          "name": "前雾灯",
+          "value": "无"
+        }, {
+          "key": "zxtd",
+          "name": "转向头灯(辅助灯)",
+          "value": "无"
+        }],
+        [{
+          "key": "zdtd",
+          "name": "自动头灯",
+          "value": "无"
+        }, {
+          "key": "rjxcd",
+          "name": "日间行车灯",
+          "value": "无"
+        }],
+        [{
+          "key": "leddd",
+          "name": "LED大灯",
+          "value": "无"
+        }, {
+          "key": "xqdd",
+          "name": "氙气大灯",
+          "value": "无"
+        }]
+      ]
+    }, {
+      "key": "vcGearbox",
+      "name": "变速箱/底盘/车轮",
+      "nameMenu": "变速器",
+      "list": [{
+        "key": "btgg",
+        "name": "备胎规格",
+        "value": "全尺寸"
+      }, {
+        "key": "hltgg",
+        "name": "后轮胎规格",
+        "value": "195/65 R15"
+      }, {
+        "key": "qltgg",
+        "name": "前轮胎规格",
+        "value": "195/65 R15"
+      }, {
+        "key": "zczdlx",
+        "name": "驻车制动类型",
+        "value": "手刹"
+      }, {
+        "key": "hzdqlx",
+        "name": "后制动器类型",
+        "value": "盘式"
+      }, {
+        "key": "qzdqlx",
+        "name": "前制动器类型",
+        "value": "通风盘式"
+      }, {
+        "key": "ctjg",
+        "name": "车体结构",
+        "value": "承载"
+      }, {
+        "key": "zllx",
+        "name": "助力类型",
+        "value": "电子液压助力"
+      }, {
+        "key": "sqxs",
+        "name": "四驱形式"
+      }, {
+        "key": "hxglx",
+        "name": "后悬架类型/后悬挂类型",
+        "value": "扭力杆悬架、螺旋弹簧、减振筒"
+      }, {
+        "key": "qxglx",
+        "name": "前悬架类型/前悬挂类型",
+        "value": "麦弗逊式独立悬架"
+      }, {
+        "key": "qdfs",
+        "name": "驱动方式",
+        "value": "前置前驱"
+      }, {
+        "key": "bxslx",
+        "name": "变速箱类型",
+        "value": "手自一体变速箱(MT/AT)"
+      }, {
+        "key": "jc",
+        "name": "简称",
+        "value": "4档手自一体变速箱"
+      }, {
+        "key": "dws",
+        "name": "档位数",
+        "value": "4档"
+      }],
+      "renderData": [
+        [{
+          "key": "btgg",
+          "name": "备胎规格",
+          "value": "全尺寸"
+        }, {
+          "key": "hltgg",
+          "name": "后轮胎规格",
+          "value": "195/65 R15"
+        }],
+        [{
+          "key": "qltgg",
+          "name": "前轮胎规格",
+          "value": "195/65 R15"
+        }, {
+          "key": "zczdlx",
+          "name": "驻车制动类型",
+          "value": "手刹"
+        }],
+        [{
+          "key": "hzdqlx",
+          "name": "后制动器类型",
+          "value": "盘式"
+        }, {
+          "key": "qzdqlx",
+          "name": "前制动器类型",
+          "value": "通风盘式"
+        }],
+        [{
+          "key": "ctjg",
+          "name": "车体结构",
+          "value": "承载"
+        }, {
+          "key": "zllx",
+          "name": "助力类型",
+          "value": "电子液压助力"
+        }],
+        [{
+          "key": "sqxs",
+          "name": "四驱形式"
+        }, {
+          "key": "hxglx",
+          "name": "后悬架类型/后悬挂类型",
+          "value": "扭力杆悬架、螺旋弹簧、减振筒"
+        }],
+        [{
+          "key": "qxglx",
+          "name": "前悬架类型/前悬挂类型",
+          "value": "麦弗逊式独立悬架"
+        }, {
+          "key": "qdfs",
+          "name": "驱动方式",
+          "value": "前置前驱"
+        }],
+        [{
+          "key": "bxslx",
+          "name": "变速箱类型",
+          "value": "手自一体变速箱(MT/AT)"
+        }, {
+          "key": "jc",
+          "name": "简称",
+          "value": "4档手自一体变速箱"
+        }],
+        [{
+          "key": "dws",
+          "name": "档位数",
+          "value": "4档"
+        }]
+      ]
+    }];
+
+    // function configDataTemp(list) {
+    //   let arrTemp = [];
+    //   let index = 0;
+    //   let sectionCount = 2;
+    //   for (let i = 0; i < list.length; i++) {
+    //     index = parseInt(i / sectionCount);
+
+    //     if (arrTemp.length <= index) {
+    //       arrTemp.push([]);
+    //     }
+    //     arrTemp[index].push(list[i]);
+
+    //   }
+    //   return arrTemp;
+    // }
+
+    function data2table(data, columns, newline) {
+      if (!data || !columns) {
+        return null;
+      }
+      let table = [], row, wrap;
+      for (let i = 0, j = 0; i < data.length; i++) {
+        wrap = newline && newline(data[i]);
+        if (wrap || j % columns == 0) {
+          j = 0;
+          row = [];
+          table.push(row);
+        }
+        row.push(data[i]);
+        if (!wrap) {
+          j++;
+        }
+      }
+      return table;
+    }
+
+    function getVehicleDetail() {
+      data.forEach(item => {
+        item.renderData = data2table(item.list, 2, it => {
+          return it.key == "commonName";
+        });
+      });
+      return data;
+    }
+
+    console.log(getVehicleDetail());
+  </script>
+</body>
+
+</html>
