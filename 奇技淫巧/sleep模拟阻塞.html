@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>json_tree by jQ</title>
+
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  // 方法一
+  function sleep(timeountMS) {
+    let startTime = new Date().getTime();
+    while (new Date().getTime() < startTime + timeountMS);
+  }
+  console.log('start1', new Date());
+  sleep(3000);
+  console.log('end1', new Date());
+
+  // 方法二
+  function sleepA(timeountMS) {
+      return new Promise((resolve) => {
+          setTimeout(resolve, timeountMS);
+      });
+  }
+
+  async function start(params) {
+    console.log('start2', new Date());
+    await sleepA(3000);
+    console.log('end2', new Date());
+  }
+
+  start();
+
+</script>
