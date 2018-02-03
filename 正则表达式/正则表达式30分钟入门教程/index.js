@@ -465,6 +465,18 @@ var regexp = /(?<=<(\w+)>).*(?=<\/\1>)/;
 var res = str.match(regexp);
 console.log(res, '(?<=<(\w*)>).*(?=<\/\1>)匹配不包含属性的简单HTML标签内里的内容。');
 
+// 匹配指定字符之间的内容
+var str = `
+<div id="dropdownsHerstellerSelectItem0" class="rf-sel-opt">CHEVROLET EUROPE / DAEWOO (GM)</div><div id="dropdownsHerstellerSelectItem1" class="rf-sel-opt">一汽轿车 / FAW</div><div id="dropdownsHerstellerSelectItem2" class="rf-sel-opt">三菱 (东南) / MITSUBISHI (DONGNAN)</div><div id="dropdownsHerstellerSelectItem3" class="rf-sel-opt">三菱 (北京吉普) / MITSUBISHI (BJC)</div><div id="dropdownsHerstellerSelectItem4" class="rf-sel-opt rf-sel-sel">三菱 (北京奔驰) / MITSUBISHI (BBDC)</div><div id="dropdownsHerstellerSelectItem5" class="rf-sel-opt">三菱 (广汽三菱) / MITSUBISHI (GMMC)</div><div id="dropdownsHerstellerSelectItem6" class="rf-sel-opt">三菱 / MITSUBISHI (进口)</div><div id="dropdownsHerstellerSelectItem7" class="rf-sel-opt">东南汽车 / DONGNAN</div><div id="dropdownsHerstellerSelectItem8" class="rf-sel-opt">东风汽车 / DFAC</div>	
+`;
+//  (?<=<div id=\"dropdownsHerstellerSelectItem\d{0,3}\" class=\"rf-sel-opt\">)  匹配前面的位置，不包含此内容
+// .*?  懒惰匹配中间的内容
+// (?=<\/div>) 匹配后面的位置，不包含此内容
+var regexp = /(?<=<div id=\"dropdownsHerstellerSelectItem\d{0,3}\" class=\"rf-sel-opt\">).*?(?=<\/div>)/g;
+var res = str.match(regexp);
+console.log(JSON.stringify(res));
+
+
 // 请详细分析表达式(?<=<(\w+)>).*(?=<\/\1>)，这个表达式最能表现零宽断言的真正用途。
 // 能够取得两个指定字符之间的内容，并不包含前后的规则
 
