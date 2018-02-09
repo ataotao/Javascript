@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .box {
+            justify-content: center;
+            align-items: center;
+            display: -webkit-flex;
+            height: 300px;
+        }
+    </style>
+    <div class="box">
+
+        <span>sdsada</span>
+        <span>sdsada</span>
+
+    </div>
+
+    <script>
+        // 方法一
+        function formatNum(str) {
+            var a = '1234567'.split('').reverse().join('');
+            var s = '';
+            for (var i = 0; i < a.length; i++) {
+                s += a[i];
+                if ((i + 1) % 3 == 0) {
+                    s += ',';
+                }
+
+            }
+            return s.split('').reverse().join('');
+        }
+        console.log(formatNum('1234567'));
+
+        // 方法二
+        function formatNumA(str) {
+            var r = str.length % 3;
+             var s = '';
+            var regexp = /\d{3}/g;
+            for (var i = 0; i < (3 - r); i++) {
+                s += '0';
+            }
+            s += str;
+            return s.match(regexp).join(',').replace(/0/g, '');
+        }
+        console.log(formatNumA('1234567'));
+
+        // 方法三
+        function formatNumB(str) {
+            return parseFloat(str).toLocaleString();
+
+        }
+        console.log(formatNumB('1234567'));
+
+        // 方法四 chrome才支持
+        function formatNumC(str) {
+            var regexp = /(?<=\d)(\d{3})+\b/;
+            var regexp1 = /\d{3}/g;
+            var res = str.match(regexp);
+            var res1 = res[0].match(regexp1);
+            var ss = str.substring(0, str.length - res[0].length);
+            return ss + ',' + res1.join(',');
+        }
+        console.log(formatNumC('1234567'));
+
+    </script>
+</body>
+
+</html>
