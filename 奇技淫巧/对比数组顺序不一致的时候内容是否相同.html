@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var initData = [["421124589002044928", "421124710469088768"],
+                        [ "421124710469088768", "421124589002044928"],
+                        [ "421124710469088763", "421124589002044928"]];
+
+        var initData1 = [["421124589002044928", "421124710469088768"],
+                        [ "421124710469088768", "421124589002044928"],
+                        [ "421124589002044928", "421124710469088768"]];       
+
+        function getIds(d) {
+			// 注意：这里排序会改变原有数据的顺序，所以需要展开
+            return [...d].sort().join();
+        }
+
+        let idArr = initData.map(item => getIds(item));
+        let idArr1 = initData1.map(item => getIds(item));
+
+        var filtered = idArr.every(item => item == idArr[0]);
+        var filtered1 = idArr1.every(item => item == idArr1[0]);
+
+        console.log(filtered);
+        console.log(filtered1);
+        console.log(initData);
+        console.log(initData1);
+		//////////////////////////////////////////////////////////////
+		
+		/**
+		 * 检测数组中的所有数据是否都一样
+		 * @param list 数据列表
+		 * @param equal 比较函数
+		 * @param selector 初始化选择器，可以使用该函数提取需要的状态数据
+		 * @return 返回0表示没有数据，返回1表示一致，返回-1表示不一致
+		 */
+		function allsame(list, equal, selector) {
+			var len;
+			if (list && (len = list.length) >= 0) {
+				if (len == 0) return 0;
+				if (len == 1) return 1;
+				var first = list[0], state = selector ? selector(first) : null;
+				for (i = 1; i < len; i++) {
+					if (!equal(first, list[i], state)) return -1;
+				}
+				return 1;
+			}
+			return -1;
+		}
+
+		function _selector(d) {
+			var hash = {};
+			for (var i=0; i<d.length; i++) {
+				hash[d[i]] = true;
+			}
+			return hash;
+		}
+		function _equal(a, b, s) {
+			if (a == b) return true;
+			if (a.length != b.length) return false;
+			
+			// Scheme 1: 按顺序比较内容（可以省去 selector 操作）
+			// for (var i=0; i<b.length; i++) if(a[i] != b[i]) return false;
+			
+			// Scheme 2: 不按顺序，只要内容一致就行
+			for (var i=0; i<b.length; i++) if(!s[b[i]]) return false;
+			
+			return true;
+		}
+		
+        console.log(allsame([["a","b"],["c","b"],["b","c"]], _equal, _selector));
+        console.log(allsame([["a","b"],["b","a"],["a","b"]], _equal, _selector));
+		
+    </script>
+</body>
+
+</html>
