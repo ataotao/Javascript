@@ -10,7 +10,11 @@
 
 <body>
 	<script>
-		var obj = { a: 1, c: 3, b: 2};
+		var obj = {
+			a: 1,
+			c: 3,
+			b: 2
+		};
 		/**
 		 * 1
 		 * */
@@ -19,10 +23,10 @@
 		var max = Math.max(...values);
 		var index = values.indexOf(max);
 		console.log(keys[index]);
-		
+
 		/**
 		 * 2
-		 * */
+		 **/
 		var arr = [];
 		for (const key in obj) {
 			arr.push({
@@ -30,18 +34,25 @@
 				val: obj[key]
 			});
 		}
-		arr = arr.sort((a,b)=> b.val - a.val);
+		arr = arr.sort((a, b) => b.val - a.val);
 		var k = arr[0].key;
 		console.log(k);
 
 
 		/**
 		 * 3
-		 * */
-		var k1 = Object.entries(obj).sort((a,b)=> b[1] - a[1])[0][0];
+		 **/
+		var k1 = Object.entries(obj).sort((a, b) => b[1] - a[1])[0][0];
 		console.log(k1);
 
+		/**
+		 * 4
+		 **/
 
+		const array1 = Object.entries(obj);
+		const reducer = (pre, next) => pre[1] >= next[1] ? pre : next;
+		const k2 = array1.reduce(reducer)[0];
+		console.log(k2);
 	</script>
 </body>
 
