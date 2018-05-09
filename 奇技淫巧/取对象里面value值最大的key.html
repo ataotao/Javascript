@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		var obj = { a: 1, c: 3, b: 2};
+		/**
+		 * 1
+		 * */
+		var values = Object.values(obj);
+		var keys = Object.keys(obj);
+		var max = Math.max(...values);
+		var index = values.indexOf(max);
+		console.log(keys[index]);
+		
+		/**
+		 * 2
+		 * */
+		var arr = [];
+		for (const key in obj) {
+			arr.push({
+				key: key,
+				val: obj[key]
+			});
+		}
+		arr = arr.sort((a,b)=> b.val - a.val);
+		var k = arr[0].key;
+		console.log(k);
+
+
+		/**
+		 * 3
+		 * */
+		var k1 = Object.entries(obj).sort((a,b)=> b[1] - a[1])[0][0];
+		console.log(k1);
+
+
+	</script>
+</body>
+
+</html>
