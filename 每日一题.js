@@ -52,8 +52,12 @@ console.log(arr);
 // }
 
 // 方法五
-for (var i = 0; i < 10; i++) {
-    setTimeout((i) => {
-        console.log(i);
-    }, 1000, i)
+// for (var i = 0; i < 10; i++) {
+//     setTimeout((i) => {
+//         console.log(i);
+//     }, 1000, i)
+// }
+// 方法六
+for (var i = 0; i< 10; i++){
+    setTimeout(console.log, 1000, i)
 }

@@ -1,0 +1,16 @@
+{
+	"appid": "wx51f2f66c1f2b50fe",
+	"projectname": "weapp-cropper",
+	"compileType": "miniprogram",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"libVersion": "2.4.3",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {}
+}
