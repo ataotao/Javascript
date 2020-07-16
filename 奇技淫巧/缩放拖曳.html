@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+    .main {
+      position: relative;
+      width: 400px;
+      height: 200px;
+      border: 1px solid red;
+    }
+    .mainspan:nth-child(1) {
+      position: absolute;
+      left: -5px;
+      top: -5px;
+      padding: 15px;
+      border-style: solid;
+      border-color: rebeccapurple;
+      border-width: 5px 0 0 5px;
+    }
+    .mainspan:nth-child(2) {
+      position: absolute;
+      right: -5px;
+      top: -5px;
+      padding: 15px;
+      border-style: solid;
+      border-color: rebeccapurple;
+      border-width: 5px5px00;
+    }
+    .mainspan:nth-child(3) {
+      position: absolute;
+      right: -5px;
+      bottom: -5px;
+      padding: 15px;
+      border-style: solid;
+      border-color: rebeccapurple;
+      border-width: 0 5px 5px 0;
+    }
+    .mainspan:nth-child(4) {
+      position: absolute;
+      left: -5px;
+      bottom: -5px;
+      padding: 15px;
+      border-style: solid;
+      border-color: rebeccapurple;
+      border-width: 0 0 5px 5px;
+    }
+    .box {
+      width: 200px;
+      height: 200px;
+      border: 1px solidgray;
+      position: absolute;
+      left: 200px;
+      top: 100px;
+    }
+    .upleftbtn,
+    .uprightbtn,
+    .downleftbtn,
+    .downrightbtn {
+      width: 10px;
+      height: 10px;
+      border: 1px solid steelblue;
+      position: absolute;
+      z-index: 5;
+      background: whitesmoke;
+    }
+    .upleftbtn {
+      top: -5px;
+      left: -5px;
+      cursor: nw-resize;
+    }
+    .uprightbtn {
+      top: -5px;
+      right: -5px;
+      cursor: ne-resize;
+    }
+    .downleftbtn {
+      left: -5px;
+      bottom: -5px;
+      cursor: sw-resize;
+    }
+    .downrightbtn {
+      right: -5px;
+      bottom: -5px;
+      cursor: se-resize;
+    }
+  </style>
+  <script>
+    //这里首先要注意操作四个角的时候，框的长宽会变化，同时绝对定位的top，left可能随之变化，我之前就犯了错误，导致移动过程框的大小变了，位置也变化了
+    var obj = null; //当前操作对象
+    var box = null; //要处理的对象;
+    //保留上次的x,y位置
+    var clickX = 0;
+    var clickY = 0;
+    //鼠标点击
+    var onDragDown = function (e, type) {
+      e = e || window.event;
+      var location = {
+        x: e.x || e.clientX,
+        y: e.y || e.clientY,
+      };
+      clickX = e.x || e.clientX;
+      clickY = e.y || e.clientY;
+      obj = this;
+      obj.operateType = type;
+      box = document.getElementById("box");
+      return false;
+    };
+    var onBoxDragDown = function (e, type) {
+      e = e || window.event;
+      var location = {
+        x: e.x || e.clientX,
+        y: e.y || e.clientY,
+      };
+      clickX = e.x || e.clientX;
+      clickY = e.y || e.clientY;
+      obj = this;
+      obj.operateType = type;
+      box = document.getElementById("box");
+      return false;
+    };
+    var onUpleftbtn = function (e) {
+      e.stopPropagation();
+      onDragDown(e, "nw");
+    };
+    var onUpRightbtn = function (e) {
+      e.stopPropagation();
+      onDragDown(e, "ne");
+    };
+    var onDownleftbtn = function (e) {
+      e.stopPropagation();
+      onDragDown(e, "sw");
+    };
+    var onDownRightbtn = function (e) {
+      e.stopPropagation();
+      onDragDown(e, "se");
+    };
+    var onBoxDown = function (e) {
+      onBoxDragDown(e, "move");
+    };
+    var move = function (type, location, tarobj) {
+      switch (type) {
+        case "n":
+          var add_length = clickY - location.y;
+          clickY = location.y;
+          var length = parseInt(tarobj.style.height) + add_length;
+          tarobj.style.height = length + "px";
+          tarobj.style.top = clickY + "px";
+          break;
+        case "s":
+          var add_length = clickY - location.y;
+          clickY = location.y;
+          var length = parseInt(tarobj.style.height) - add_length;
+          tarobj.style.height = length + "px";
+          break;
+        case "w":
+          var add_length = clickX - location.x;
+          clickX = location.x;
+          var length = parseInt(tarobj.style.width) + add_length;
+          tarobj.style.width = length + "px";
+          tarobj.style.left = clickX + "px";
+          break;
+        case "e":
+          var add_length = clickX - location.x;
+          clickX = location.x;
+          var length = parseInt(tarobj.style.width) - add_length;
+          tarobj.style.width = length + "px";
+          break;
+        case "move":
+          var add_ylength = clickY - location.y;
+          clickY = location.y;
+          var length = parseInt(tarobj.style.top) - add_ylength;
+          //tarobj.style.height=length+"px";
+          tarobj.style.top = length + "px";
+          var add_xlength = clickX - location.x;
+          clickX = location.x;
+          var xlength = parseInt(tarobj.style.left) - add_xlength;
+          //tarobj.style.width=length+"px";
+          tarobj.style.left = xlength + "px";
+          break;
+      }
+    };
+    window.onload = function (e) {
+      document.getElementById("upleftbtn").onmousedown = onUpleftbtn;
+      document.getElementById("uprightbtn").onmousedown = onUpRightbtn;
+      document.getElementById("downleftbtn").onmousedown = onDownleftbtn;
+      document.getElementById("downrightbtn").onmousedown = onDownRightbtn;
+      document.getElementById("box").onmousedown = onBoxDown;
+      document.onmousemove = function (e) {
+        if (obj) {
+          e = e || window.event;
+          var location = {
+            x: e.x || e.clientX,
+            y: e.y || e.clientY,
+          };
+          switch (obj.operateType) {
+            case "nw":
+              move("n", location, box);
+              move("w", location, box);
+              break;
+            case "ne":
+              move("n", location, box);
+              move("e", location, box);
+              break;
+            case "sw":
+              move("s", location, box);
+              move("w", location, box);
+              break;
+            case "se":
+              move("s", location, box);
+              move("e", location, box);
+              break;
+            case "move":
+              move("move", location, box);
+              break;
+          }
+        }
+      };
+      document.onmouseup = function () {
+        document.body.style.cursor = "auto";
+        obj = null;
+      };
+    };
+  </script>
+</head>
+<body>
+  <div class="box" id="box" style="width: 200px; height: 200px; left: 200px; top: 100px;">
+    <div class="upleftbtn" id="upleftbtn"></div>
+    <div class="uprightbtn" id="uprightbtn"></div>
+    <div class="downleftbtn" id="downleftbtn"></div>
+    <div class="downrightbtn" id="downrightbtn"></div>
+  </div>
+</body>
+</html>
