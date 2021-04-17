@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p style="height: 500px;"><img data-src="http://cms-bucket.ws.126.net/2021/0417/9890a97ep00qrp2kx009uc000s600e3c.png?imageView&thumbnail=453y225&quality=85&type=webp" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="http://cms-bucket.ws.126.net/2021/0416/53dbd40cj00qrnmml000ac0005k003hc.jpg?imageView&thumbnail=200y125&type=webp" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://static.ws.126.net/f2e/include/common_nav/images/topapp.jpg" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://cms-bucket.ws.126.net/2021/0416/a7c64c40j00qrmt7v0018c0009c0070c.jpg?imageView&thumbnail=380y184" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://cms-bucket.ws.126.net/2021/0416/a7c64c40j00qrmt7v0018c0009c0070c.jpg?imageView&thumbnail=198y112" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://cms-bucket.ws.126.net/2021/0417/fde1b6b7j00qron8n002zc000s600e3c.jpg?imageView&thumbnail=380y187&quality=85" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://cms-bucket.ws.126.net/2021/0417/1d660a92p00qro2fs00kmc000s600e3c.png?imageView&thumbnail=380y187&quality=85" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://cms-bucket.ws.126.net/2021/0417/1d660a92p00qro2fs00kmc000s600e3c.png?imageView&thumbnail=200y125&quality=85" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://cms-bucket.ws.126.net/2021/0417/fde1b6b7j00qron8n002zc000s600e3c.jpg?imageView&thumbnail=200y125&quality=85" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://cms-bucket.ws.126.net/2021/0417/88305e35j00qrozai002kc000s600e3c.jpg?imageView&thumbnail=185y116&quality=85" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://cms-bucket.ws.126.net/2021/0416/09b31659p00qrnwy3006xc000s600e3c.png?imageView&thumbnail=185y116&quality=85" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://yt-adp.ws.126.net/linxue/300250_azbi_20210401.jpg" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://yt-adp.ws.126.net/channel4/300250_cjpo_20210325.jpg" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://yt-adp.ws.126.net/channel4/425125_doab_20190313.jpg" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://yt-adp.ws.126.net/channel14/425125_mbhn_20171114.jpg" alt="" srcset=""></p>
+    <p style="height: 500px;"><img data-src="https://yt-adp.ws.126.net/channel4/425125_evsx_20210315.jpg" alt="" srcset=""></p>
+    <script>
+      window.onload = function () {
+        let imgs = document.getElementsByTagName('img');
+
+        const observer = new IntersectionObserver((changes) => {
+          //changes 是被观察的元素集合
+          console.log(changes);
+          
+          for (let i = 0, len = changes.length; i < len; i++) {
+            let change = changes[i];
+            console.log(change);
+            
+            // 通过这个属性判断是否在视口中
+            if (change.isIntersecting) {
+              const imgElement = change.target;
+              imgElement.src = imgElement.getAttribute('data-src');
+              observer.unobserve(imgElement);
+            }
+          }
+        });
+        for (let i = 0; i < imgs.length; i++) {
+          const element = imgs[i];
+          
+          observer.observe(element);
+        }
+      };
+    </script>
+  </body>
+</html>
